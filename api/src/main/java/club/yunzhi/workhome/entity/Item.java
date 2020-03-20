@@ -29,10 +29,6 @@ public class Item extends AbstractEntity {
     private List<Attachment> attachments = new ArrayList<>();
 
 
-	@ManyToMany
-	@JsonView(AttachmentsJsonView.class)
-	private List<Attachment> attachments = new ArrayList<>();
-
     public Item() {
     }
 
@@ -77,10 +73,6 @@ public class Item extends AbstractEntity {
         this.attachments = attachments;
     }
 
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
-	}
 
 	public interface AttachmentsJsonView {}
 }
