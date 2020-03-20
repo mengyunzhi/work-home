@@ -1,6 +1,9 @@
 package club.yunzhi.workhome.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,8 @@ public class Item extends AbstractEntity {
 
 	private String description;
 
+	@ManyToMany
+	@JsonView(AttachmentsJsonView.class)
 	private List<Attachment> attachments = new ArrayList<>();
 
 	public Item() {
@@ -64,4 +69,6 @@ public class Item extends AbstractEntity {
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
+
+	public interface AttachmentsJsonView {}
 }
