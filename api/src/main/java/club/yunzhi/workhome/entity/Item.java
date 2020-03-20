@@ -10,61 +10,73 @@ import java.util.List;
 
 /**
  * 实验项目
+ *
  * @author yunzhi
  */
 @Entity
 public class Item extends AbstractEntity {
 
-	private String name;
+    private String name;
 
-	private Timestamp beginTime;
+    private Timestamp beginTime;
 
-	private Timestamp endTime;
+    private Timestamp endTime;
 
-	private String description;
+    private String description;
+
+    @ManyToMany
+    @JsonView(AttachmentsJsonView.class)
+    private List<Attachment> attachments = new ArrayList<>();
+
 
 	@ManyToMany
 	@JsonView(AttachmentsJsonView.class)
 	private List<Attachment> attachments = new ArrayList<>();
 
-	public Item() {
-	}
+    public Item() {
+    }
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Timestamp getBeginTime() {
-		return beginTime;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setBeginTime(Timestamp beginTime) {
-		this.beginTime = beginTime;
-	}
+    public Timestamp getBeginTime() {
+        return beginTime;
+    }
 
-	public Timestamp getEndTime() {
-		return endTime;
-	}
+    public void setBeginTime(Timestamp beginTime) {
+        this.beginTime = beginTime;
+    }
 
-	public void setEndTime(Timestamp endTime) {
-		this.endTime = endTime;
-	}
+    public Timestamp getEndTime() {
+        return endTime;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
 
 	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
