@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpEvent, HttpErrorResponse
+  HttpEvent, HttpErrorResponse, HttpParams
 } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, mergeMap } from 'rxjs/operators';
-import { config } from '../conf/app.config';
-import { Router } from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {catchError, mergeMap} from 'rxjs/operators';
+import {config} from '../conf/app.config';
+import {Router} from '@angular/router';
 import swal from 'sweetalert2';
+import {isDefined} from '../utils';
 
 /**
  * Yunzhi拦截器，用于实现添加url，添加header，全局异常处理
@@ -43,6 +44,19 @@ export class YunzhiInterceptor implements HttpInterceptor {
     let headers = request.headers;
     headers = headers.append('X-Requested-With', 'XMLHttpRequest');
     request = request.clone({headers});
+
+    /**
+     * 过滤到null及undefined
+     */
+    let cleanedParams = new HttpParams();
+    request.params.keys().forEach(x => {
+      if (isDefined(request.params.get(x))) {
+        cleanedParams = cleanedParams.append(x, req.params.get(x));
+      }
+    });
+
+
+    request = request.clone({headers, params: cleanedParams});
 
     /**
      * 数据过滤
