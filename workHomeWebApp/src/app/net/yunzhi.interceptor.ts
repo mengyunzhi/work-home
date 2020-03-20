@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
-import { config } from '../../conf/app.config';
+import { config } from '../conf/app.config';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 
