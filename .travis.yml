@@ -1,0 +1,49 @@
+matrix:
+  include:
+    - language: java
+      # 声明使用的服务
+      services:
+      - mysql
+
+      jdk:
+      - openjdk8
+      cache:
+        directories:
+          - .autoconf
+          - $HOME/.m2
+      group: edge
+
+      # 执行脚本前创建数据库
+      # before_install:
+      #  - mysql -e 'CREATE DATABASE IF NOT EXISTS log default charset utf8 COLLATE utf8_general_ci;' -u root
+
+      script:
+        - cd api
+        - java -version
+        - javac -version
+        - mvn test
+
+    - language: node_js    
+      os: osx
+      node_js: 
+        - "12"
+      cache:
+        directories:
+          - $HOME/.npm
+          - ./workHomeWebApp/node_modules
+      addons:
+        chrome: stable
+      before_script:
+        - npm install -g @angular/cli@8
+      script:
+        - cd workHomeWebApp
+        - npm install
+        - ng lint
+        - ng version
+        - ng test --watch=false --browsers=ChromeHeadless --sourceMap=false
+        - ng build --prod
+
+
+notifications:
+  email: false
+  webhooks: https://oapi.dingtalk.com/robot/send?access_token=d97e197b25d8c9e593ba0c35923e11c344d54969c1093a388911f2bc0dc7867e
