@@ -28,8 +28,10 @@ public class Item extends AbstractEntity {
     @JsonView(AttachmentsJsonView.class)
     private List<Attachment> attachments = new ArrayList<>();
 
+
     public Item() {
     }
+
 
     public String getName() {
         return name;
@@ -71,6 +73,6 @@ public class Item extends AbstractEntity {
         this.attachments = attachments;
     }
 
-    public interface AttachmentsJsonView {
-    }
+
+	public interface AttachmentsJsonView {}
 }
