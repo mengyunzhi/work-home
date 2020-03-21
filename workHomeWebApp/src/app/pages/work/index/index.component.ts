@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Work} from '../../../common/work';
 
 @Component({
   selector: 'app-index',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./index.component.sass']
 })
 export class IndexComponent implements OnInit {
-
+  works = new Array<Work>();
   constructor() { }
 
   ngOnInit() {
