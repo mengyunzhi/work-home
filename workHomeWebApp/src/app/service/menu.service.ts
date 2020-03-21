@@ -7,8 +7,9 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class MenuService {
   private menusSubject = new BehaviorSubject<Array<Menu>>([
-    new Menu({name: '我的作业'}),
-    new Menu({name: '个人中心'})
+    new Menu({name: '仪表盘', url: 'dashboard'}),
+    new Menu({name: '我的作业', url: 'work'}),
+    new Menu({name: '个人中心', url: 'personalCenter'})
   ]);
 
   constructor() {
