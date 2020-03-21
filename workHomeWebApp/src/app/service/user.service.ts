@@ -1,44 +1,48 @@
-import { Injectable } from '@angular/core';
-import { AppOnReadyItem, CommonService } from './common.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from '../common/user';
-import { Observable, ReplaySubject } from 'rxjs';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {AppOnReadyItem, CommonService} from './common.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {User} from '../common/entity/user';
+import {Observable, ReplaySubject} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'User';
+  private currentLoginUser: User;
   private currentLoginUser$ = new ReplaySubject<User>(1);
-  /*当前登录用户*/
-  private currentLoginUser;
+  private url = '/user';
 
   constructor(private commonService: CommonService,
               private httpClient: HttpClient,
-              private router: Router,
-  ) {
-
+              private router: Router) {
     // 如果当前不是登录模块，请求当前登录用户
     if (!this.router.url.includes('auth')) {
       this.getCurrentLoginUser();
     }
   }
 
-  public getCurrentLoginUser(callback?: () => void) {
+  private getCurrentLoginUser() {
     const appOnReadyItem = new AppOnReadyItem();
     this.commonService.addAppOnReadyItem(appOnReadyItem);
-    // 获取当前登录用户，并设置ready = true;
-    this.httpClient.get<User>('User/user')
-      .subscribe((user: User) => {
-        this.setCurrentLoginUser(user);
+
+    this.httpClient.get<User>(`${this.url}/me`)
+      .subscribe(user => {
+        this.currentLoginUser = user;
       }, () => {
+        this.currentLoginUser = null;
       }, () => {
+        // 准备完完毕
         appOnReadyItem.ready = true;
-        if (callback) {
-          callback();
-        }
       });
+  }
+
+  /**
+   * 获取登录用户时，应该结合appOnReady。示例：
+   * this.commonService.appOnReady(() => {const user = this.userService.getCurrentUser();});
+   */
+  getCurrentUser(): User | null {
+    return this.currentLoginUser;
   }
 
 
@@ -50,7 +54,7 @@ export class UserService {
     // 添加认证信息
     headers = headers.append('Authorization', 'Basic ' + btoa(user.username + ':' + encodeURIComponent(user.password)));
     // 发起get请求并返回
-    return this.httpClient.get<User>(this.baseUrl + '/me', {headers});
+    return this.httpClient.get<User>(this.url + '/me', {headers});
   }
 
   /**
@@ -61,5 +65,4 @@ export class UserService {
     this.currentLoginUser = user;
     this.currentLoginUser$.next(user);
   }
-
 }

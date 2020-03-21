@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../../service/user.service';
-import { CommonService } from '../../../service/common.service';
-import { environment } from 'src/environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserService} from '../../../service/user.service';
+import {CommonService} from '../../../service/common.service';
+import {environment} from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -43,13 +43,8 @@ export class LoginComponent implements OnInit {
   login() {
     this.userService.login(this.loginForm.value)
       .subscribe((user) => {
-        console.log(user);
         this.showErrorInfo = false;
-        //
-        this.userService.getCurrentLoginUser(() => {
-          this.router.navigateByUrl('dashboard');
-        });
-
+        this.userService.setCurrentLoginUser(user);
       }, () => {
         this.errorInfo = '登录失败，请检查您的用户名、密码';
         this.showErrorInfo = true;

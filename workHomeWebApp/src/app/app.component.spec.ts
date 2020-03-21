@@ -27,8 +27,4 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('workHomeWebApp');
   });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-  });
 });
