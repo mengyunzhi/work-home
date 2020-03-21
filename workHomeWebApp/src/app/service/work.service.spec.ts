@@ -25,7 +25,7 @@ describe('WorkService', () => {
     let result;
     service.getAllOfCurrentStudent()
       .subscribe(data => result = data);
-    const req = httpTestingController.expectOne('/work/');
+    const req = httpTestingController.expectOne('work');
     expect(req.request.method).toBe('GET');
 
     const mockReturn = new Array<Work>();

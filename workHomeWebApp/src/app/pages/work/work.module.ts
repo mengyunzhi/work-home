@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router';
 import { WorkRoutingModule } from './work-routing.module';
 
 
-
 @NgModule({
   declarations: [IndexComponent, EditComponent],
   imports: [
@@ -19,4 +18,5 @@ import { WorkRoutingModule } from './work-routing.module';
     WorkRoutingModule
   ]
 })
-export class WorkModule { }
+export class WorkModule {
+}

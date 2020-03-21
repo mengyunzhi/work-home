@@ -12,7 +12,7 @@ import {User} from '../common/user';
 export class UserService {
   private currentLoginUser: User;
   private currentLoginUser$ = new ReplaySubject<User>(1);
-  private url = '/user';
+  private url = 'user';
 
   constructor(private commonService: CommonService,
               private httpClient: HttpClient,
