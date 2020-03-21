@@ -5,7 +5,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [EditorComponentComponent, MenuShowPipe],
+  declarations: [EditorComponentComponent],
   exports: [
     EditorComponentComponent
   ],
