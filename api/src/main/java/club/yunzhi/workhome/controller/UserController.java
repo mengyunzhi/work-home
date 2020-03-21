@@ -34,12 +34,12 @@ public class UserController {
     }
 
     @GetMapping("user")
-    @JsonView(getCurrentLoginUser.class)
+    @JsonView(GetCurrentLoginUser.class)
     public User getCurrentLoginUser() {
         return this.userService.getCurrentLoginUser();
     }
 
     public interface MeJsonView {}
 
-    public interface getCurrentLoginUser{}
+    public interface GetCurrentLoginUser{}
 }
