@@ -27,5 +27,6 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<Work> getAllOfCurrentStudent() {
         Student student = this.studentService.getCurrentStudent();
+        return this.workRepository.findAllByStudent(student);
     }
 }
