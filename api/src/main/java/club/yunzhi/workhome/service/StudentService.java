@@ -38,4 +38,10 @@ public interface StudentService {
      * @param id
      */
     void delete(Long id);
+
+    /**
+     * 获取当前登录的学生
+     * @return 学生 | null
+     */
+    Student getCurrentStudent();
 }

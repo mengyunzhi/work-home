@@ -17,13 +17,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
+/**
+ * @author yz
+ */
 @RestController
 @RequestMapping("User")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private final UserService userService;
+    final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
