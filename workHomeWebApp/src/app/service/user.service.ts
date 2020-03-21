@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {AppOnReadyItem, CommonService} from './common.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {User} from '../common/entity/user';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
+import {User} from '../common/user';
 
 @Injectable({
   providedIn: 'root'

@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {UserService} from '../../service/user.service';
 import {User} from '../../common/user';
+import {CommonService} from '../../service/common.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private router: Router,
-              private userService: UserService) {
+              private userService: UserService,
+              private commonService: CommonService) {
   }
 
   ngOnInit() {
@@ -29,8 +31,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   init() {
-    this.subscription = this.userService.getCurrentLoginUser$()
-      .subscribe(user => this.currentUser = user);
+    this.commonService.appOnReady(() => {
+      this.currentUser = this.userService.getCurrentUser();
+    });
   }
 
   logout() {
@@ -43,6 +46,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
