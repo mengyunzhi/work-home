@@ -3,6 +3,7 @@
  */
 import {Item} from './item';
 import {Student} from './student';
+import { Attachment } from './attachment';
 
 /**
  * 作业
@@ -16,4 +17,5 @@ export class Work {
   student = new Student();
   updateTime: Date;
   reviewed: boolean;
+  attachments = new Array<Attachment>();
 }

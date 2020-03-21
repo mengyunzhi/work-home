@@ -31,9 +31,8 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public Work getById(Long id) {
-        User user = this.userService.getCurrentLoginUser();
-        Work work = this.workRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("没找到该作业"));
-//        if (user.getRole() != 0|| !work.getStudent().getUser().getId().equals(user.getId()))
+    public Work update(Long id, Work work) {
+        return null;
     }
+
 }

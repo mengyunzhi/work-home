@@ -27,7 +27,8 @@
     "tinymce": "^5.2.0",
     "tinymce-i18n": "^19.9.17",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "file-saver": "latest"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.4",

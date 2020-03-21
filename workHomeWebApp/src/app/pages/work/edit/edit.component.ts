@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../../service/common.service';
 import { WorkService } from '../../../service/work.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Work } from '../../../common/work';
 import { Attachment } from '../../../common/attachment';
+import { AttachmentService } from '../../../service/attachment.service';
+import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-edit',
@@ -13,30 +14,14 @@ import { Attachment } from '../../../common/attachment';
   styleUrls: ['./edit.component.sass']
 })
 export class EditComponent implements OnInit {
-  editForm: FormGroup;
   work: Work;
+  selectFiles: File[];
 
   constructor(private router: Router,
               private commonService: CommonService,
               private route: ActivatedRoute,
-              private builder: FormBuilder,
-              private workService: WorkService) {
-    this.createForm();
-  }
-
-  createForm() {
-    this.editForm = this.builder.group({
-      content: ['', Validators.required],
-      course: null
-    });
-  }
-
-  initForm(data) {
-
-    this.editForm.setValue({
-      content: data.content,
-      course: data.course
-    });
+              private workService: WorkService,
+              private attachmentService: AttachmentService) {
   }
 
   ngOnInit() {
@@ -50,34 +35,56 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.workService.getById(params.id).subscribe((data) => {
         this.work = data;
-        this.initForm(data);
       });
     });
   }
 
-  public update(work: Work) {
-    this.route.params.subscribe(params => {
-      this.workService.update(params.id, work).subscribe(() => {
-        // this.commonService.success(() => {
-        //   this.router.navigateByUrl('/library');
-        // }, '大纲库保存成功');
-      }, (response: HttpErrorResponse) => {
-        // this.commonService.error(() => {
-        //   this.router.navigateByUrl('/library');
-        // }, response.error);
-      });
-    });
+  /**
+   * 更新
+   */
+  public update() {
+    // 先上传每个附件
+    for (let i = 0; i < this.selectFiles.length; i++) {
+      this.attachmentService.upload(this.selectFiles[i])
+        .subscribe((attachment) => {
+          this.work.attachments.push(attachment);
+          // 最后一个附件上传以后更新作业信息
+          if (i === this.selectFiles.length - 1) {
+            this.workService.update(this.work.id, this.work);
+          }
+        });
+    }
   }
 
   submit() {
-    this.update(this.editForm.value);
+    this.update();
   }
 
+  /**
+   * 下载附件
+   * @param attachment 附件
+   */
   downloadAttachment(attachment: Attachment) {
-
+    this.attachmentService.download(attachment).subscribe((data) => {
+      saveAs(data, `${attachment.originName}`);
+    });
   }
 
   contentChange($event) {
-   console.log($event);
+    this.work.content = $event;
+  }
+
+  fileChange(files: File[]) {
+    this.selectFiles = files;
+  }
+
+
+  /**
+   * 删除附件
+   * @param workId 作业id
+   * @param attachmentId 附件id
+   */
+  deleteAttachment(workId: number, attachmentId: number) {
+
   }
 }

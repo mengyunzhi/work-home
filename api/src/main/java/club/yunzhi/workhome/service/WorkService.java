@@ -16,13 +16,6 @@ public interface WorkService {
     List<Work> getAllOfCurrentStudent();
 
     /**
-     * 通过id获取
-     * @param id
-     * @return
-     */
-    Work getById(Long id);
-
-    /**
      * 更新
      * @param id
      * @param work
