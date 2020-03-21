@@ -1,0 +1,16 @@
+.nav {
+  height: 40px;
+  line-height: 40px;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+a {
+  color: black;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+p {
+  margin-left: 20px;
+}
