@@ -24,6 +24,13 @@ const routes: Routes = [
           title: '仪表盘'
         }
       },
+      {
+        path: 'work',
+        loadChildren: () => import('./pages/work/work.module').then(m => m.WorkModule),
+        data: {
+          title: '我的作业'
+        }
+      }
     ]
   }
 ];
