@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
       .subscribe((user) => {
         this.showErrorInfo = false;
         this.userService.setCurrentLoginUser(user);
+        this.router.navigateByUrl('work');
       }, () => {
         this.errorInfo = '登录失败，请检查您的用户名、密码';
         this.showErrorInfo = true;
