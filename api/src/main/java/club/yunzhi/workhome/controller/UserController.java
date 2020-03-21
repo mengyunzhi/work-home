@@ -33,5 +33,13 @@ public class UserController {
         return this.userService.findByUsername(username);
     }
 
+    @GetMapping("user")
+    @JsonView(getCurrentLoginUser.class)
+    public User getCurrentLoginUser() {
+        return this.userService.getCurrentLoginUser();
+    }
+
     public interface MeJsonView {}
+
+    public interface getCurrentLoginUser{}
 }

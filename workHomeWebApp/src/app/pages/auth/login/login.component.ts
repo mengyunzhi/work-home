@@ -38,28 +38,20 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
 
-    // /** 订阅 username 数据的变化 */
-    // this.loginForm.get('username').valueChanges.subscribe(username => {
-    //   /** 校验用户名是否有效 */
-    //   const valid = this.verifyUsername(username);
-    //   if (!this.countdown) {
-    //     this.setVerificationCodeButtonDisabled(!valid);
-    //   }
-    //
-    // });
   }
 
   login() {
     this.userService.login(this.loginForm.value)
-      .subscribe(() => {
+      .subscribe((user) => {
+        console.log(user);
         this.showErrorInfo = false;
         //
-        // this.authService.requestCurrentLoginUser(() => {
-        //   this.router.navigateByUrl('dashboard');
-        // });
+        this.userService.getCurrentLoginUser(() => {
+          this.router.navigateByUrl('dashboard');
+        });
 
       }, () => {
-        this.errorInfo = '登录失败，请检查您的手机号、密码、验证码';
+        this.errorInfo = '登录失败，请检查您的用户名、密码';
         this.showErrorInfo = true;
       });
   }
