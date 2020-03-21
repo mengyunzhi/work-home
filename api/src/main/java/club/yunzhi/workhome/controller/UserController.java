@@ -9,7 +9,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @RestController
@@ -31,6 +36,18 @@ public class UserController {
         String username = user.getName();
 
         return this.userService.findByUsername(username);
+    }
+
+    @GetMapping("logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("用户注销");
+        // 获取用户认证信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 存在认证信息，注销
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
     }
 
     public interface MeJsonView {}
