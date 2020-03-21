@@ -1,0 +1,52 @@
+<div class="container-fluid p-0">
+  <div class="header">
+    <div class="row m-0">
+      <div class="col-md-2 offset-md-2">
+        <p class="title"><b>Welcome!</b></p>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="row m-0 pt-5">
+      <div class="col-md-2 offset-md-8 mt-5 pl-3 pr-3 pt-4 pb-4 bg-white">
+        <h6 class="text-center">账户登录</h6>
+        <hr>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="form-group">
+            <label for="username">手机号<code>*</code></label>
+            <input type="number" class="form-control" id="username" placeholder="请输入手机号" formControlName="username" />
+          </div>
+          <div class="form-group">
+            <label for="password">密码<code>*</code></label>
+            <input type="password" class="form-control" id="password" placeholder="请输入密码" formControlName="password" />
+          </div>
+          <ng-template [ngIf]="showErrorInfo">
+            <hr>
+            <small class="text-danger">{{ errorInfo }}</small>
+          </ng-template>
+          <hr>
+          <button type="submit" [disabled]="loginForm.invalid" class="btn form-control login-button">
+            登录
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="row m-0">
+      <div class="col-md-8 offset-md-2">
+        <p class="text-center link">
+          <a href="#">企业合作</a>
+          <a href="#">联系我们</a>
+          <a href="#">帮助中心</a>
+          <a href="#">意见反馈</a>
+          <a href="#">友情链接</a>
+        </p>
+        <p class="text-center power">
+          技术支持:
+          <a href="http://www.mengyunzhi.com/" target="_blank">河北工业大学梦云智软件开发中心</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
