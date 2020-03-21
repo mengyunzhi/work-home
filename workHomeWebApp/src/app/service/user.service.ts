@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {AppOnReadyItem, CommonService} from './common.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {User} from '../common/entity/user';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Router} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {User} from '../common/user';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,12 @@ export class UserService {
     headers = headers.append('Authorization', 'Basic ' + btoa(user.username + ':' + encodeURIComponent(user.password)));
     // 发起get请求并返回
     return this.httpClient.get<User>(this.url + '/me', {headers});
+  }
+
+  logout(): Observable<void> {
+    return this.httpClient.get<void>(`${this.url}/logout`).pipe(map(() => {
+      this.setCurrentLoginUser(null);
+    }));
   }
 
   /**
