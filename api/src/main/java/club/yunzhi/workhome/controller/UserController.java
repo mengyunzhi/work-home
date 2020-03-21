@@ -50,5 +50,16 @@ public class UserController {
         }
     }
 
-    public interface MeJsonView {}
+    @GetMapping("user")
+    @JsonView(GetCurrentLoginUser.class)
+    public User getCurrentLoginUser() {
+        return this.userService.getCurrentLoginUser();
+
+    }
+
+    public interface MeJsonView {
+    }
+
+    public interface GetCurrentLoginUser {
+    }
 }

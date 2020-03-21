@@ -1,21 +1,30 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './pages/layout/layout.component';
 
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'auth',
-  //   pathMatch: 'full'
-  // },
-  // {
-  //   path: 'auth',
-  //   loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
-  // },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+  },
   {
     path: '',
     component: LayoutComponent,
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+        data: {
+          title: '仪表盘'
+        }
+      },
+    ]
   }
 ];
 
@@ -23,4 +32,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

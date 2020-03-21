@@ -1,5 +1,4 @@
 import {TestBed} from '@angular/core/testing';
-
 import {UserService} from './user.service';
 import {CommonService} from './common.service';
 import {HttpClient} from '@angular/common/http';
@@ -21,7 +20,7 @@ describe('UserService', () => {
   beforeEach(() => {
     commonService = TestBed.get(CommonService);
     const httpClient = TestBed.get(HttpClient) as HttpClient;
-    const router = TestBed.get(Router) as Router;
+    const router = TestBed.get(Router);
     service = new UserService(commonService, httpClient, router);
   });
 

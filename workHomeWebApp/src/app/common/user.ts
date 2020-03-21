@@ -1,6 +1,12 @@
+/**
+ * 用户实体
+ */
 export class User {
   /** id */
   id: number;
+
+  /** 名称 */
+  name: string;
 
   /** 用户名 */
   username: string;
