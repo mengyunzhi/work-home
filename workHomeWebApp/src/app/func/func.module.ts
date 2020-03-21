@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [EditorComponentComponent],
+  exports: [
+    EditorComponentComponent
+  ],
   imports: [
     CommonModule,
     EditorModule,

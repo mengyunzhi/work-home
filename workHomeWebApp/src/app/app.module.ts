@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { YunzhiInterceptor } from './net/yunzhi.interceptor';
+import { FuncModule } from './func/func.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { YunzhiInterceptor } from './net/yunzhi.interceptor';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FuncModule
   ],
   providers: [
     {
