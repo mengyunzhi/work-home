@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { YunzhiInterceptor } from './net/yunzhi.interceptor';
 import { PartModule } from './pages/part.module';
 import { FuncModule } from './func/func.module';
@@ -16,7 +16,8 @@ import { FuncModule } from './func/func.module';
     BrowserModule,
     AppRoutingModule,
     PartModule,
-    FuncModule
+    FuncModule,
+    HttpClientModule
   ],
   providers: [
     {

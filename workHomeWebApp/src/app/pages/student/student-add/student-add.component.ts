@@ -22,7 +22,9 @@ export class StudentAddComponent implements OnInit {
     this.studentForm = this.builder.group({
       name: ['', [Validators.required]],
       no: ['', [Validators.required]],
-      password: [config.defaultPassword, Validators.required]
+      user: this.builder.group({
+        password: [config.defaultPassword, [Validators.required]]
+      })
     });
   }
 
@@ -30,7 +32,10 @@ export class StudentAddComponent implements OnInit {
    * 保存学生
    */
   submit() {
-
+    this.studentService.save(this.studentForm.value)
+      .subscribe(() => {
+        this.router.navigateByUrl('/student');
+      });
   }
 
 
@@ -43,6 +48,6 @@ export class StudentAddComponent implements OnInit {
   }
 
   get password(): AbstractControl {
-    return this.studentForm.get('password');
+    return this.studentForm.get('user').get('password');
   }
 }
