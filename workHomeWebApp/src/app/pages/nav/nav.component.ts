@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { CommonService } from '../../service/common.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {CommonService} from '../../service/common.service';
 
 @Component({
   selector: 'app-nav',
@@ -16,7 +16,7 @@ export class NavComponent implements OnInit, OnDestroy {
   private backSubscription: Subscription;
 
   constructor(private commonService: CommonService,
-              ) {
+  ) {
   }
 
   ngOnInit() {
@@ -34,8 +34,13 @@ export class NavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     /** 统一取消订阅 */
-    this.titleSubscription.unsubscribe();
-    this.backSubscription.unsubscribe();
+    if (this.titleSubscription) {
+      this.titleSubscription.unsubscribe();
+    }
+
+    if (this.backSubscription) {
+      this.backSubscription.unsubscribe();
+    }
   }
 
 }
