@@ -1,0 +1,75 @@
+<div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>标题：</label>
+    </div>
+    <div class="col-md-8">
+      {{work?.item?.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>描述：</label>
+    </div>
+    <div class="col-md-8">
+      {{work?.item?.description}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>资源：</label>
+    </div>
+    <div class="col-md-8">
+            <span *ngFor="let attachment of work?.item?.attachements">
+        {{ attachment.originName}}
+              &nbsp;
+         <span (click)="
+        downloadAttachment(attachment)" class="btn-outline-info"> <i class="fas fa-download"></i></span>
+          &nbsp;
+        <br>
+      </span>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-2 form-text text-right">
+      <label for="content">内容：</label>
+    </div>
+    <div class="col-md-8">
+      <app-editor-component [content]="work?.content" id="content" formControlName="content"
+                            (contentEmit)="contentChange($event)"></app-editor-component>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-2 form-text text-right">
+      <label for="content">代码：</label>
+    </div>
+    <div class="col-md-8">
+      <input type="file" multiple (change)="fileChange($event.target.files)">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>已上传文件：</label>
+    </div>
+    <div class="col-md-8">
+            <span *ngFor="let attachment of work?.attachments">
+        {{ attachment.originName}}
+              &nbsp;
+              <span (click)="
+        downloadAttachment(attachment)" class="btn-outline-info"> <i class="fas fa-download"></i></span>
+          &nbsp;
+         <span (click)="
+        deleteAttachment(work.id, attachment.id)" class="btn-outline-danger"> <i class="fas fa-trash-alt"></i></span>
+        <br>
+      </span>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-8 offset-md-2">
+      <button type="submit" class="btn btn-dark btn-sm">
+        <i class="far fa-save"></i>
+        &nbsp;保存
+      </button>
+    </div>
+  </div>
+</div>

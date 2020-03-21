@@ -14,4 +14,14 @@ public interface WorkService {
      * @return 作业
      */
     List<Work> getAllOfCurrentStudent();
+
+    /**
+     * 更新
+     * @param id
+     * @param work
+     * @return
+     */
+    Work update(Long id, Work work);
+
+
 }

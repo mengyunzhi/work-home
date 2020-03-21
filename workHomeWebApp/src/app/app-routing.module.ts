@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {LayoutComponent} from './part/layout/layout.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LayoutComponent } from './part/layout/layout.component';
 
 
 const routes: Routes = [
@@ -39,6 +39,10 @@ const routes: Routes = [
         }
       }
     ]
+  },
+  {
+    path: 'work',
+    loadChildren: () => import('./pages/work/work.module').then(m => m.WorkModule)
   }
 ];
 

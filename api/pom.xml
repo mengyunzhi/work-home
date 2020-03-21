@@ -55,6 +55,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- CORE -->
+		<dependency>
+			<groupId>com.mengyunzhi</groupId>
+			<artifactId>core</artifactId>
+			<version>3.0.1.release</version>
+		</dependency>
 	</dependencies>
 
 	<build>
