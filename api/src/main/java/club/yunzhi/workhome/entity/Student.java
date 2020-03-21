@@ -2,10 +2,7 @@ package club.yunzhi.workhome.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * 学生
@@ -19,7 +16,7 @@ public class Student extends AbstractEntity {
 	@Column(nullable =  false)
 	private String no;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(nullable =  false)
 	@JsonView(UserJsonView.class)
 	private User user;

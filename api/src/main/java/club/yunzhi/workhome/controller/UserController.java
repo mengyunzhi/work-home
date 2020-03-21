@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
+/**
+ * @author yz
+ */
 @RestController
 @RequestMapping("User")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private final UserService userService;
+    final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -39,7 +42,9 @@ public class UserController {
         return this.userService.getCurrentLoginUser();
     }
 
-    public interface MeJsonView {}
+    public interface MeJsonView {
+    }
 
-    public interface GetCurrentLoginUser{}
+    public interface GetCurrentLoginUser {
+    }
 }
