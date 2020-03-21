@@ -1,0 +1,58 @@
+.header {
+  height: 72px;
+}
+
+.title {
+  font-size: 16px;
+  height: 72px;
+  line-height: 72px;
+}
+
+.content {
+  height: 620px;
+  background-image: url('src/assets/images/blue-login-background-rotate.png');
+  background-size: cover;
+}
+
+.login-button {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.login-button:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.login-button:focus {
+  box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5);
+}
+
+.login-button:disabled {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.footer {
+  padding: 36px 0;
+}
+
+.link a {
+  padding: 0 10px;
+  font-size: 14px;
+  color: #99A1A6;
+}
+
+.power {
+  font-size: 12px;
+  margin-top: 8px;
+  color: #99A1A6;
+}
+
+.power a {
+  font-size: 12px;
+  color: #99A1A6;
+}

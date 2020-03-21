@@ -4,6 +4,8 @@ import {UserService} from './user.service';
 import {CommonService} from './common.service';
 import {HttpClient} from '@angular/common/http';
 import {ServiceTestingModule} from './service-tesing/service-testing.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('UserService', () => {
   let service: UserService;
@@ -11,14 +13,16 @@ describe('UserService', () => {
 
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
-      ServiceTestingModule
+      ServiceTestingModule,
+      RouterTestingModule
     ]
   }));
 
   beforeEach(() => {
     commonService = TestBed.get(CommonService);
     const httpClient = TestBed.get(HttpClient) as HttpClient;
-    service = new UserService(commonService, httpClient);
+    const router = TestBed.get(Router);
+    service = new UserService(commonService, httpClient, router);
   });
 
   it('should be created', () => {
