@@ -15,4 +15,5 @@ export class Work {
   score: number;
   student = new Student();
   updateTime: Date;
+  reviewed: boolean;
 }

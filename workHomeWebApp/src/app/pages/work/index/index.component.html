@@ -8,7 +8,13 @@
     <th>得分</th>
     <th>操作</th>
   </tr>
-  <tr *ngFor="let work in works">
-    <td></td>
+  <tr *ngFor="let work of works; let $index = index;">
+    <td>{{$index + 1}}</td>
+    <td>{{work.item.name}}</td>
+    <td>{{work.item.beginTime}}</td>
+    <td>{{work.item.endTime}}</td>
+    <td>{{work.reviewed}}</td>
+    <td>{{work.score}}</td>
+    <td><a class="btn btn-sm">作答</a></td>
   </tr>
 </table>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Work} from '../../../common/work';
+import {WorkService} from '../../../service/work.service';
 
 @Component({
   selector: 'app-index',
@@ -8,9 +9,15 @@ import {Work} from '../../../common/work';
 })
 export class IndexComponent implements OnInit {
   works = new Array<Work>();
-  constructor() { }
+
+  constructor(private workService: WorkService) {
+  }
 
   ngOnInit() {
+    this.workService.getAllOfCurrentStudent()
+      .subscribe(data => {
+        this.works = data;
+      });
   }
 
 }
