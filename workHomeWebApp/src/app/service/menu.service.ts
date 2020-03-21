@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Menu} from '../common/menu';
 import {BehaviorSubject, Observable} from 'rxjs';
 
@@ -6,8 +6,13 @@ import {BehaviorSubject, Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class MenuService {
-  private menusSubject = new BehaviorSubject<Array<Menu>>([]);
-  constructor() { }
+  private menusSubject = new BehaviorSubject<Array<Menu>>([
+    new Menu({name: '我的作业'}),
+    new Menu({name: '个人中心'})
+  ]);
+
+  constructor() {
+  }
 
   getAll(): Observable<Array<Menu>> {
     return this.menusSubject.asObservable();

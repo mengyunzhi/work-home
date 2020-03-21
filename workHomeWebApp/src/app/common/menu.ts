@@ -10,9 +10,13 @@ export class Menu {
   /** 路由 */
   url: string;
 
+  icon: string;
+
   role = Menu.ROLE_STUDENT;
 
-  constructor(data?: { name?: string, url?: string }) {
+  order = 0;
+
+  constructor(data?: { name?: string, url?: string, role?: number, icon?: string , order?: number}) {
     if (data) {
       if (data.name) {
         this.name = data.name;
@@ -20,6 +24,18 @@ export class Menu {
 
       if (data.url) {
         this.url = data.url;
+      }
+
+      if (data.role) {
+        this.role = data.role;
+      }
+
+      if (data.icon) {
+        this.icon = data.icon;
+      }
+
+      if (data.order) {
+        this.order = data.order;
       }
     }
   }

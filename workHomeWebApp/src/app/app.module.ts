@@ -27,4 +27,5 @@ import { FuncModule } from './func/func.module';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

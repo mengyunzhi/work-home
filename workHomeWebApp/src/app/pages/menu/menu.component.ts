@@ -101,4 +101,8 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+
+  isShow(menu: Menu) {
+    return true;
+  }
 }
