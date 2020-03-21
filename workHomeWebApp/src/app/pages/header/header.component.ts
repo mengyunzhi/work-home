@@ -1,7 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {environment} from '../../../environments/environment';
+import {UserService} from '../../service/user.service';
+import {User} from '../../common/user';
+import {CommonService} from '../../service/common.service';
 
 @Component({
   selector: 'app-header',
@@ -9,37 +12,38 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  // // 当前用户
-  // currentUser: User;
+  /**
+   *  当前用户
+   */
+  currentUser: User;
 
   environment = environment;
 
   private subscription: Subscription;
 
   constructor(private router: Router,
-              ) {
+              private userService: UserService,
+              private commonService: CommonService) {
   }
 
   ngOnInit() {
-    // this.init();
+    this.init();
   }
 
-  // init() {
-  //   this.subscription = this.authService.getCurrentLoginUser$()
-  //     .subscribe(user => this.currentUser = user);
-  // }
-  //
-  // logout() {
-  //   /**
-  //    * complete 时跳转
-  //    */
-  //   this.authService.logout()
-  //     .subscribe(() => {
-  //       this.router.navigateByUrl('auth');
-  //     }, () => {
-  //       this.router.navigateByUrl('auth');
-  //     });
-  // }
+  init() {
+    this.commonService.appOnReady(() => {
+      this.currentUser = this.userService.getCurrentUser();
+    });
+  }
+
+  logout() {
+    this.userService.logout()
+      .subscribe(() => {
+        this.router.navigateByUrl('auth');
+      }, () => {
+        this.router.navigateByUrl('auth');
+      });
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {

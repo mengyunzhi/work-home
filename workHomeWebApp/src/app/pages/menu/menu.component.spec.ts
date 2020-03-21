@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuComponent } from './menu.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import {ServiceTestingModule} from '../../service/service-tesing/service-testing.module';
 
 describe('part -> MenuComponent', () => {
   let component: MenuComponent;
@@ -12,8 +13,8 @@ describe('part -> MenuComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MenuComponent ],
       imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ServiceTestingModule
       ]
     })
     .compileComponents();
