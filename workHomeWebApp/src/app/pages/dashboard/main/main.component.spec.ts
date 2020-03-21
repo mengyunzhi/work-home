@@ -4,10 +4,8 @@ import { MainComponent } from './main.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FuncModule } from '../../../func/func.module';
 import { AppComponent } from '../../../app.component';
-import { NgxEchartsModule } from 'ngx-echarts';
 
 describe('page -> dashboard -> MainComponent', () => {
   let component: MainComponent;
@@ -21,9 +19,7 @@ describe('page -> dashboard -> MainComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
-        SweetAlert2Module.forRoot(),
         FuncModule,
-        NgxEchartsModule
       ],
       providers: [
         {provide: AppComponent, useClass: AppComponent},
