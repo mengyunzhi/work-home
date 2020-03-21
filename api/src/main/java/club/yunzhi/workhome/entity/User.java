@@ -1,5 +1,7 @@
 package club.yunzhi.workhome.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -12,6 +14,7 @@ public class User extends AbstractEntity {
 	@Column(unique = true, nullable = false)
 	private String username;
 
+	@JsonView(PasswordJsonView.class)
 	private String password;
 
 	private int role;
@@ -42,4 +45,6 @@ public class User extends AbstractEntity {
 	public void setRole(int role) {
 		this.role = role;
 	}
+
+	public interface PasswordJsonView {}
 }
