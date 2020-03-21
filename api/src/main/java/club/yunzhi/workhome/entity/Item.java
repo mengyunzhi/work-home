@@ -30,10 +30,13 @@ public class Item extends AbstractEntity {
     @JsonView(AttachmentsJsonView.class)
     private List<Attachment> attachments = new ArrayList<>();
 
-
     public Item() {
     }
 
+    public Item(Timestamp beginTime, Timestamp endTime) {
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+    }
 
     public String getName() {
         return name;
