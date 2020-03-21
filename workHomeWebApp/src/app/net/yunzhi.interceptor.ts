@@ -75,14 +75,14 @@ export class YunzhiInterceptor implements HttpInterceptor {
   private handleHttpException(error: HttpErrorResponse): Observable<HttpErrorResponse> {
     switch (error.status) {
       case 401:
-        if (this.router.url !== 'admin/login') {
+        if (this.router.url !== '/auth') {
           swal.fire({
             icon: 'error',
             title: '操作失败',
             text: '请先登陆!'
           }).then(() => {
             // 未登录，跳转到登录页
-            this.router.navigateByUrl('admin/login');
+            this.router.navigateByUrl('/auth');
           });
         }
         break;
