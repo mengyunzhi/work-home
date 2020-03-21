@@ -5,9 +5,11 @@ import club.yunzhi.workhome.service.WorkService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.jws.WebParam;
 import java.util.List;
 
 /**
@@ -29,6 +31,10 @@ public class WorkController {
         return workService.getAllOfCurrentStudent();
     }
 
+    @GetMapping("getByItemIdOfCurrentStudent}")
+    public Work getByItemId(@WebParam Long itemId) {
+        return workService.getByItemIdOfCurrentStudent(itemId);
+    }
     private interface GetAllOfCurrentStudentJsonView
             extends Work.ItemJsonView {
     }

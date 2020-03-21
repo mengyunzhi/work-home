@@ -14,4 +14,11 @@ public interface WorkService {
      * @return 作业
      */
     List<Work> getAllOfCurrentStudent();
+
+    /**
+     * 获取当前登录学生某个实验的作业
+     * @param itemId 实验
+     * @return 作业
+     */
+    Work getByItemIdOfCurrentStudent(Long itemId);
 }
