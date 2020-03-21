@@ -9,11 +9,24 @@ export class User {
   password: string;
   role: number;
 
+  constructor(data?: { id?: number, username?: string, password?: string, role?: number }) {
+    if (data) {
+      if (data.id) {
+        this.id = data.id;
+      }
 
-  constructor(id: number, username: string, password: string, role: number) {
-    this.id = id;
-    this.username = username;
-    this.password = password;
-    this.role = role;
+      if (data.username) {
+        this.username = data.username;
+      }
+
+      if (data.password) {
+        this.password = data.password;
+      }
+
+      if (data.role) {
+        this.role = data.role;
+      }
+    }
+
   }
 }
