@@ -1,0 +1,20 @@
+.header {
+  position: fixed;
+  width: 100vw;
+  z-index: 100;
+}
+
+.menu {
+  position: fixed;
+  top: 78px;
+  width: 279px;
+}
+
+.content {
+  position: relative;
+  top: 78px;
+  left: 279px;
+  height: calc(100vh - 78px);
+  width: calc(100vw - 279px);
+  overflow: auto;
+}
