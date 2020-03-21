@@ -2,9 +2,9 @@
  * 用户
  * @author yz
  */
-import {User} from '../../common/entity/user';
 import {TestingUtils} from '../../testing/testingUtils';
 import {Observable, of} from 'rxjs';
+import {User} from '../../common/user';
 
 export class UserStubService {
 

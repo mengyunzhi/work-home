@@ -1,11 +1,10 @@
 import {TestBed} from '@angular/core/testing';
-
 import {UserService} from './user.service';
 import {CommonService} from './common.service';
 import {HttpClient} from '@angular/common/http';
 import {ServiceTestingModule} from './service-tesing/service-testing.module';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('UserService', () => {
   let service: UserService;
