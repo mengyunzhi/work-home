@@ -9,6 +9,8 @@ import {WorkService} from '../work.service';
 import {WorkStubService} from './work-stub.service';
 import {MenuService} from '../menu.service';
 import {MenuStubService} from './menu-stub.service';
+import {StudentService} from '../student.service';
+import {StudentStubService} from './student-stub.service';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import {MenuStubService} from './menu-stub.service';
     {provide: UserService, useClass: UserStubService},
     {provide: WorkService, useClass: WorkStubService},
     {provide: MenuService, useClass: MenuStubService},
+    {provide: StudentService, useClass: StudentStubService},
   ]
 })
 export class ServiceTestingModule {
