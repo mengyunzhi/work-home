@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class WorkService {
-  private url = '/work/';
+  private url = 'work';
 
   constructor(private httpClient: HttpClient) {
   }

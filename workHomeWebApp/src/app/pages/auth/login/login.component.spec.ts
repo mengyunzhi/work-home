@@ -4,6 +4,7 @@ import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {AppTestingModule} from '../../../app-testing/app-testing.module';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -17,6 +18,7 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         HttpClientTestingModule,
+        AppTestingModule
       ]
     })
     .compileComponents();
