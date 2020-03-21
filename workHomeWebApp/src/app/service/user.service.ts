@@ -3,8 +3,10 @@ import {AppOnReadyItem, CommonService} from './common.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Router} from '@angular/router';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {User} from '../common/user';
+import {VUser} from '../base/vuser';
+import {AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -71,5 +73,54 @@ export class UserService {
   setCurrentLoginUser(user: User): void {
     this.currentLoginUser = user;
     this.currentLoginUser$.next(user);
+  }
+
+  /**
+   * 校验密码是否正确
+   * @param password 密码
+   */
+  public checkPasswordIsRight(password: string): Observable<boolean> {
+    const vUser = new VUser();
+    vUser.password = password;
+    return this.httpClient.post<boolean>(`${this.url}/checkPasswordIsRight`, vUser);
+  }
+
+  /**
+   * 验证原密码是否正确
+   */
+  public oldPasswordValidator(): AsyncValidatorFn {
+    return (ctrl: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      return this.checkPasswordIsRight(ctrl.value)
+        .pipe(map((isRight: boolean) => (isRight ? null : {passwordError: true})),
+          catchError(() => null));
+    };
+  }
+
+  /**
+   * 验证新密码与确认密码是否相同
+   * @param control 表单
+   */
+  public confirmPasswordValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+    const newPassword = control.get('newPassword').value;
+    const confirmNewPassword = control.get('confirmNewPassword').value;
+
+    // 判断确认密码与新密码是否相同
+    if (newPassword && confirmNewPassword) {
+      return newPassword !== confirmNewPassword ? {confirmPasswordError: true} : null;
+    }
+    return null;
+  }
+
+  /**
+   * 登录用户修改密码
+   * @param newPassword 新密码
+   * @param oldPassword 旧密码
+   */
+  public updatePassword(newPassword: string, oldPassword: string): Observable<void> {
+    const vUser = new VUser();
+    vUser.password = oldPassword;
+    vUser.newPassword = encodeURIComponent(newPassword);
+
+    return this.httpClient.put<void>(`${this.url}/updatePassword`, vUser);
   }
 }
