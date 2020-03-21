@@ -25,6 +25,10 @@ const routes: Routes = [
         }
       },
     ]
+  },
+  {
+    path: 'work',
+    loadChildren: () => import('./pages/work/work.module').then(m => m.WorkModule)
   }
 ];
 

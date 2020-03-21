@@ -24,6 +24,8 @@ public class Item extends AbstractEntity {
 
     private String description;
 
+    private Boolean active = false;
+
     @ManyToMany
     @JsonView(AttachmentsJsonView.class)
     private List<Attachment> attachments = new ArrayList<>();
@@ -73,6 +75,13 @@ public class Item extends AbstractEntity {
         this.attachments = attachments;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
 
-	public interface AttachmentsJsonView {}
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public interface AttachmentsJsonView {}
 }
