@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {environment} from 'src/environments/environment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: [ './menu.component.css' ]
+  styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit, OnDestroy {
 
@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(
-              private router: Router) {
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -91,8 +91,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   // }
 
   ngOnDestroy(): void {
-    console.log('menu destroy');
-    /** 取消订阅 */
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

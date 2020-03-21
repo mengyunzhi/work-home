@@ -11,7 +11,7 @@ export class LayoutComponent implements OnInit {
   /**
    * 当前是否为默认密码
    */
-  default: boolean;
+  default = false;
 
   constructor() {
   }
@@ -20,7 +20,6 @@ export class LayoutComponent implements OnInit {
     /**
      * 验证当前用户是否为默认密码
      */
-
   }
 
   /**
