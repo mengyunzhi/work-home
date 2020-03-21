@@ -2,13 +2,13 @@ package club.yunzhi.workhome.controller;
 
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.service.UserService;
+import club.yunzhi.workhome.vo.VUser;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -58,6 +58,27 @@ public class UserController {
     public User getCurrentLoginUser() {
         return this.userService.getCurrentLoginUser();
 
+    }
+
+    /**
+     * 校验密码是否正确
+     *
+     * @param vUser 带有密码的VUser
+     * @return true 正确 false 不正确
+     */
+    @PostMapping("checkPasswordIsRight")
+    public boolean checkPasswordIsRight(@RequestBody VUser vUser) {
+        return this.userService.checkPasswordIsRight(vUser);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param vUser 带有新密码和旧密码VUser
+     */
+    @PutMapping("updatePassword")
+    public void updatePassword(@RequestBody VUser vUser) {
+        this.userService.updatePassword(vUser);
     }
 
     public interface MeJsonView {

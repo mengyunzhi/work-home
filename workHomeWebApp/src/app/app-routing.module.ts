@@ -30,6 +30,13 @@ const routes: Routes = [
         data: {
           title: '学生管理'
         }
+      },
+      {
+        path: 'personalCenter',
+        loadChildren: () => import('./pages/personal-center/personal-center.module').then(m => m.PersonalCenterModule),
+        data: {
+          title: '个人中心'
+        }
       }
     ]
   }
