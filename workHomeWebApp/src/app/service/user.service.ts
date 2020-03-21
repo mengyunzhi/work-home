@@ -18,7 +18,7 @@ export class UserService {
     const appOnReadyItem = new AppOnReadyItem();
     this.commonService.addAppOnReadyItem(appOnReadyItem);
 
-    this.httpClient.get(`${this.url}/me`)
+    this.httpClient.get<User>(`${this.url}/me`)
       .subscribe(user => {
         this.currentUser = user;
       }, () => {
@@ -33,7 +33,7 @@ export class UserService {
    * 获取登录用户时，应该结合appOnReady。示例：
    * this.commonService.appOnReady(() => {const user = this.userService.getCurrentUser();});
    */
-  getCurrentUser(): User {
+  getCurrentUser(): User | null {
     return this.currentUser;
   }
 

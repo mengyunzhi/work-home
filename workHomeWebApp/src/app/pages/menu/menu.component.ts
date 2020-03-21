@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {MenuService} from '../../service/menu.service';
+import {Menu} from '../../common/menu';
 
 @Component({
   selector: 'app-menu',
@@ -15,9 +16,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   environment = environment;
 
-  // primaryMenus: Array<BaseMenu>;
+  // primaryMenus: Array<Menu>;
 
-  // menus: Array<BaseMenu>;
+  menus: Array<Menu>;
 
   private subscription: Subscription;
 
@@ -27,7 +28,9 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.menuService.getAll().
+    this.menuService.getAll()
+      .subscribe(data => this.menus = data);
+
     // this.primaryMenus = menus;
     // this.subscription = this.authService.getCurrentLoginUser$()
     //   .subscribe((user: User) => {
@@ -54,44 +57,44 @@ export class MenuComponent implements OnInit, OnDestroy {
     //   });
   }
 
-  // navigate(menu: BaseMenu): void {
-  //   this.router.navigateByUrl(menu.url);
-  // }
-  //
-  // getBackgroundColor(menu: BaseMenu): string {
-  //   if (this.active(menu)) {
-  //     return environment.color;
-  //   }
-  // }
+  navigate(menu: Menu): void {
+    this.router.navigateByUrl(menu.url);
+  }
 
-  // getTextColor(menu: BaseMenu): string {
-  //   if (this.active(menu)) {
-  //     return 'white';
-  //   }
-  // }
+  getBackgroundColor(menu: Menu): string {
+    if (this.active(menu)) {
+      return environment.color;
+    }
+  }
+
+  getTextColor(menu: Menu): string {
+    if (this.active(menu)) {
+      return 'white';
+    }
+  }
 
   /**
    * 判断当前菜单是否激活
    * @param menu 菜单
    */
-  // active(menu: BaseMenu): boolean {
-  //   // 截取/的位置
-  //   const start = this.router.url.indexOf('/');
-  //   const end = this.router.url.indexOf('/', start + 1);
-  //
-  //   // 定义主路由
-  //   let mainRoute: string;
-  //
-  //   // 根据是否有第2个/选择截取方式
-  //   if (end !== -1) {
-  //     mainRoute = this.router.url.substring(start + 1, end);
-  //   } else {
-  //     mainRoute = this.router.url.substring(start + 1, this.router.url.length);
-  //   }
-  //
-  //   // 判断当前路由是否激活
-  //   return mainRoute === menu.url;
-  // }
+  active(menu: Menu): boolean {
+    // 截取/的位置
+    const start = this.router.url.indexOf('/');
+    const end = this.router.url.indexOf('/', start + 1);
+
+    // 定义主路由
+    let mainRoute: string;
+
+    // 根据是否有第2个/选择截取方式
+    if (end !== -1) {
+      mainRoute = this.router.url.substring(start + 1, end);
+    } else {
+      mainRoute = this.router.url.substring(start + 1, this.router.url.length);
+    }
+
+    // 判断当前路由是否激活
+    return mainRoute === menu.url;
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {

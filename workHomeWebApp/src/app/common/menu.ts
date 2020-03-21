@@ -10,7 +10,7 @@ export class Menu {
   /** 路由 */
   url: string;
 
-  role = this.ROLE_STUDENT;
+  role = Menu.ROLE_STUDENT;
 
   constructor(data?: { name?: string, url?: string }) {
     if (data) {
