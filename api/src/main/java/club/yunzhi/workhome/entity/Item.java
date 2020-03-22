@@ -5,8 +5,10 @@ import com.mengyunzhi.core.entity.YunzhiEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -24,8 +26,6 @@ public class Item extends AbstractEntity implements YunzhiEntity {
     private Timestamp endTime;
 
     private String description;
-
-    private Boolean active = false;
 
     @ManyToMany
     @JsonView(AttachmentsJsonView.class)
@@ -80,12 +80,15 @@ public class Item extends AbstractEntity implements YunzhiEntity {
     }
 
     public Boolean getActive() {
-        return active;
+        long current = System.currentTimeMillis();
+        if (this.beginTime != null && this.endTime != null) {
+            if (current > this.beginTime.getTime() && current < this.endTime.getTime()) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public interface AttachmentsJsonView {
     }
-
-    public interface AttachmentsJsonView {}
 }
