@@ -53,6 +53,14 @@ public interface WorkService {
     Work update(Long id, Work work);
 
     /**
+     * 更新当前学生
+     * @param id  作业ID
+     * @param work 作业
+     * @return 作业
+     */
+    Work updateOfCurrentStudent(Long id, Work work);
+
+    /**
      * 新建作业
      * @param itemId 学期
      * @return 作业

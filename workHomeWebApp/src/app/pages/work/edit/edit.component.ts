@@ -25,15 +25,9 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getEditWork();
-  }
-
-  /**
-   * 获取要编辑的大纲
-   */
-  public getEditWork() {
     this.route.params.subscribe(params => {
-      this.workService.getById(params.id).subscribe((data) => {
+      const itemId = params.itemId as string;
+      this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
         this.work = data;
       });
     });
@@ -50,7 +44,7 @@ export class EditComponent implements OnInit {
           this.work.attachments.push(attachment);
           // 最后一个附件上传以后更新作业信息
           if (i === this.selectFiles.length - 1) {
-            this.workService.update(this.work.id, this.work);
+            this.workService.updateOfCurrentStudent(this.work.id, this.work);
           }
         });
     }

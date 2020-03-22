@@ -3,11 +3,11 @@
  * @author yz
  */
 import {TestingUtils} from '../../testing/testingUtils';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {User} from '../../common/user';
 
 export class UserStubService {
-
+  currentLoginUser$ = new Subject<User>();
   constructor() { }
 
   getCurrentUser(): User {
@@ -26,4 +26,6 @@ export class UserStubService {
   setCurrentLoginUser(user: User): void {
     return;
   }
+
+
 }

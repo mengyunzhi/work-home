@@ -3,6 +3,8 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {StudentService} from '../../../service/student.service';
 import {Student} from '../../../common/student';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AppComponent} from '../../../app.component';
 
 @Component({
   selector: 'app-student-edit',
@@ -18,7 +20,8 @@ export class StudentEditComponent implements OnInit {
   constructor(private builder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              private studentService: StudentService) {
+              private studentService: StudentService,
+              private appComponent: AppComponent) {
   }
 
   ngOnInit() {
@@ -48,7 +51,12 @@ export class StudentEditComponent implements OnInit {
   submit() {
     this.studentService.update(this.id, this.studentForm.value)
       .subscribe(() => {
-        this.router.navigateByUrl('/student');
+        this.appComponent.success(() => {
+          this.router.navigateByUrl('/student');
+        }, '学生信息更新成功');
+      }, (res: HttpErrorResponse) => {
+        this.appComponent.error(() => {
+        }, `学生信息更新失败:${res.error.message}`);
       });
   }
 

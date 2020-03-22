@@ -40,7 +40,7 @@
                     <label for="password" class="form-text">密码<code>*</code></label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="password" placeholder="请输入学生账号密码" formControlName="password" />
+                    <input type="password" class="form-control" id="password" placeholder="请输入学生账号密码" formControlName="password" />
                 </div>
             </div>
             <div class="row mt-2" *ngIf="password.invalid && (password.dirty || password.touched)">

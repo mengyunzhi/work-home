@@ -1,9 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../../../service/user.service';
-import {environment} from 'src/environments/environment';
-import {AppComponent} from '../../../app.component';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../../service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -15,9 +12,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   /** 当前模式 */
   mode: string;
-
-  /** 获取当前环境配置 */
-  environment = environment;
 
   /** 登录表单对象 */
   loginForm: FormGroup;
@@ -44,14 +38,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   showRegisterInfo: boolean;
 
   constructor(private userService: UserService,
-              private builder: FormBuilder,
-              private appComponent: AppComponent,
-              private router: Router) {
+              private builder: FormBuilder) {
   }
 
   ngOnInit() {
     this.changeToLogin();
-    this.appComponent.showLogin = true;
     /** 创建表单 */
     this.loginForm = this.builder.group({
       username: ['', Validators.required],
@@ -79,16 +70,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /** 判断两次密码是否相同 */
     if (password && confirmPassword) {
-      return password === confirmPassword ? null : { mismatch: true };
+      return password === confirmPassword ? null : {mismatch: true};
     }
   }
 
   login() {
     this.userService.login(this.loginForm.value)
-      .subscribe((user) => {
+      .subscribe(() => {
         this.showErrorInfo = false;
-        this.userService.setCurrentLoginUser(user);
-        this.appComponent.showLogin = false;
       }, () => {
         this.errorInfo = '登录失败，请检查您的用户名、密码';
         this.showErrorInfo = true;

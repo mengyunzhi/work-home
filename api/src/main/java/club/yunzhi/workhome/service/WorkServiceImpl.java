@@ -4,18 +4,20 @@ import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.exception.AccessDeniedException;
+import club.yunzhi.workhome.exception.ObjectNotFoundException;
+import club.yunzhi.workhome.exception.ValidationException;
 import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * @author yz
+ * 作业
  */
 @Service
 public class WorkServiceImpl implements WorkService {
@@ -33,22 +35,15 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public List<Work> getAllOfCurrentStudent() {
-        Optional<Student> student = this.studentService.getCurrentStudent();
-        if (student.isPresent()) {
-            return this.workRepository.findAllByStudent(student.get());
-        } else {
-            return new ArrayList<>();
-        }
+        Student student = this.studentService.getCurrentStudent();
+        return this.workRepository.findAllByStudent(student);
     }
 
     @Override
     public Optional<Work> getByItemIdOfCurrentStudent(Long itemId) {
-        Optional<Student> student = this.studentService.getCurrentStudent();
-        if (!student.isPresent()) {
-            return Optional.empty();
-        }
+        Student student = this.studentService.getCurrentStudent();
 
-        return this.getByItemIdAndStudentId(itemId, student.get().getId());
+        return this.getByItemIdAndStudentId(itemId, student.getId());
     }
 
     @Override
@@ -69,11 +64,6 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public Work update(Long id, Work work) {
-        return null;
-    }
-
-    @Override
     public Work save(Work work) {
         return this.workRepository.save(work);
     }
@@ -83,14 +73,34 @@ public class WorkServiceImpl implements WorkService {
         Item item = this.itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("未找到id为" + itemId + "的实验"));
 
-        Optional<Student> student = this.studentService.getCurrentStudent();
-        if (!student.isPresent()) {
-            throw new AccessDeniedException("学生未登录");
-        }
+        Student student = this.studentService.getCurrentStudent();
+
         Work work = new Work();
         work.setItem(item);
-        work.setStudent(student.get());
+        work.setStudent(student);
         return this.save(work);
     }
 
+    @Override
+    public Work update(Long id, Work work) {
+        return null;
+    }
+
+    @Override
+    public Work updateOfCurrentStudent(Long id, @NotNull Work work) {
+        Assert.notNull(work, "更新的作业实体不能为null");
+        Work oldWork = this.workRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
+        if (!oldWork.getStudent().getId().equals(this.studentService.getCurrentStudent().getId())) {
+            throw new AccessDeniedException("无权更新其它学生的作业");
+        }
+
+        if (!oldWork.getItem().getActive()) {
+            throw new ValidationException("禁止提交已关闭的实验作业");
+        }
+
+        oldWork.setContent(work.getContent());
+        oldWork.setAttachments(work.getAttachments());
+        return this.workRepository.save(oldWork);
+    }
 }
