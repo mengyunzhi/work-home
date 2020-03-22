@@ -1,7 +1,7 @@
 <div>
   <div class="row">
     <div class="col-md-2 form-text text-right">
-      <label>标题：</label>
+      <label>实验名称：</label>
     </div>
     <div class="col-md-8">
       {{work?.item?.name}}
@@ -9,15 +9,15 @@
   </div>
   <div class="row">
     <div class="col-md-2 form-text text-right">
-      <label>描述：</label>
+      <label>任务描述：</label>
     </div>
     <div class="col-md-8">
       {{work?.item?.description}}
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="work.item.attachments.length">
     <div class="col-md-2 form-text text-right">
-      <label>资源：</label>
+      <label>实验资源：</label>
     </div>
     <div class="col-md-8">
             <span *ngFor="let attachment of work?.item?.attachments">
@@ -30,9 +30,10 @@
       </span>
     </div>
   </div>
+  <hr>
   <div class="row mt-4">
     <div class="col-md-2 form-text text-right">
-      <label for="content">内容：</label>
+      <label for="content">我的作答：</label>
     </div>
     <div class="col-md-8">
       <app-editor-component [content]="work?.content" id="content"
@@ -56,10 +57,10 @@
         {{ attachment.originName}}
               &nbsp;
               <span (click)="
-        downloadAttachment(attachment)" class="btn-outline-info"> <i class="fas fa-download"></i></span>
+        downloadAttachment(attachment)" class="btn-outline-info"> <i class="fas fa-download"></i>下载</span>
           &nbsp;
          <span (click)="
-        deleteAttachment(work.id, attachment.id)" class="btn-outline-danger"> <i class="fas fa-trash-alt"></i></span>
+        deleteAttachment(work.id, attachment.id)" class="btn-outline-danger"> <i class="fas fa-trash-alt"></i>删除</span>
         <br>
       </span>
     </div>

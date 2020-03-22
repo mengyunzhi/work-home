@@ -29,8 +29,4 @@ public class AttachmentController {
     public Attachment upload(@RequestParam("attachment") MultipartFile multipartFile) {
         return attachmentService.upload(multipartFile);
     }
-//    @GetMapping("{originName:.+}")
-//    public void downloadFile(@PathVariable String originName, HttpServletResponse response) throws IOException {
-//        this.attachmentService.downloadFile(originName, response);
-//    }
 }

@@ -3,8 +3,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MainComponent} from './main.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+import {ServiceTestingModule} from '../../../service/service-tesing/service-testing.module';
 
-describe('MainComponent', () => {
+describe('pages -> personal-center -> MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
 
@@ -12,7 +13,8 @@ describe('MainComponent', () => {
     TestBed.configureTestingModule({
       declarations: [MainComponent],
       imports: [HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ServiceTestingModule
       ]
     })
       .compileComponents();

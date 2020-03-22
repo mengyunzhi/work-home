@@ -24,7 +24,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     private static final Logger logger = LoggerFactory.getLogger(AttachmentServiceImpl.class);
 
-    private static final String CONFIG_PATH = "uploadFile/";
+    private static final String CONFIG_PATH = "attachment/";
 
     private final AttachmentRepository attachmentRepository;
 
@@ -82,7 +82,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 
                 logger.debug("将附件存入到数据库中");
                 attachment.setSaveName(saveName);
-                String savePath = saveFilePath.resolve(saveName).toString();
+                String savePath = saveFilePath.toString();
                 attachment.setSavePath(savePath);
             } else {
                 return oldAttachment;

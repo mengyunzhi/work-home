@@ -1,5 +1,6 @@
 package club.yunzhi.workhome.controller;
 
+import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.service.WorkService;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -49,7 +50,7 @@ public class WorkController {
     }
 
     private interface GetByItemIdJsonView
-            extends Work.ItemJsonView, Work.AttachmentsJsonView {
+            extends Work.ItemJsonView, Work.AttachmentsJsonView, Item.AttachmentsJsonView {
     }
 
     private interface UpdateJsonView extends GetByItemIdJsonView {

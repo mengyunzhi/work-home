@@ -29,6 +29,8 @@ export class WorkStubService {
     work.id = TestingUtils.randomNumber();
     work.content = TestingUtils.randomString('作业内容');
     work.attachments = [new Attachment()];
+    work.item.attachments = [new Attachment()];
+    work.item.name = TestingUtils.randomString('实验名称');
     return of(work);
   }
 

@@ -15,7 +15,7 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./edit.component.sass']
 })
 export class EditComponent implements OnInit {
-  work: Work;
+  work = new Work();
   selectFiles = new Array<File>();
   maxFileSize = 1024 * 1024 * 20;
 
@@ -31,6 +31,9 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(params => {
       const itemId = params.itemId as string;
       this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
+        if (data.content.length === 0) {
+          data.content = '请将源代码、网页截图（支持拖拽）等按实验要求添加到此处。';
+        }
         this.work = data;
       });
     });
@@ -43,6 +46,7 @@ export class EditComponent implements OnInit {
     this.workService.updateOfCurrentStudent(this.work.id, this.work)
       .subscribe(() => {
         this.appComponent.success(() => {
+          this.router.navigateByUrl('work');
         }, '', '保存成功!');
       });
   }
@@ -109,7 +113,6 @@ export class EditComponent implements OnInit {
    * @param attachmentId 附件id
    */
   deleteAttachment(workId: number, attachmentId: number) {
-
     this.appComponent.confirm(() => {
       this.workService.deleteAttachment(workId, attachmentId)
         .subscribe(() => {
