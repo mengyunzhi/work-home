@@ -27,5 +27,4 @@ export class IndexComponent implements OnInit {
         this.works = data;
       });
   }
-
 }
