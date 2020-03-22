@@ -3,6 +3,7 @@ import {first} from 'rxjs/operators';
 import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 import {UserService} from './service/user.service';
 import {isDefined} from './utils';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,6 +16,9 @@ export class AppComponent implements OnInit {
   public alert: SwalComponent;
 
   constructor(private userService: UserService) {
+  }
+
+  ngOnInit(): void {
     this.userService.currentLoginUser$
       .subscribe(user => {
         if (isDefined(user)) {
@@ -23,9 +27,6 @@ export class AppComponent implements OnInit {
           this.showLogin = true;
         }
       });
-  }
-
-  ngOnInit(): void {
   }
 
   /**

@@ -110,7 +110,7 @@ export class UserService {
       return newPassword !== confirmNewPassword ? {confirmPasswordError: true} : null;
     }
     return null;
-  };
+  }
 
   /**
    * 登录用户修改密码
