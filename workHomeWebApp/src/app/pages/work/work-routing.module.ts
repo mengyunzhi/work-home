@@ -13,7 +13,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'edit/:id',
+    path: 'edit/:itemId',
     component: EditComponent,
     data: {
       title: '编辑'

@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../service/user.service';
 import {environment} from 'src/environments/environment';
 import {AppComponent} from '../../../app.component';
+import {isDefined} from '../../../utils';
 
 @Component({
   selector: 'app-login',
@@ -27,12 +28,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
               private builder: FormBuilder,
-              private appComponent: AppComponent,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.appComponent.showLogin = true;
     /** 创建表单 */
     this.loginForm = this.builder.group({
       username: ['', Validators.required],
@@ -43,10 +42,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     this.userService.login(this.loginForm.value)
-      .subscribe((user) => {
+      .subscribe(() => {
         this.showErrorInfo = false;
-        this.userService.setCurrentLoginUser(user);
-        this.appComponent.showLogin = false;
       }, () => {
         this.errorInfo = '登录失败，请检查您的用户名、密码';
         this.showErrorInfo = true;

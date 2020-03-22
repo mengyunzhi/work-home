@@ -25,15 +25,10 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getEditWork();
-  }
-
-  /**
-   * 获取要编辑的大纲
-   */
-  public getEditWork() {
     this.route.params.subscribe(params => {
-      this.workService.getByItemIdOfCurrentStudent(params.itemId).subscribe((data) => {
+      const itemId = params.itemId as string;
+      this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
+        this.work = data;
       });
     });
   }
@@ -42,23 +37,14 @@ export class EditComponent implements OnInit {
    * 更新
    */
   public update() {
-    this.work = new Work();
-
     // 先上传每个附件
-    for (const file of this.selectFiles) {
-      let uploadedCount = 0;
-      this.attachmentService.upload(file)
+    for (let i = 0; i < this.selectFiles.length; i++) {
+      this.attachmentService.upload(this.selectFiles[i])
         .subscribe((attachment) => {
-          uploadedCount++;
-          if (!this.containAttachment(attachment, this.work.attachments)) {
-            this.work.attachments.push(attachment);
-          }
+          this.work.attachments.push(attachment);
           // 最后一个附件上传以后更新作业信息
-          if (uploadedCount === this.selectFiles.length - 1) {
-            this.workService.update(this.work.id, this.work)
-              .subscribe(() => {
-
-              });
+          if (i === this.selectFiles.length - 1) {
+            this.workService.updateOfCurrentStudent(this.work.id, this.work);
           }
         });
     }
@@ -74,7 +60,6 @@ export class EditComponent implements OnInit {
    */
   downloadAttachment(attachment: Attachment) {
     this.attachmentService.download(attachment).subscribe((data) => {
-      console.log(data, 33333);
       saveAs(data, `${attachment.originName}`);
     });
   }
@@ -94,21 +79,6 @@ export class EditComponent implements OnInit {
    * @param attachmentId 附件id
    */
   deleteAttachment(workId: number, attachmentId: number) {
-    this.workService.deleteAttachment(workId, attachmentId)
-      .subscribe(() => {
 
-      });
-  }
-
-  /**
-   * 该附件是否已经上传
-   */
-  containAttachment(testAttachment: Attachment, attachments: Array<Attachment>): boolean {
-    for (const attachment of attachments) {
-      if (attachment.id === testAttachment.id) {
-        return true;
-      }
-    }
-    return false;
   }
 }
