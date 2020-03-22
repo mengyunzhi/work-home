@@ -3,6 +3,8 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {Router} from '@angular/router';
 import {config} from '../../../conf/app.config';
 import {StudentService} from '../../../service/student.service';
+import {AppComponent} from '../../../app.component';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-student-add',
@@ -15,7 +17,8 @@ export class StudentAddComponent implements OnInit {
 
   constructor(private builder: FormBuilder,
               private router: Router,
-              private studentService: StudentService) {
+              private studentService: StudentService,
+              private appComponent: AppComponent) {
   }
 
   ngOnInit() {
@@ -34,7 +37,12 @@ export class StudentAddComponent implements OnInit {
   submit() {
     this.studentService.save(this.studentForm.value)
       .subscribe(() => {
-        this.router.navigateByUrl('/student');
+        this.appComponent.success(() => {
+          this.router.navigateByUrl('/student');
+        }, '学生新增成功');
+      }, (res: HttpErrorResponse) => {
+        this.appComponent.error(() => {
+        }, `学生新增失败:${res.error.message}`);
       });
   }
 
