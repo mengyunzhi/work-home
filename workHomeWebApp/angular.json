@@ -102,7 +102,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/*", "input": "package.json", "output": "/package.json" },
+              "src/config.json",
               { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/tinymce/skins/" },
               { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/tinymce/themes/" },
               { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/tinymce/plugins/" },

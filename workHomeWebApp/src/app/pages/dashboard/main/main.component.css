@@ -1,3 +1,13 @@
-.chart {
-  height: 690px;
+.title {
+  margin-top: 4em;
+  margin-bottom: 4em;
+  color: #25543F;
+}
+
+h5 {
+  color: #25543F;
+}
+
+ul > li {
+  list-style: none;
 }
