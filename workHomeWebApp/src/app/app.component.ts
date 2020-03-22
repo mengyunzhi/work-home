@@ -1,18 +1,28 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {first} from 'rxjs/operators';
 import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
+import {UserService} from './service/user.service';
+import {isDefined} from './utils';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  showLogin = false;
+  showLogin = true;
   title = 'workHomeWebApp';
   @ViewChild('alert', {static: true})
   public alert: SwalComponent;
 
-  constructor() {
+  constructor(private userService: UserService) {
+    this.userService.currentLoginUser$
+      .subscribe(user => {
+        if (isDefined(user)) {
+          this.showLogin = false;
+        } else {
+          this.showLogin = true;
+        }
+      });
   }
 
   ngOnInit(): void {

@@ -9,6 +9,7 @@ import { YunzhiInterceptor } from './net/yunzhi.interceptor';
 import { PartModule } from './part/part.module';
 import { FuncModule } from './func/func.module';
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
+import {AuthModule} from './pages/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
     PartModule,
     FuncModule,
     HttpClientModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    AuthModule
   ],
   providers: [
     {
