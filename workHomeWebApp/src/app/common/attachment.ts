@@ -21,6 +21,7 @@ export class Attachment {
    * 保存的名字
    */
   saveName: string;
+  savePath: string;
 
   /** 创建用户 */
   createUser: User;

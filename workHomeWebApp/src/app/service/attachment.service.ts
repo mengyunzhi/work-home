@@ -32,8 +32,10 @@ export class AttachmentService {
    */
   download(attachment: Attachment): Observable<Blob> {
     Assert.isDefined(attachment.saveName, 'saveName未定义');
+    
 
+    const url = '/Attachment1/' + attachment.savePath;
     /** 下载附件对象 */
-    return this.httpClient.get<Blob>(`${this.baseUrl}/${attachment.saveName}`, { responseType: 'blob' as 'json' });
+    return this.httpClient.get<Blob>(url, {responseType: 'blob' as 'json'});
   }
 }

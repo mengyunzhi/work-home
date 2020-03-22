@@ -33,8 +33,7 @@ export class EditComponent implements OnInit {
    */
   public getEditWork() {
     this.route.params.subscribe(params => {
-      this.workService.getById(params.id).subscribe((data) => {
-        this.work = data;
+      this.workService.getByItemIdOfCurrentStudent(params.itemId).subscribe((data) => {
       });
     });
   }
@@ -43,6 +42,8 @@ export class EditComponent implements OnInit {
    * 更新
    */
   public update() {
+    this.work = new Work();
+
     // 先上传每个附件
     for (const file of this.selectFiles) {
       let uploadedCount = 0;
@@ -73,6 +74,7 @@ export class EditComponent implements OnInit {
    */
   downloadAttachment(attachment: Attachment) {
     this.attachmentService.download(attachment).subscribe((data) => {
+      console.log(data, 33333);
       saveAs(data, `${attachment.originName}`);
     });
   }

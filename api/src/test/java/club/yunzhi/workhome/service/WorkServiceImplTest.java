@@ -31,7 +31,7 @@ class WorkServiceImplTest extends ServiceTest {
         this.userService = Mockito.mock(UserService.class);
         this.itemRepository = Mockito.mock(ItemRepository.class);
         this.workService = Mockito.spy(new WorkServiceImpl(this.workRepository, this.studentService,
-                this.userService, this.itemRepository, this.itemService));
+                this.userService, this.itemRepository));
     }
 
     @Test

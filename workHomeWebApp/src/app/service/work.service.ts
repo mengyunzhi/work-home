@@ -28,4 +28,9 @@ export class WorkService {
   deleteAttachment(workId: number, attachmentId: number): Observable<void> {
     return this.httpClient.delete<void>(this.url + '/deleteAttachment/' + workId + '/' + attachmentId);
   }
+
+  getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
+    const params: { [key: string]: any } = {itemId};
+    return this.httpClient.get<Work>(this.url + '/getByItemIdOfCurrentStudent/' + itemId, {params});
+  }
 }
