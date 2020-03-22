@@ -12,6 +12,9 @@ import {AppComponent} from '../../../app.component';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
+  /** 当前模式 */
+  mode: string;
+
   /** 获取当前环境配置 */
   environment = environment;
 
@@ -24,7 +27,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   /** 显示错误信息 */
   showErrorInfo: boolean;
 
-
   constructor(private userService: UserService,
               private builder: FormBuilder,
               private appComponent: AppComponent,
@@ -32,13 +34,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.mode = 'login';
     this.appComponent.showLogin = true;
     /** 创建表单 */
     this.loginForm = this.builder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
-
   }
 
   login() {
@@ -51,6 +53,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.errorInfo = '登录失败，请检查您的用户名、密码';
         this.showErrorInfo = true;
       });
+  }
+
+  changeToLogin(): void {
+    this.mode = 'login';
+  }
+
+  changeToRegister(): void {
+    this.mode = 'register';
   }
 
   ngOnDestroy(): void {
