@@ -7,7 +7,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 })
 export class LoadingComponent implements OnInit, OnDestroy {
   tips = '';
-  timeOut: number;
+  timeOut: any;
 
   constructor() {
   }
