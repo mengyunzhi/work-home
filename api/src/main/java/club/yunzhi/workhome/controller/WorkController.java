@@ -32,10 +32,16 @@ public class WorkController {
     }
 
     @GetMapping("getByItemIdOfCurrentStudent}")
+    @JsonView(GetByItemIdJsonView.class)
     public Work getByItemId(@WebParam Long itemId) {
-        return workService.getByItemIdOfCurrentStudent(itemId);
+        return workService.getOrElseCreateNewByItemIdOfCurrentStudent(itemId);
     }
+
     private interface GetAllOfCurrentStudentJsonView
             extends Work.ItemJsonView {
+    }
+
+    private interface GetByItemIdJsonView
+            extends Work.ItemJsonView, Work.AttachmentsJsonView {
     }
 }

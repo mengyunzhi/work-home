@@ -1,13 +1,16 @@
 package club.yunzhi.workhome.service;
 
+import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Student;
-import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.entity.Work;
+import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
-import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yz
@@ -17,11 +20,13 @@ public class WorkServiceImpl implements WorkService {
     final WorkRepository workRepository;
     final StudentService studentService;
     final UserService userService;
+    final ItemRepository itemRepository;
 
-    public WorkServiceImpl(WorkRepository workRepository, StudentService studentService, UserService userService) {
+    public WorkServiceImpl(WorkRepository workRepository, StudentService studentService, UserService userService, ItemRepository itemRepository) {
         this.workRepository = workRepository;
         this.studentService = studentService;
         this.userService = userService;
+        this.itemRepository = itemRepository;
     }
 
     @Override
@@ -31,8 +36,48 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    public Optional<Work> getByItemIdOfCurrentStudent(Long itemId) {
+        Student student = this.studentService.getCurrentStudent();
+        return this.getByItemIdAndStudentId(itemId, student.getId());
+    }
+
+    @Override
+    public Optional<Work> getByItemIdAndStudentId(@NotNull Long itemId, @NotNull Long studentId) {
+        Assert.notNull(itemId, "实验ID不能为null");
+        Assert.notNull(studentId, "学生id不能为null");
+        return this.workRepository.findByItemIdAndStudentId(itemId, studentId);
+    }
+
+    @Override
+    public Work getOrElseCreateNewByItemIdOfCurrentStudent(@NotNull Long itemId) {
+        Optional<Work> workOptional = this.getByItemIdOfCurrentStudent(itemId);
+        if (workOptional.isPresent()) {
+            return workOptional.get();
+        } else {
+            return this.saveWorkByItemIdOfCurrentStudent(itemId);
+        }
+    }
+
+    @Override
     public Work update(Long id, Work work) {
         return null;
+    }
+
+    @Override
+    public Work save(Work work) {
+        return this.workRepository.save(work);
+    }
+
+    @Override
+    public Work saveWorkByItemIdOfCurrentStudent(@NotNull Long itemId) {
+        Item item = this.itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("未找到id为" + itemId + "的实验"));
+
+        Student student = this.studentService.getCurrentStudent();
+        Work work = new Work();
+        work.setItem(item);
+        work.setStudent(student);
+        return this.save(work);
     }
 
 }
