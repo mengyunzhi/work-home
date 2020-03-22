@@ -4,6 +4,7 @@ import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {MenuService} from '../../service/menu.service';
 import {Menu} from '../../common/menu';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -24,12 +25,22 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private menuService: MenuService) {
+    private menuService: MenuService,
+    private userService: UserService) {
   }
 
   ngOnInit() {
+
     this.menuService.getAll()
-      .subscribe(data => this.menus = data);
+      .subscribe(data => {
+        this.userService.currentLoginUser$
+          .subscribe(user => {
+            if (user )
+          });
+        this.menus = [];
+        data.forEach()
+        this.menus = data;
+      });
 
     // this.primaryMenus = menus;
     // this.subscription = this.authService.getCurrentLoginUser$()
