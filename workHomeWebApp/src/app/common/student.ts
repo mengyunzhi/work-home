@@ -11,5 +11,5 @@ export class Student {
 
   no: string;
 
-  user: User;
+  user = new User();
 }

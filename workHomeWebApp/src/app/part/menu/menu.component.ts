@@ -4,6 +4,8 @@ import {environment} from 'src/environments/environment';
 import {Router} from '@angular/router';
 import {MenuService} from '../../service/menu.service';
 import {Menu} from '../../common/menu';
+import {UserService} from '../../service/user.service';
+import {isDefined} from '../../utils';
 
 @Component({
   selector: 'app-menu',
@@ -21,15 +23,30 @@ export class MenuComponent implements OnInit, OnDestroy {
   menus: Array<Menu>;
 
   private subscription: Subscription;
+  private userSubscription: Subscription;
 
   constructor(
     private router: Router,
-    private menuService: MenuService) {
+    private menuService: MenuService,
+    private userService: UserService) {
   }
 
   ngOnInit() {
-    this.menuService.getAll()
-      .subscribe(data => this.menus = data);
+
+    this.subscription = this.menuService.getAll()
+      .subscribe(data => {
+        this.userSubscription = this.userService.currentLoginUser$
+          .subscribe(user => {
+            this.menus = [];
+            if (isDefined(user)) {
+              data.forEach((menu) => {
+                if (menu.roles.includes(user.role)) {
+                  this.menus.push(menu);
+                }
+              });
+            }
+          });
+      });
 
     // this.primaryMenus = menus;
     // this.subscription = this.authService.getCurrentLoginUser$()
@@ -100,9 +117,9 @@ export class MenuComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
 
-  isShow(menu: Menu) {
-    return true;
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 }

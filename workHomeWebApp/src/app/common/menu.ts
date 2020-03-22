@@ -8,7 +8,7 @@ export class Menu {
   name: string;
 
   /** 路由 */
-  url: string;
+  url = '';
 
   icon: string;
 
