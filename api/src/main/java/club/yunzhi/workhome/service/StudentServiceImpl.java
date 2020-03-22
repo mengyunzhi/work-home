@@ -2,20 +2,20 @@ package club.yunzhi.workhome.service;
 
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
+import club.yunzhi.workhome.exception.AccessDeniedException;
 import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import club.yunzhi.workhome.entity.User;
-import club.yunzhi.workhome.exception.ObjectNotFoundException;
-import club.yunzhi.workhome.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
+/**
+ * @author  yz
+ * 学生
+ */
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -34,7 +34,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getCurrentStudent() {
         User user = this.userService.getCurrentLoginUser();
-        return this.studentRepository.findByUser(user).orElse(null);
+        return this.studentRepository.findByUser(user)
+                .orElseThrow(() -> new AccessDeniedException("未找到登录用户对应的学生信息"));
     }
 
     @Override
