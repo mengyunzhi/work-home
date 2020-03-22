@@ -70,6 +70,9 @@ export class EditComponent implements OnInit {
   downloadAttachment(attachment: Attachment) {
     this.attachmentService.download(attachment).subscribe((data) => {
       saveAs(data, `${attachment.originName}`);
+    }, () => {
+      console.log('请确定是否修改了nginx配置');
+      this.appComponent.error(() => {}, '', '下载发生错误');
     });
   }
 
@@ -94,6 +97,8 @@ export class EditComponent implements OnInit {
         .subscribe(() => {
           this.appComponent.success(() => {
           }, '', '删除成功!');
+        }, () => {
+          this.appComponent.error(() => {}, '', '删除失败!');
         });
 
     }, '', '确定删除吗?');
