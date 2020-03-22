@@ -32,6 +32,10 @@
             <label for="password">密码<code>*</code></label>
             <input type="password" class="form-control" id="password" placeholder="请输入密码" formControlName="password"/>
           </div>
+          <ng-template [ngIf]="showRegisterInfo">
+            <hr>
+            <small class="text-success">{{ registerInfo }}</small>
+          </ng-template>
           <ng-template [ngIf]="showErrorInfo">
             <hr>
             <small class="text-danger">{{ errorInfo }}</small>
@@ -78,6 +82,10 @@
           <ng-template [ngIf]="registerForm.errors && registerForm.errors.mismatch">
             <hr>
             <small class="text-danger">两次输入的密码不一致</small>
+          </ng-template>
+          <ng-template [ngIf]="showRegisterErrorInfo">
+            <hr>
+            <small class="text-danger">{{ registerErrorInfo }}</small>
           </ng-template>
           <hr>
           <button type="submit" [disabled]="registerForm.invalid" class="btn btn-success form-control form-control-sm">

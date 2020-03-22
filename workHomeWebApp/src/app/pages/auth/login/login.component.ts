@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../service/user.service';
 import {environment} from 'src/environments/environment';
 import {AppComponent} from '../../../app.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   /** 显示错误信息 */
   showErrorInfo: boolean;
 
+  /** 注册错误信息 */
+  registerErrorInfo: string;
+
+  /** 显示注册错误信息 */
+  showRegisterErrorInfo: boolean;
+
+  /** 注册提示信息 */
+  registerInfo: string;
+
+  /** 显示注册提示信息 */
+  showRegisterInfo: boolean;
+
   constructor(private userService: UserService,
               private builder: FormBuilder,
               private appComponent: AppComponent,
@@ -37,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.mode = 'login';
+    this.changeToLogin();
     this.appComponent.showLogin = true;
     /** 创建表单 */
     this.loginForm = this.builder.group({
@@ -83,7 +96,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   register(): void {
-    console.log(this.registerForm.value);
+    this.userService.register(this.registerForm.value)
+      .subscribe(() => {
+        this.showRegisterErrorInfo = false;
+        this.changeToLogin();
+        this.showRegisterInfo = true;
+        this.registerInfo = '注册成功，请登录。';
+      }, (response: HttpErrorResponse) => {
+        this.registerErrorInfo = `${response.error.message}请尝试更换用户名或检查您的网络连接`;
+        this.showRegisterErrorInfo = true;
+      });
   }
 
   changeToLogin(): void {

@@ -48,7 +48,6 @@ export class UserService {
     return this.currentLoginUser;
   }
 
-
   login(user: User): Observable<User> {
     // 新建Headers，并添加认证信息
     let headers = new HttpHeaders();
@@ -64,6 +63,14 @@ export class UserService {
     return this.httpClient.get<void>(`${this.url}/logout`).pipe(map(() => {
       this.setCurrentLoginUser(null);
     }));
+  }
+
+  /**
+   * 学生注册
+   * @param student 学生
+   */
+  register(student): Observable<void> {
+    return this.httpClient.post<void>(`${this.url}/register`, student);
   }
 
   /**
