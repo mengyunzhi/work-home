@@ -11,21 +11,20 @@ import {ItemService} from '../../../service/item.service';
 })
 export class IndexComponent implements OnInit {
   works = new Array<Work>();
-  currentItem = new Item();
+  currentItems = new Array<Item>();
 
   constructor(private workService: WorkService,
               private itemService: ItemService) {
   }
 
   ngOnInit() {
-    this.itemService.getCurrentActiveItem()
+    this.itemService.findAllActiveItems()
       .subscribe(data => {
-        this.currentItem = data;
+        this.currentItems = data;
       });
     this.workService.getAllOfCurrentStudent()
       .subscribe(data => {
         this.works = data;
       });
   }
-
 }

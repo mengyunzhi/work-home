@@ -12,11 +12,11 @@ export class Menu {
 
   icon: string;
 
-  role = Menu.ROLE_STUDENT;
+  roles = [Menu.ROLE_STUDENT];
 
   order = 0;
 
-  constructor(data?: { name?: string, url?: string, role?: number, icon?: string , order?: number}) {
+  constructor(data?: { name?: string, url?: string, roles?: number[], icon?: string , order?: number}) {
     if (data) {
       if (data.name) {
         this.name = data.name;
@@ -26,8 +26,8 @@ export class Menu {
         this.url = data.url;
       }
 
-      if (data.role) {
-        this.role = data.role;
+      if (data.roles) {
+        this.roles = data.roles;
       }
 
       if (data.icon) {

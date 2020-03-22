@@ -35,7 +35,8 @@ export class EditorComponentComponent implements OnInit {
     //     });
     // },
     // 允许拖拽图片
-    paste_data_images: true
+    paste_data_images: true,
+    height: '100'
   };
 
   ngOnInit(): void {
