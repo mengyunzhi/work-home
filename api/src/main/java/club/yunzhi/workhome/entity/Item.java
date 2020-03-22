@@ -1,6 +1,7 @@
 package club.yunzhi.workhome.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.mengyunzhi.core.entity.YunzhiEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author yunzhi
  */
 @Entity
-public class Item extends AbstractEntity {
+public class Item extends AbstractEntity implements YunzhiEntity {
 
     private String name;
 
