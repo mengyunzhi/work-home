@@ -21,7 +21,7 @@ public class Work extends AbstractEntity {
 
 	private Timestamp updateTime;
 
-	private Integer score;
+	private Integer score = 0;
 
 	private Boolean reviewed = false;
 
