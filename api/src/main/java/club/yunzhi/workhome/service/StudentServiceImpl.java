@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -32,9 +33,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getCurrentStudent() {
+    public Optional<Student> getCurrentStudent() {
         User user = this.userService.getCurrentLoginUser();
-        return this.studentRepository.findByUser(user).orElseThrow(() -> new RuntimeException("未找到当前登录的学生，请确认业务流程是否正确"));
+        return this.studentRepository.findByUser(user);
     }
 
     @Override

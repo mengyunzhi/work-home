@@ -3,12 +3,14 @@ package club.yunzhi.workhome.service;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.Work;
+import club.yunzhi.workhome.exception.AccessDeniedException;
 import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,14 +33,22 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public List<Work> getAllOfCurrentStudent() {
-        Student student = this.studentService.getCurrentStudent();
-        return this.workRepository.findAllByStudent(student);
+        Optional<Student> student = this.studentService.getCurrentStudent();
+        if (student.isPresent()) {
+            return this.workRepository.findAllByStudent(student.get());
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public Optional<Work> getByItemIdOfCurrentStudent(Long itemId) {
-        Student student = this.studentService.getCurrentStudent();
-        return this.getByItemIdAndStudentId(itemId, student.getId());
+        Optional<Student> student = this.studentService.getCurrentStudent();
+        if (!student.isPresent()) {
+            return Optional.empty();
+        }
+
+        return this.getByItemIdAndStudentId(itemId, student.get().getId());
     }
 
     @Override
@@ -73,10 +83,13 @@ public class WorkServiceImpl implements WorkService {
         Item item = this.itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("未找到id为" + itemId + "的实验"));
 
-        Student student = this.studentService.getCurrentStudent();
+        Optional<Student> student = this.studentService.getCurrentStudent();
+        if (!student.isPresent()) {
+            throw new AccessDeniedException("学生未登录");
+        }
         Work work = new Work();
         work.setItem(item);
-        work.setStudent(student);
+        work.setStudent(student.get());
         return this.save(work);
     }
 
