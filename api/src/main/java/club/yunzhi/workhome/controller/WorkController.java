@@ -26,7 +26,7 @@ public class WorkController {
         return workService.getAllOfCurrentStudent();
     }
 
-    @GetMapping("getByItemIdOfCurrentStudent}")
+    @GetMapping("getByItemIdOfCurrentStudent")
     @JsonView(GetByItemIdJsonView.class)
     public Work getByItemId(@RequestParam Long itemId) {
         return workService.getOrElseCreateNewByItemIdOfCurrentStudent(itemId);
