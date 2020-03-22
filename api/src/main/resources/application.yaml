@@ -6,7 +6,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL55Dialect
   datasource:
-    url: jdbc:mysql://${datasource.url:127.0.0.1}:${datasource.port:3306}/${datasource.dbname:work_home}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${datasource.url:127.0.0.1}:${datasource.port:3307}/${datasource.dbname:work_home}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: ${datasource.username:root}
     password: ${datasource.password:}
   servlet:

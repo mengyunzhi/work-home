@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {AppOnReadyItem, CommonService} from './common.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {Router} from '@angular/router';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {User} from '../common/user';
 import {VUser} from '../base/vuser';
 import {AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
@@ -13,12 +13,14 @@ import {AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, Validato
 })
 export class UserService {
   private currentLoginUser: User;
-  private currentLoginUser$ = new ReplaySubject<User>(1);
+  private currentLoginUserSubject = new ReplaySubject<User>(1);
+  public currentLoginUser$: Observable<User>;
   private url = 'user';
 
   constructor(private commonService: CommonService,
               private httpClient: HttpClient,
               private router: Router) {
+    this.currentLoginUser$ = this.currentLoginUserSubject.asObservable();
     // 如果当前不是登录模块，请求当前登录用户
     if (!this.router.url.includes('auth')) {
       this.getCurrentLoginUser();
@@ -57,7 +59,9 @@ export class UserService {
     // 添加认证信息
     headers = headers.append('Authorization', 'Basic ' + btoa(user.username + ':' + encodeURIComponent(user.password)));
     // 发起get请求并返回
-    return this.httpClient.get<User>(this.url + '/me', {headers});
+    return this.httpClient.get<User>(this.url + '/me', {headers}).pipe(tap((data) => {
+      this.setCurrentLoginUser(data);
+    }));
   }
 
   logout(): Observable<void> {
@@ -72,7 +76,7 @@ export class UserService {
    */
   setCurrentLoginUser(user: User): void {
     this.currentLoginUser = user;
-    this.currentLoginUser$.next(user);
+    this.currentLoginUserSubject.next(user);
   }
 
   /**
