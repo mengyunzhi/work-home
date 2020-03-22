@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { YunzhiInterceptor } from './net/yunzhi.interceptor';
 import { PartModule } from './part/part.module';
 import { FuncModule } from './func/func.module';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FuncModule } from './func/func.module';
     AppRoutingModule,
     PartModule,
     FuncModule,
-    HttpClientModule
+    HttpClientModule,
+    SweetAlert2Module.forRoot()
   ],
   providers: [
     {
