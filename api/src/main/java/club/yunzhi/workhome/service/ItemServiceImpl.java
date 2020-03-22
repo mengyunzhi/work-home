@@ -46,12 +46,17 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void update(Long id, Item item) {
-        Item oldItem = this.findById(id);
-        oldItem.setName(item.getName());
-        oldItem.setBeginTime(item.getBeginTime());
-        oldItem.setEndTime(item.getEndTime());
-        itemRepository.save(item);
 
+        if (item.getBeginTime().compareTo(item.getEndTime()) < 0) {
+            Item oldItem = this.findById(id);
+            oldItem.setName(item.getName());
+            oldItem.setBeginTime(item.getBeginTime());
+            oldItem.setEndTime(item.getEndTime());
+            oldItem.setDescription(item.getDescription());
+            itemRepository.save(oldItem);
+            return;
+        }
+        throw new SecurityException("开始时间比结束时间晚");
     }
 
     @Override
@@ -59,7 +64,9 @@ public class ItemServiceImpl implements ItemService {
         Item item = this.findById(id);
         if (!item.getActive()) {
             itemRepository.deleteById(id);
+            return;
         }
+        throw new SecurityException("为激活状态不可删除");
     }
 
     @Override

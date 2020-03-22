@@ -1,0 +1,74 @@
+<form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <div class="row">
+    <div class="col-md-6 offset-md-1">
+      <div class="row">
+        <div class="col-md-4 text-right">
+          <label for="name" class="form-text">实验项目名称<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="name" placeholder="请输入实验项目名称" formControlName="name"/>
+        </div>
+      </div>
+      <div class="row mt-2" *ngIf="name.invalid && (name.dirty || name.touched)">
+        <div class="col-md-8 offset-md-4">
+          <small class="text-danger" *ngIf="name.errors.required">
+            <i class="fa fa-exclamation-triangle"></i>
+            项目名称必须
+          </small>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4 text-right">
+          <label for="beginTime" class="form-text">开始时间<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <input type="date" class="form-control" id="beginTime" placeholder="请输入开始时间" formControlName="beginTime"/>
+        </div>
+      </div>
+      <div class="row mt-2" *ngIf="beginTime.invalid && (beginTime.dirty || beginTime.touched)">
+        <div class="col-md-8 offset-md-4">
+          <small class="text-danger" *ngIf="beginTime.errors.required">
+            <i class="fa fa-exclamation-triangle"></i>
+            开始时间必须
+          </small>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4 text-right">
+          <label for="endTime" class="form-text">结束时间<code>*</code></label>
+        </div>
+        <div class="col-md-8">
+          <input type="date" class="form-control" id="endTime" placeholder="请输入结束时间" formControlName="endTime"/>
+        </div>
+      </div>
+      <div class="row mt-2" *ngIf="endTime.invalid && (endTime.dirty || endTime.touched)">
+        <div class="col-md-8 offset-md-4">
+          <small class="text-danger" *ngIf="endTime.errors.required">
+            <i class="fa fa-exclamation-triangle"></i>
+            结束时间必须
+          </small>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4 text-right">
+          <label for="description" class="form-text">描述</label>
+        </div>
+        <div class="col-md-8">
+          <textarea id="description" class="form-control" rows="4" formControlName="description"
+                    placeholder="请输入实验项目描述"></textarea>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-8 offset-md-4">
+          <button class="btn btn-dark btn-sm" [disabled]="itemForm.invalid" type="submit">
+            <i class="far fa-save"></i>
+            &nbsp;保存
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
