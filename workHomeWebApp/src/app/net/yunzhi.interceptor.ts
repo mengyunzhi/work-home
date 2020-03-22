@@ -27,11 +27,7 @@ export class YunzhiInterceptor implements HttpInterceptor {
      * 为request加上服务端前缀
      */
     let url = req.url;
-    const firstUrl = url.split('/');
-    console.log(firstUrl, 111);
-    console.log(String(firstUrl.includes('Attachment1')));
-    if (!url.startsWith('https://') && !url.startsWith('http://') && !firstUrl.includes('Attachment1')) {
-      console.log(url);
+    if (!url.startsWith('https://') && !url.startsWith('http://') && !url.startsWith('uploadFile')) {
       url = config.server + url;
     }
 

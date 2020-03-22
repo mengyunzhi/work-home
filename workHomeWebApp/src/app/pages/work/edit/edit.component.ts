@@ -44,7 +44,10 @@ export class EditComponent implements OnInit {
           this.work.attachments.push(attachment);
           // 最后一个附件上传以后更新作业信息
           if (i === this.selectFiles.length - 1) {
-            this.workService.updateOfCurrentStudent(this.work.id, this.work);
+            this.workService.updateOfCurrentStudent(this.work.id, this.work)
+              .subscribe(() => {
+
+              });
           }
         });
     }

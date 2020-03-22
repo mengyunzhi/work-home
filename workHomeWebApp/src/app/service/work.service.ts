@@ -23,16 +23,6 @@ export class WorkService {
   }
 
   /**
-   * 根据实验ID获取当前学生对应的作业
-   * @param itemId 实验
-   */
-  getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
-    Assert.isNumber(itemId, '学期号必须是有效的numbert');
-    const params = new HttpParams().set('itemId', itemId.toString());
-    return this.httpClient.get<Work>(`${this.url}/getByItemIdOfCurrentStudent`, {params});
-  }
-
-  /**
    * 更新前台学生作业
    * @param id 作业ID
    * @param work 作业
