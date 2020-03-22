@@ -5,10 +5,8 @@ import com.mengyunzhi.core.entity.YunzhiEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**

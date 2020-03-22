@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   menus: Array<Menu>;
 
   private subscription: Subscription;
+  private userSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -32,9 +33,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.menuService.getAll()
+    this.subscription = this.menuService.getAll()
       .subscribe(data => {
-        this.userService.currentLoginUser$
+        this.userSubscription = this.userService.currentLoginUser$
           .subscribe(user => {
             this.menus = [];
             if (isDefined(user)) {
@@ -116,9 +117,9 @@ export class MenuComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
 
-  isShow(menu: Menu) {
-    return true;
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 }
