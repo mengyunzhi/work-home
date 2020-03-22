@@ -8,7 +8,7 @@
   </div>
   <div class="content">
     <div class="row m-0 pt-5">
-      <div class="col-md-2 offset-md-8 mt-5 pl-3 pr-3 pt-4 pb-4 bg-white">
+      <div class="col-md-2 offset-md-8 mt-2 pl-3 pr-3 pt-4 pb-4 bg-white">
         <div class="row">
           <div class="col-md-6 border-right">
             <h6 class="text-center" [ngClass]="{'text-success font-weight-bolder' : mode === 'login'}">
@@ -17,19 +17,20 @@
           </div>
           <div class="col-md-6">
             <h6 class="text-center" [ngClass]="{'text-success font-weight-bolder' : mode === 'register'}">
-              <a href="javascript:void(0);" (click)="changeToRegister()" class="text-reset text-decoration-none">用户注册</a>
+              <a href="javascript:void(0);" (click)="changeToRegister()"
+                 class="text-reset text-decoration-none">用户注册</a>
             </h6>
           </div>
         </div>
         <hr>
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="mode === 'login'">
           <div class="form-group">
             <label for="username">用户名<code>*</code></label>
-            <input  class="form-control" id="username" placeholder="请输入手机号" formControlName="username" />
+            <input class="form-control" id="username" placeholder="请输入手机号" formControlName="username"/>
           </div>
           <div class="form-group">
             <label for="password">密码<code>*</code></label>
-            <input type="password" class="form-control" id="password" placeholder="请输入密码" formControlName="password" />
+            <input type="password" class="form-control" id="password" placeholder="请输入密码" formControlName="password"/>
           </div>
           <ng-template [ngIf]="showErrorInfo">
             <hr>
@@ -38,6 +39,45 @@
           <hr>
           <button type="submit" [disabled]="loginForm.invalid" class="btn form-control login-button">
             登录
+          </button>
+        </form>
+        <form [formGroup]="registerForm" *ngIf="mode === 'register'">
+          <div class="form-group">
+            <label for="register-no">
+              <small>学号<code>*</code></small>
+            </label>
+            <input class="form-control form-control-sm" id="register-no" placeholder="请输入学号" formControlName="no"/>
+          </div>
+          <div class="form-group">
+            <label for="register-name">
+              <small>姓名<code>*</code></small>
+            </label>
+            <input class="form-control form-control-sm" id="register-name" placeholder="请输入姓名" formControlName="name"/>
+          </div>
+          <div class="form-group">
+            <label for="register-username">
+              <small>用户名<code>*</code></small>
+            </label>
+            <input class="form-control form-control-sm" id="register-username" placeholder="请输入用户名"
+                   formControlName="username"/>
+          </div>
+          <div class="form-group">
+            <label for="register-password">
+              <small>密码<code>*</code></small>
+            </label>
+            <input type="password" class="form-control form-control-sm" id="register-password" placeholder="请输入密码"
+                   formControlName="password"/>
+          </div>
+          <div class="form-group">
+            <label for="register-confirm-password">
+              <small>确认密码<code>*</code></small>
+            </label>
+            <input type="password" class="form-control form-control-sm" id="register-confirm-password"
+                   placeholder="请确认密码" formControlName="confirmPassword"/>
+          </div>
+          <hr>
+          <button type="submit" [disabled]="registerForm.invalid" class="btn btn-success form-control form-control-sm">
+            注册
           </button>
         </form>
       </div>

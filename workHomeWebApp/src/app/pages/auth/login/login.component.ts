@@ -18,8 +18,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   /** 获取当前环境配置 */
   environment = environment;
 
-  /** 表单对象 */
+  /** 登录表单对象 */
   loginForm: FormGroup;
+
+  /** 注册表单对象 */
+  registerForm: FormGroup;
 
   /** 错误信息 */
   errorInfo: string;
@@ -41,6 +44,28 @@ export class LoginComponent implements OnInit, OnDestroy {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+    /** 创建注册表单 */
+    this.registerForm = this.builder.group({
+      no: ['', Validators.required],
+      name: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    }, {
+      validators: this.checkPassword
+    });
+  }
+
+  /**
+   * 校验密码
+   * @param group 表单对象
+   */
+  checkPassword(group: FormGroup) {
+    const password = group.get('password').value;
+    const confirmPassword = group.get('confirmPassword').value;
+
+    /** 判断两次密码是否相同 */
+    return password === confirmPassword ? null : { mismatch: true };
   }
 
   login() {
