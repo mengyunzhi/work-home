@@ -17,6 +17,7 @@ import { AppComponent } from '../../../app.component';
 export class EditComponent implements OnInit {
   work: Work;
   selectFiles = new Array<File>();
+  maxFileSize = 1024 * 1024 * 20;
 
   constructor(private router: Router,
               private commonService: CommonService,
@@ -31,7 +32,6 @@ export class EditComponent implements OnInit {
       const itemId = params.itemId as string;
       this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
         this.work = data;
-        console.log(data);
       });
     });
   }
@@ -56,6 +56,11 @@ export class EditComponent implements OnInit {
     // 先上传每个附件
     let fileUploadCount = 0;
     for (const file of this.selectFiles) {
+      if (file.size > this.maxFileSize) {
+        this.appComponent.error(() => {
+        }, '最大传送20M的文件', '文件大小超过上传限制');
+        return;
+      }
       this.attachmentService.upload(file)
         .subscribe((attachment) => {
           fileUploadCount++;
@@ -64,7 +69,7 @@ export class EditComponent implements OnInit {
             this.work.attachments.push(attachment);
           }
           // 最后一个附件上传以后更新作业信息
-          if (fileUploadCount === this.selectFiles.length - 1) {
+          if (fileUploadCount === this.selectFiles.length) {
             this.update();
           }
         }, () => {
