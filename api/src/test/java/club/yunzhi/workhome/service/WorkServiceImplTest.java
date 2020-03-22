@@ -1,6 +1,5 @@
 package club.yunzhi.workhome.service;
 
-import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
@@ -14,7 +13,6 @@ import java.util.Optional;
 
 class WorkServiceImplTest extends ServiceTest {
     WorkRepository workRepository;
-    StudentService studentService;
     UserService userService;
     ItemRepository itemRepository;
 
@@ -22,8 +20,8 @@ class WorkServiceImplTest extends ServiceTest {
 
     @BeforeEach
     public void beforeEach() {
+        super.beforeEach();
         this.workRepository = Mockito.mock(WorkRepository.class);
-        this.studentService = Mockito.mock(StudentService.class);
         this.userService = Mockito.mock(UserService.class);
         this.itemRepository = Mockito.mock(ItemRepository.class);
         this.workService = Mockito.spy(new WorkServiceImpl(this.workRepository, this.studentService,
@@ -32,6 +30,15 @@ class WorkServiceImplTest extends ServiceTest {
 
     @Test
     void getByItemIdOfCurrentStudent() {
+        Long itemId = this.random.nextLong();
+        Optional<Work> workOptional = Optional.of(new Work());
+        Mockito.doReturn(workOptional)
+                .when(this.workService)
+                .getByItemIdAndStudentId(Mockito.eq(itemId),
+                        Mockito.eq(this.currentStudent.getId()));
+
+        Assertions.assertEquals(workOptional,
+                this.workService.getByItemIdOfCurrentStudent(itemId));
     }
 
     @Test
@@ -53,5 +60,9 @@ class WorkServiceImplTest extends ServiceTest {
 
     @Test
     void save() {
+        Work work = new Work();
+        this.workService.save(work);
+        Mockito.verify(this.workRepository, Mockito.times(1))
+                .save(Mockito.eq(work));
     }
 }
