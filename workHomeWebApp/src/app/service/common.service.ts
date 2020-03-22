@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,8 @@ export class CommonService {
    */
   private appIsReadySubject = new BehaviorSubject<boolean>(true);
   public appIsReady$: Observable<boolean>;
+  private loadingSubject = new Subject<boolean>();
+  public loading$: Observable<boolean>;
 
   /**
    * 缓存的当应用准备完毕后回调的函数
@@ -29,6 +31,7 @@ export class CommonService {
   }
 
   $onInit(): void {
+    this.loading$ = this.loadingSubject.asObservable();
     this.appIsReady$ = this.appIsReadySubject.asObservable();
     this.appIsReady$.subscribe(isReady => {
       if (isReady) {
@@ -94,6 +97,9 @@ export class CommonService {
     this.appOnReadyCacheCallbacks.splice(0, this.appOnReadyCacheCallbacks.length);
   }
 
+  setLoading(state: boolean): void {
+    this.loadingSubject.next(state);
+  }
 }
 
 

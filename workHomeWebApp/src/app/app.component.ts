@@ -4,6 +4,8 @@ import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 import {UserService} from './service/user.service';
 import {isDefined} from './utils';
 import {Subscription} from 'rxjs/src/internal/Subscription';
+import {Utils} from 'tslint';
+import {CommonService} from './service/common.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +13,18 @@ import {Subscription} from 'rxjs/src/internal/Subscription';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
+  loading: boolean;
+  showLoading: boolean;
+  /* showLoading计时器 */
+  showLoadingTimer: any;
   showLogin = true;
   title = 'workHomeWebApp';
   @ViewChild('alert', {static: true})
   public alert: SwalComponent;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private commonService: CommonService) {
+
   }
 
   ngOnInit(): void {
@@ -28,6 +36,9 @@ export class AppComponent implements OnInit {
           this.showLogin = true;
         }
       });
+
+    this.commonService.loading$
+      .subscribe(data => this.setLoading(data));
   }
 
   /**
@@ -149,5 +160,20 @@ export class AppComponent implements OnInit {
      * 显示提示框
      */
     this.alert.fire();
+  }
+
+  setLoading(loading: boolean) {
+    if (loading) {
+      if (!this.loading) {
+        this.loading = true;
+        this.showLoadingTimer = setTimeout(() => this.showLoading = true, 500);
+      }
+    } else {
+      this.loading = this.showLoading = false;
+      if (isDefined(this.showLoadingTimer)) {
+        clearTimeout(this.showLoadingTimer);
+        this.showLoadingTimer = null;
+      }
+    }
   }
 }

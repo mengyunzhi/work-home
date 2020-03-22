@@ -31,6 +31,9 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(params => {
       const itemId = params.itemId as string;
       this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
+        if (data.content.length === 0) {
+          data.content = '请将源代码、网页截图（支持拖拽）等按实验要求添加到此处。';
+        }
         this.work = data;
       });
     });
