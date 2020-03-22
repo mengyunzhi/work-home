@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../service/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import {Student} from '../../../common/student';
 
 @Component({
   selector: 'app-login',
@@ -52,7 +53,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.registerForm = this.builder.group({
       no: ['', Validators.required],
       name: ['', Validators.required],
-      username: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     }, {
@@ -85,7 +85,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   register(): void {
-    this.userService.register(this.registerForm.value)
+    const student = new Student();
+    student.name = this.registerForm.get('name').value;
+    student.no = this.registerForm.get('no').value;
+    student.user.username = student.no;
+    student.user.password = this.registerForm.get('confirmPassword').value;
+    console.log(student);
+    this.userService.register(student)
       .subscribe(() => {
         this.showRegisterErrorInfo = false;
         this.changeToLogin();
