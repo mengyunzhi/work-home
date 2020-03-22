@@ -16,7 +16,8 @@ import { AppComponent } from '../../../app.component';
 })
 export class EditComponent implements OnInit {
   work: Work;
-  selectFiles: File[];
+  selectFiles = new Array<File>();
+  maxFileSize = 1024 * 1024 * 20;
 
   constructor(private router: Router,
               private commonService: CommonService,
@@ -36,21 +37,40 @@ export class EditComponent implements OnInit {
   }
 
   /**
-   * 更新
+   * 更新数据
    */
   public update() {
+    this.workService.updateOfCurrentStudent(this.work.id, this.work)
+      .subscribe(() => {
+        this.appComponent.success(() => {
+        }, '', '保存成功!');
+      });
+  }
+
+  submit() {
+    // 上传的附件为空直接更新数据
+    if (this.selectFiles.length === 0) {
+      this.update();
+    }
+
     // 先上传每个附件
-    for (let i = 0; i < this.selectFiles.length; i++) {
-      this.attachmentService.upload(this.selectFiles[i])
+    let fileUploadCount = 0;
+    for (const file of this.selectFiles) {
+      if (file.size > this.maxFileSize) {
+        this.appComponent.error(() => {
+        }, '最大传送20M的文件', '文件大小超过上传限制');
+        return;
+      }
+      this.attachmentService.upload(file)
         .subscribe((attachment) => {
-          this.work.attachments.push(attachment);
+          fileUploadCount++;
+
+          if (!this.containAttachment(attachment, this.work.attachments)) {
+            this.work.attachments.push(attachment);
+          }
           // 最后一个附件上传以后更新作业信息
-          if (i === this.selectFiles.length - 1) {
-            this.workService.updateOfCurrentStudent(this.work.id, this.work)
-              .subscribe(() => {
-                this.appComponent.success(() => {
-                }, '', '保存成功!');
-              });
+          if (fileUploadCount === this.selectFiles.length) {
+            this.update();
           }
         }, () => {
           this.appComponent.error(() => {
@@ -59,9 +79,6 @@ export class EditComponent implements OnInit {
     }
   }
 
-  submit() {
-    this.update();
-  }
 
   /**
    * 下载附件
@@ -72,7 +89,8 @@ export class EditComponent implements OnInit {
       saveAs(data, `${attachment.originName}`);
     }, () => {
       console.log('请确定是否修改了nginx配置');
-      this.appComponent.error(() => {}, '', '下载发生错误');
+      this.appComponent.error(() => {
+      }, '', '下载发生错误');
     });
   }
 
@@ -95,12 +113,30 @@ export class EditComponent implements OnInit {
     this.appComponent.confirm(() => {
       this.workService.deleteAttachment(workId, attachmentId)
         .subscribe(() => {
+          this.work.attachments = this.work.attachments.filter(attachment => attachment.id !== attachmentId);
+
           this.appComponent.success(() => {
           }, '', '删除成功!');
         }, () => {
-          this.appComponent.error(() => {}, '', '删除失败!');
+          this.appComponent.error(() => {
+          }, '', '删除失败!');
         });
 
     }, '', '确定删除吗?');
+  }
+
+  /**
+   * 判断附件是否添加到附件数组中
+   * @param testAttachment 测试的附件
+   * @param attachments 附件数组
+   */
+  containAttachment(testAttachment: Attachment, attachments: Array<Attachment>) {
+    for (const attachment of attachments) {
+      if (attachment.id === testAttachment.id) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
