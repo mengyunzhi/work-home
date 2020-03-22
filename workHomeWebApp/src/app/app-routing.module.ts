@@ -22,6 +22,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'item',
+        loadChildren: () => import('./pages/item/item.module').then(m => m.ItemModule),
+        data: {
+          title: '实验项目管理'
+        }
+      },
+      {
         path: 'personalCenter',
         loadChildren: () => import('./pages/personal-center/personal-center.module').then(m => m.PersonalCenterModule),
         data: {

@@ -10,6 +10,7 @@ export class MenuService {
     new Menu({name: '仪表盘', url: '', roles: [Menu.ROLE_TEACHER, Menu.ROLE_STUDENT]}),
     new Menu({name: '我的作业', url: 'work', roles: [Menu.ROLE_STUDENT]}),
     new Menu({name: '学生管理', url: 'student', roles: [Menu.ROLE_TEACHER]}),
+    new Menu({name: '实验项目管理', url: 'item', roles: [Menu.ROLE_TEACHER]}),
     new Menu({name: '个人中心', url: 'personalCenter', roles: [Menu.ROLE_TEACHER, Menu.ROLE_STUDENT]})
   ]);
 
