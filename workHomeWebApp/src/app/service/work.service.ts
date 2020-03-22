@@ -24,4 +24,8 @@ export class WorkService {
   update(id: number, work: Work): Observable<void> {
     return this.httpClient.put<void>(this.url + '/' + id, work);
   }
+
+  deleteAttachment(workId: number, attachmentId: number): Observable<void> {
+    return this.httpClient.delete<void>(this.url + '/deleteAttachment/' + workId + '/' + attachmentId);
+  }
 }

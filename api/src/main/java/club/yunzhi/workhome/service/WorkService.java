@@ -23,5 +23,7 @@ public interface WorkService {
      */
     Work update(Long id, Work work);
 
+    void deleteAttachment(Long workId, Long attachmentId);
 
+    Work findById(Long id);
 }

@@ -32,7 +32,22 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Work update(Long id, Work work) {
-        return null;
+        Work oldWork = this.findById(id);
+        oldWork.setAttachments(work.getAttachments());
+        oldWork.setContent(work.getContent());
+        return this.workRepository.save(oldWork);
+    }
+
+    @Override
+    public void deleteAttachment(Long workId, Long attachmentId) {
+        Work work = this.findById(workId);
+        work.getAttachments().removeIf(attachment -> attachment.getId().equals(attachmentId));
+        this.workRepository.save(work);
+    }
+
+    @Override
+    public Work findById(Long id) {
+        return this.workRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("未找到该作业"));
     }
 
 }

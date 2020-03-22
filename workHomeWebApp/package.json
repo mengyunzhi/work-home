@@ -28,7 +28,8 @@
     "tinymce-i18n": "^19.9.17",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1",
-    "file-saver": "latest"
+    "file-saver": "latest",
+    "@fortawesome/fontawesome-free": "^5.11.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.4",

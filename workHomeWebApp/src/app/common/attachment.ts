@@ -11,15 +11,16 @@ export class Attachment {
   /** 附件存储路径 */
   path: string;
 
-  /** 附件存储名称 */
-  name: string;
-
   /** 附件扩展名 */
   ext: string;
 
   sha1: string;
 
   md5: string;
+  /**
+   * 保存的名字
+   */
+  saveName: string;
 
   /** 创建用户 */
   createUser: User;
@@ -33,12 +34,12 @@ export class Attachment {
     sha1?: string,
     md5?: string,
     createUser?: User
+    saveName: string
   }) {
     if (data) {
       this.id = data.id;
       this.originName = data.originName;
       this.path = data.path;
-      this.name = data.name;
       this.ext = data.ext;
       this.sha1 = data.sha1;
       this.md5 = data.md5;
@@ -51,10 +52,10 @@ export class Attachment {
       id: Random.nextNumber(),
       originName: 'originName' + Random.nextString(),
       path: 'path' + Random.nextString(),
-      name: 'name' + Random.nextString(),
       ext: 'ext' + Random.nextString(),
       sha1: 'sha1' + Random.nextString(),
-      md5: 'md5' + Random.nextString()
+      md5: 'md5' + Random.nextString(),
+      saveName: 'saveName' + Random.nextString()
     });
   }
 }

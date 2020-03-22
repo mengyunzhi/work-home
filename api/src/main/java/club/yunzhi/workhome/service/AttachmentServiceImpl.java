@@ -1,33 +1,23 @@
 package club.yunzhi.workhome.service;
 
 import club.yunzhi.workhome.entity.Attachment;
-import club.yunzhi.workhome.properties.AppProperties;
 import club.yunzhi.workhome.repository.AttachmentRepository;
 import com.mengyunzhi.core.exception.ObjectNotFoundException;
 import com.mengyunzhi.core.service.CommonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.crypto.Cipher;
-import javax.crypto.CipherOutputStream;
-import javax.crypto.spec.SecretKeySpec;
-import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Key;
+import java.nio.file.StandardCopyOption;
 import java.util.Calendar;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 @Service
 public class AttachmentServiceImpl implements AttachmentService {
@@ -37,25 +27,17 @@ public class AttachmentServiceImpl implements AttachmentService {
     private static final String CONFIG_PATH = "attachment/";
 
     private final AttachmentRepository attachmentRepository;
-    private final String ALGORITHM;
-    private final Key KEY;
 
-    public AttachmentServiceImpl(AppProperties appProperties, AttachmentRepository attachmentRepository) {
-        byte[] VALUE = appProperties.getCrypto().getBytes(StandardCharsets.UTF_8);
-        this.ALGORITHM = "AES";
-        this.KEY = new SecretKeySpec(VALUE, this.ALGORITHM);
+    @Autowired
+    public AttachmentServiceImpl(AttachmentRepository attachmentRepository) {
         this.attachmentRepository = attachmentRepository;
     }
 
     @Override
     public Attachment upload(MultipartFile multipartFile) {
-        logger.debug("检验附件信息");
-        if (multipartFile.isEmpty()) {
-            throw new RuntimeException("上传的附件不能为空");
-        }
-
         logger.debug("新建附件对象");
         Attachment attachment = new Attachment();
+        Path saveFilePath = Paths.get(CONFIG_PATH + this.getYearMonthDay());
 
         try {
             logger.debug("获取文件名");
@@ -63,90 +45,55 @@ public class AttachmentServiceImpl implements AttachmentService {
 
             logger.debug("从文件名中截取拓展名");
             // 从"."最后一次出现的位置的下一位开始截取，获取扩展名
-            assert fileName != null;
             String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
 
-            logger.debug("计算文件SHA-1 MD5值");
-            String sha1 = CommonService.encrypt(multipartFile, "SHA-1");
-            String md5 = CommonService.encrypt(multipartFile, "MD5");
+            logger.debug("对文件进行sha1,md5加密");
+            String sha1ToMultipartFile = CommonService.encrypt(multipartFile, "SHA-1");
+            String md5ToMultipartFile = CommonService.encrypt(multipartFile, "MD5");
 
-            logger.debug("设置附件信息");
-            attachment.setSha1(sha1);
-            attachment.setMd5(md5);
+            logger.debug("设置一般信息");
             attachment.setOriginName(fileName);
+            attachment.setMIME(multipartFile.getContentType());
+            attachment.setSize(String.valueOf(multipartFile.getSize()));
             attachment.setExt(ext);
+            attachment.setSha1(sha1ToMultipartFile);
+            attachment.setMd5(md5ToMultipartFile);
 
-            logger.debug("查询持久化附件");
-            Attachment persistAttachment = this.attachmentRepository.findTopOneBySha1AndMd5(sha1, md5);
+            logger.debug("查找附件是否已经被上传过了，已上传过的话，则用原来的。");
+            Attachment oldAttachment = this.attachmentRepository.findTopOneBySha1AndMd5(sha1ToMultipartFile, md5ToMultipartFile);
+            if (oldAttachment == null) {
+                logger.debug("设置保存文件名");
+                String saveName = CommonService.md5(md5ToMultipartFile + System.currentTimeMillis()) + "." + ext;
 
-            if (persistAttachment == null) {
-                logger.debug("计算存储文件名称");
-                String name = CommonService.md5(sha1 + System.currentTimeMillis());
-
-                logger.debug("获取文件存储路径");
-                Path path = this.getPath();
-
-                logger.debug("如果目录不存在，则创建目录");
-                if (Files.notExists(path)) {
-                    Files.createDirectories(path);
+                logger.debug("判断上传的文件是否为空");
+                if (multipartFile.isEmpty()) {
+                    throw new RuntimeException("上传的附件不能为空" + fileName);
                 }
 
-                logger.debug("获取算法");
-                Cipher cipher = Cipher.getInstance(this.ALGORITHM);
+                logger.debug("如果目录不存在，则创建目录。如果目录存在，则不创建");
+                if (!Files.exists(saveFilePath)) {
+                    Files.createDirectories(saveFilePath);
+                    new File(saveFilePath.resolve("index.html").toString()).createNewFile();
+                }
 
-                logger.debug("设置加密模式与加密密钥");
-                cipher.init(Cipher.ENCRYPT_MODE, this.KEY);
+                logger.debug("将文件移动至储存文件的路径下");
+                Files.copy(multipartFile.getInputStream(), saveFilePath.resolve(saveName),
+                        StandardCopyOption.REPLACE_EXISTING);
 
-                logger.debug("获取输出流");
-                OutputStream out = new FileOutputStream(path.resolve(name).toFile());
-
-                logger.debug("文件上传至目录");
-                this.readInputAndWriteToOutput(multipartFile.getInputStream(), out, cipher);
-
-                logger.debug("设置附件存储信息");
-                attachment.setPath(path.toString());
-                attachment.setName(name);
+                logger.debug("将附件存入到数据库中");
+                attachment.setSaveName(saveName);
+                String savePath = saveFilePath.resolve(saveName).toString();
+                attachment.setSavePath(savePath);
             } else {
-                logger.debug("从原附件实体中复制信息");
-                attachment.setPath(persistAttachment.getPath());
-                attachment.setName(persistAttachment.getName());
+                return oldAttachment;
             }
 
-            logger.debug("存储附件");
             this.attachmentRepository.save(attachment);
         } catch (Exception e) {
             logger.error("上传附件出现异常");
-            throw new RuntimeException("附件上传错误", e);
+            e.printStackTrace();
         }
-
         return attachment;
-    }
-
-    @Override
-    public void download(String md5, String sha1, Long id, String originName, OutputStream out) {
-        logger.debug("查询附件");
-        Attachment attachment = this.attachmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("附件未找到"));
-
-        if (!attachment.getMd5().equals(md5) && !attachment.getSha1().equals(sha1) && !attachment.getOriginName().equals(originName)) {
-            throw new EntityNotFoundException("附件未找到");
-        }
-
-        logger.debug("查询资源");
-        Path path = Paths.get(attachment.getPath()).resolve(attachment.getName());
-        Resource resource = this.getResourceByPath(path);
-
-        try {
-            logger.debug("获取算法");
-            Cipher cipher = Cipher.getInstance(this.ALGORITHM);
-
-            logger.debug("设置解密模式与解密密钥");
-            cipher.init(Cipher.DECRYPT_MODE, this.KEY);
-
-            this.readInputAndWriteToOutput(resource.getInputStream(), out, cipher);
-        } catch (Exception e) {
-            logger.error("下载附件出现异常");
-            throw new RuntimeException("附件下载错误", e);
-        }
     }
 
     @Override
@@ -155,29 +102,33 @@ public class AttachmentServiceImpl implements AttachmentService {
         return this.attachmentRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(String.format("id为%s的附件未找到", id.toString())));
     }
 
-    /**
-     * 从 输入 中读取并写入到 输出 中
-     *
-     * @param in     输入流
-     * @param out    输出流
-     * @param cipher 加密/解密
-     */
-    private void readInputAndWriteToOutput(InputStream in, OutputStream out, Cipher cipher) throws IOException {
-        logger.debug("设置缓冲区大小");
-        byte[] buffer = new byte[10240];
+    @Override
+    public void downloadFile(String fileName, HttpServletResponse response) throws IOException {
+        File file = this.getPathByFileSaveName(fileName).toFile();
+        logger.info("输出文件类型");
+        FileInputStream inputStream = new FileInputStream(file);
+        response.setHeader("Content-Type", this.getMediaTypeBySaveName(fileName));
 
-        logger.debug("输出流配置加密/解密");
-        out = new CipherOutputStream(out, cipher);
+        logger.info("输出文件名");
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+        response.setContentLength((int) file.length());
 
-        logger.debug("循环读取数据并写入到输出流");
-        int len;
-        while ((len = in.read(buffer)) != -1) {
-            out.write(buffer, 0, len);
-        }
+        logger.info("写入数据流");
+        readInputAndWriteToOutput(inputStream, response.getOutputStream());
+    }
 
-        logger.debug("关闭输出流");
-        out.flush();
-        out.close();
+    private Path getPathByFileSaveName(String name) {
+        return this.getFilePath().resolve(name);
+    }
+
+    private Path getFilePath() {
+        return Paths.get(CONFIG_PATH + this.getYearMonthDay());
+    }
+
+    @Override
+    public String getMediaTypeBySaveName(String saveName) {
+        Attachment attachment = this.attachmentRepository.findBySaveName(saveName);
+        return attachment.getMIME();
     }
 
     /**
@@ -195,28 +146,6 @@ public class AttachmentServiceImpl implements AttachmentService {
         while ((len = in.read(buffer)) != -1) {
             out.write(buffer, 0, len);
         }
-    }
-
-    /**
-     * 根据附件路径获取资源
-     */
-    private Resource getResourceByPath(Path path) {
-        try {
-            logger.debug("根据附件路径获取附件");
-            Resource resource = new UrlResource(path.toUri());
-
-            logger.debug("判断附件是否存在");
-            return resource;
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("获取附件时存在异常");
-        }
-    }
-
-    /**
-     * 计算当前图片的存储路径
-     */
-    private Path getPath() {
-        return Paths.get(CONFIG_PATH + this.getYearMonthDay());
     }
 
     /**

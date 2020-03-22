@@ -44,13 +44,20 @@ export class EditComponent implements OnInit {
    */
   public update() {
     // 先上传每个附件
-    for (let i = 0; i < this.selectFiles.length; i++) {
-      this.attachmentService.upload(this.selectFiles[i])
+    for (const file of this.selectFiles) {
+      let uploadedCount = 0;
+      this.attachmentService.upload(file)
         .subscribe((attachment) => {
-          this.work.attachments.push(attachment);
+          uploadedCount++;
+          if (!this.containAttachment(attachment, this.work.attachments)) {
+            this.work.attachments.push(attachment);
+          }
           // 最后一个附件上传以后更新作业信息
-          if (i === this.selectFiles.length - 1) {
-            this.workService.update(this.work.id, this.work);
+          if (uploadedCount === this.selectFiles.length - 1) {
+            this.workService.update(this.work.id, this.work)
+              .subscribe(() => {
+
+              });
           }
         });
     }
@@ -85,6 +92,21 @@ export class EditComponent implements OnInit {
    * @param attachmentId 附件id
    */
   deleteAttachment(workId: number, attachmentId: number) {
+    this.workService.deleteAttachment(workId, attachmentId)
+      .subscribe(() => {
 
+      });
+  }
+
+  /**
+   * 该附件是否已经上传
+   */
+  containAttachment(testAttachment: Attachment, attachments: Array<Attachment>): boolean {
+    for (const attachment of attachments) {
+      if (attachment.id === testAttachment.id) {
+        return true;
+      }
+    }
+    return false;
   }
 }

@@ -31,17 +31,9 @@ export class AttachmentService {
    * @param attachment 附件对象
    */
   download(attachment: Attachment): Observable<Blob> {
-    Assert.isDefined(attachment.md5, 'md5未定义');
-    Assert.isDefined(attachment.sha1, 'sh1未定义');
-    Assert.isDefined(attachment.id, 'id未定义');
-    Assert.isDefined(attachment.originName, 'originName未定义');
+    Assert.isDefined(attachment.saveName, 'saveName未定义');
 
-    /** 从附件中获取参数 */
-    const md5 = attachment.md5;
-    const sha1 = attachment.sha1;
-    const id = attachment.id;
-    const originName = attachment.originName;
     /** 下载附件对象 */
-    return this.httpClient.get<Blob>(`${this.baseUrl}/${md5}/${sha1}/${id}/${originName}`, { responseType: 'blob' as 'json' });
+    return this.httpClient.get<Blob>(`${this.baseUrl}/${attachment.saveName}`, { responseType: 'blob' as 'json' });
   }
 }
