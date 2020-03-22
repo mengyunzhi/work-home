@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../service/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Student} from '../../../common/student';
+import {ConfigService} from '../../../service/config.service';
 
 @Component({
   selector: 'app-login',
@@ -38,11 +39,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   /** 显示注册提示信息 */
   showRegisterInfo: boolean;
 
+  projectConfig: {version: string};
+
   constructor(private userService: UserService,
-              private builder: FormBuilder) {
+              private builder: FormBuilder,
+              private configService: ConfigService) {
   }
 
   ngOnInit() {
+    this.projectConfig = this.configService.config;
     this.changeToLogin();
     /** 创建表单 */
     this.loginForm = this.builder.group({
