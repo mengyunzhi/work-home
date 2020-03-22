@@ -16,7 +16,7 @@ public abstract class ServiceTest {
     public void beforeEach() {
         this.studentService = Mockito.mock(StudentService.class);
         this.currentStudent.setId(this.random.nextLong());
-        Mockito.doReturn(Optional.of(currentStudent))
+        Mockito.doReturn(currentStudent)
                 .when(this.studentService)
                 .getCurrentStudent();
     }

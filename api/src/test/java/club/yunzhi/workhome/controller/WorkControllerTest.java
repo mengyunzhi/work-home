@@ -54,10 +54,10 @@ class WorkControllerTest extends ControllerTest {
         work.setId(this.random.nextLong());
 
         Mockito.doReturn(work).when(this.workService)
-                .update(Mockito.any(Long.class), Mockito.any(Work.class));
+                .updateOfCurrentStudent(Mockito.any(Long.class), Mockito.any(Work.class));
 
         this.mockMvc.perform(MockMvcRequestBuilders
-                .put(this.url + "/" + workId)
+                .put(this.url + "/updateOfCurrentStudent/" + workId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -66,7 +66,7 @@ class WorkControllerTest extends ControllerTest {
         ;
 
         ArgumentCaptor<Work> workArgumentCaptor = ArgumentCaptor.forClass(Work.class);
-        Mockito.verify(this.workService).update(Mockito.eq(workId), workArgumentCaptor.capture());
+        Mockito.verify(this.workService).updateOfCurrentStudent(Mockito.eq(workId), workArgumentCaptor.capture());
         Assertions.assertEquals(workId.compareTo(workArgumentCaptor.getValue().getId()), 0);
     }
 }

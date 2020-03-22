@@ -33,10 +33,10 @@ public class WorkController {
         return workService.getOrElseCreateNewByItemIdOfCurrentStudent(itemId);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("updateOfCurrentStudent/{id}")
     @JsonView(UpdateJsonView.class)
-    public Work update(@PathVariable Long id, @RequestBody Work work) {
-        return this.workService.update(id, work);
+    public Work updateOfCurrentStudent(@PathVariable Long id, @RequestBody Work work) {
+        return this.workService.updateOfCurrentStudent(id, work);
     }
 
     private interface GetAllOfCurrentStudentJsonView
