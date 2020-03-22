@@ -112,10 +112,6 @@ export class AppComponent implements OnInit {
       cancelButtonText: '取消'
     });
 
-    const cancel = this.alert.cancel.pipe(first()).subscribe(() => {
-      result.unsubscribe();
-    });
-
     /**
      * 订阅提示框确认消息
      */
@@ -126,6 +122,10 @@ export class AppComponent implements OnInit {
       }
       // 取消订阅
       cancel.unsubscribe();
+    });
+
+    const cancel = this.alert.cancel.pipe(first()).subscribe(() => {
+      result.unsubscribe();
     });
 
     /**
