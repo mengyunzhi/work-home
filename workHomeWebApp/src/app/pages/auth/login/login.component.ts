@@ -65,7 +65,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     const confirmPassword = group.get('confirmPassword').value;
 
     /** 判断两次密码是否相同 */
-    return password === confirmPassword ? null : { mismatch: true };
+    if (password && confirmPassword) {
+      return password === confirmPassword ? null : { mismatch: true };
+    }
   }
 
   login() {

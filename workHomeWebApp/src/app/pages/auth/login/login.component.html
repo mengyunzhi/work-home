@@ -75,6 +75,10 @@
             <input type="password" class="form-control form-control-sm" id="register-confirm-password"
                    placeholder="请确认密码" formControlName="confirmPassword"/>
           </div>
+          <ng-template [ngIf]="registerForm.errors && registerForm.errors.mismatch">
+            <hr>
+            <small class="text-danger">两次输入的密码不一致</small>
+          </ng-template>
           <hr>
           <button type="submit" [disabled]="registerForm.invalid" class="btn btn-success form-control form-control-sm">
             注册
