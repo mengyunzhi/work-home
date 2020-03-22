@@ -1,14 +1,14 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${ddl-auto:update}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL55Dialect
   datasource:
-    url: jdbc:mysql://${datasource.url:127.0.0.1}:${datasource.port:3306}/${datasource.dbname:work_home}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: ${datasource.username:root}
-    password: ${datasource.password:}
+    url: jdbc:mysql://${db.host:127.0.0.1}:${db.port:3306}/${db.name:work_home}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: ${db.username:root}
+    password: ${db.password:}
   servlet:
     multipart:
       enabled: true
@@ -17,7 +17,7 @@ spring:
 
 server:
   # 配置端口
-  port: 8002
+  port: ${port:8002}
 
 app:
   # 32 位随机字符串 ASE 密钥
