@@ -110,3 +110,34 @@ export class Assert {
  * 定义class类型
  */
 export type Class = new(...args: any[]) => any;
+
+export class Random {
+  /**
+   * 获取随机数据
+   * @param width 位宽
+   */
+  static nextNumber(width = 32) {
+    let range = 1;
+    while (width > 0) {
+      range = range * 2;
+      width--;
+    }
+
+    return Math.floor(Math.random() * range);
+  }
+
+  /**
+   * 获取随机字符串
+   * @param prefix 返回字符串的前缀
+   * @param length 字符串长度
+   */
+  static nextString(prefix = '', length = 4) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return prefix + result;
+  }
+}

@@ -1,0 +1,39 @@
+<form [formGroup]="studentForm" (ngSubmit)="submit()">
+    <div class="row">
+        <div class="col-md-6 offset-md-1">
+            <div class="row">
+                <div class="col-md-4 text-right">
+                    <label class="form-text">学号<code>*</code></label>
+                </div>
+                <div class="col-md-8">
+                    <p>{{student.no}}</p>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 text-right">
+                    <label for="name" class="form-text">名称<code>*</code></label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="name" placeholder="请输入学生名称" formControlName="name" />
+                </div>
+            </div>
+            <div class="row mt-2" *ngIf="name.invalid && (name.dirty || name.touched)">
+                <div class="col-md-8 offset-md-4">
+                    <small class="text-danger" *ngIf="name.errors.required">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        学生姓名必须
+                    </small>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-8 offset-md-4">
+                    <button class="btn btn-dark btn-sm" [disabled]="studentForm.invalid" type="submit">
+                        <i class="far fa-save"></i>
+                        &nbsp;保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

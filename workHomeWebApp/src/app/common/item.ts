@@ -8,6 +8,6 @@ export class Item {
   name: string;
   beginTime: number;
   endTime: number;
-  content: string;
+  description: string;
   attachements: Array<Attachment>;
 }
