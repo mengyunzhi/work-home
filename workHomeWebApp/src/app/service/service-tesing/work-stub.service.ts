@@ -1,6 +1,7 @@
-import { Observable, of } from 'rxjs';
-import { Work } from '../../common/work';
-import { TestingUtils } from '../../testing/testingUtils';
+import {Observable, of} from 'rxjs';
+import {Work} from '../../common/work';
+import {TestingUtils} from '../../testing/testingUtils';
+import {Attachment} from '../../common/attachment';
 
 export class WorkStubService {
 
@@ -20,5 +21,21 @@ export class WorkStubService {
 
   getById(id: number) {
     return of(new Work());
+  }
+
+  getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
+    const work = new Work();
+    work.id = TestingUtils.randomNumber();
+    work.content = TestingUtils.randomString('作业内容');
+    work.attachments = [new Attachment()];
+    return of(work);
+  }
+
+  updateOfCurrentStudent(id: number, work: Work): Observable<Work> {
+    const resultWork = new Work();
+    resultWork.id = TestingUtils.randomNumber();
+    resultWork.content = TestingUtils.randomString('作业内容');
+    resultWork.attachments = [new Attachment()];
+    return of(resultWork);
   }
 }

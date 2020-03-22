@@ -9,13 +9,13 @@ export class MenuStubService {
     const menu = new Menu();
     menu.name = TestingUtils.randomString('测试菜单');
     menu.url = TestingUtils.randomString('测试url');
-    menu.role = Menu.ROLE_STUDENT;
+    menu.roles = [Menu.ROLE_STUDENT];
     this.menus.push(menu);
 
     const menu1 = new Menu();
     menu1.name = TestingUtils.randomString('测试菜单');
     menu1.url = TestingUtils.randomString('测试url');
-    menu1.role = Menu.ROLE_TEACHER;
+    menu1.roles = [Menu.ROLE_TEACHER];
     this.menus.push(menu1);
   }
 

@@ -10,7 +10,7 @@ export class ItemService {
   private url = 'item';
   constructor(private httpClient: HttpClient) { }
 
-  getCurrentActiveItem(): Observable<Item> {
-    return this.httpClient.get<Item>(`${this.url}/getCurrentActiveItem`);
+  findAllActiveItems(): Observable<Item[]> {
+    return this.httpClient.get<Item[]>(`${this.url}/active`);
   }
 }
