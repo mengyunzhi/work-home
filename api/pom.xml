@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>club.yunzhi</groupId>
 	<artifactId>workHome</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>workHome</name>
-	<description>Demo project for Spring Boot</description>
+	<version>1.0.0</version>
+	<name>work-home</name>
+	<description>作业提交系统</description>
 
 	<properties>
 		<java.version>1.8</java.version>
