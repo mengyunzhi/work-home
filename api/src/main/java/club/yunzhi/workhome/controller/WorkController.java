@@ -33,11 +33,10 @@ public class WorkController {
         return workService.getOrElseCreateNewByItemIdOfCurrentStudent(itemId);
     }
 
-//
-//    @DeleteMapping("{workId}/{attachmentId}")
-//    public void deleteAttachment(@PathVariable Long workId, @PathVariable Long attachmentId) {
-//        this.workService.deleteAttachment(workId, attachmentId);
-//    }
+    @DeleteMapping("deleteAttachment/{workId}/{attachmentId}")
+    public void deleteAttachment(@PathVariable Long workId, @PathVariable Long attachmentId) {
+        this.workService.deleteAttachment(workId, attachmentId);
+    }
 
     @PutMapping("updateOfCurrentStudent/{id}")
     @JsonView(UpdateJsonView.class)

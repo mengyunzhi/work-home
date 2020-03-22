@@ -6,6 +6,7 @@ import { Work } from '../../../common/work';
 import { Attachment } from '../../../common/attachment';
 import { AttachmentService } from '../../../service/attachment.service';
 import { saveAs } from 'file-saver';
+import { AppComponent } from '../../../app.component';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class EditComponent implements OnInit {
               private commonService: CommonService,
               private route: ActivatedRoute,
               private workService: WorkService,
-              private attachmentService: AttachmentService) {
+              private attachmentService: AttachmentService,
+              private appComponent: AppComponent) {
   }
 
   ngOnInit() {
@@ -46,9 +48,13 @@ export class EditComponent implements OnInit {
           if (i === this.selectFiles.length - 1) {
             this.workService.updateOfCurrentStudent(this.work.id, this.work)
               .subscribe(() => {
-
+                this.appComponent.success(() => {
+                }, '', '保存成功!');
               });
           }
+        }, () => {
+          this.appComponent.error(() => {
+          }, '', '保存失败!');
         });
     }
   }
@@ -83,5 +89,13 @@ export class EditComponent implements OnInit {
    */
   deleteAttachment(workId: number, attachmentId: number) {
 
+    this.appComponent.confirm(() => {
+      this.workService.deleteAttachment(workId, attachmentId)
+        .subscribe(() => {
+          this.appComponent.success(() => {
+          }, '', '删除成功!');
+        });
+
+    }, '', '确定删除吗?');
   }
 }
