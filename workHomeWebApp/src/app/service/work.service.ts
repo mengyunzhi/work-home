@@ -14,7 +14,7 @@ export class WorkService {
   }
 
   getAllOfCurrentStudent(): Observable<Array<Work>> {
-    return this.httpClient.get<Array<Work>>(this.url);
+    return this.httpClient.get<Array<Work>>(`${this.url}/getAllOfCurrentStudent`);
   }
 
   getById(id: number): Observable<Work> {

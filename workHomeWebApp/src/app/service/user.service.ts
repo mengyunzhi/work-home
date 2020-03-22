@@ -21,10 +21,7 @@ export class UserService {
               private httpClient: HttpClient,
               private router: Router) {
     this.currentLoginUser$ = this.currentLoginUserSubject.asObservable();
-    // 如果当前不是登录模块，请求当前登录用户
-    if (!this.router.url.includes('auth')) {
-      this.getCurrentLoginUser();
-    }
+    this.getCurrentLoginUser();
   }
 
   private getCurrentLoginUser() {
