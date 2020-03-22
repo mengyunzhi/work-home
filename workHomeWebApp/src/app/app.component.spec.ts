@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import {FuncTestingModule} from './func/func-testing/func-testing.module';
 import {PartTestingModule} from './part/part-testing/part-testing.module';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import {AuthTestingModule} from './pages/pages-testing/auth-testing/auth-testing.module';
 import {ServiceTestingModule} from './service/service-tesing/service-testing.module';
 
@@ -13,6 +14,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         FuncTestingModule,
         PartTestingModule,
+        SweetAlert2Module.forRoot(),
         AuthTestingModule,
         ServiceTestingModule
       ],

@@ -30,9 +30,9 @@ export class UserService {
 
     this.httpClient.get<User>(`${this.url}/me`)
       .subscribe(user => {
-        this.currentLoginUser = user;
+        this.setCurrentLoginUser(user);
       }, () => {
-        this.currentLoginUser = null;
+        this.setCurrentLoginUser(null);
       }, () => {
         // 准备完完毕
         appOnReadyItem.ready = true;
