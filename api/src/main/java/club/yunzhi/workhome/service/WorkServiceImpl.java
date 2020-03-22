@@ -1,5 +1,6 @@
 package club.yunzhi.workhome.service;
 
+import club.yunzhi.workhome.entity.Attachment;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.Work;
@@ -8,9 +9,12 @@ import club.yunzhi.workhome.exception.ObjectNotFoundException;
 import club.yunzhi.workhome.exception.ValidationException;
 import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +25,8 @@ import java.util.Optional;
  */
 @Service
 public class WorkServiceImpl implements WorkService {
+    private static final Logger logger = LoggerFactory.getLogger(WorkServiceImpl.class);
+
     final WorkRepository workRepository;
     final StudentService studentService;
     final UserService userService;
@@ -69,6 +75,23 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    public void deleteAttachment(Long workId, Long attachmentId) {
+        Work work = this.findById(workId);
+        List<Attachment> attachments = work.getAttachments();
+
+        logger.debug("删除关联关系");
+        attachments.removeIf(attachment -> attachment.getId().equals(attachmentId));
+
+        work.setAttachments(attachments);
+        this.save(work);
+    }
+
+    @Override
+    public Work findById(Long id) {
+        return this.workRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("未找到该作业"));
+    }
+
+    @Override
     public Work saveWorkByItemIdOfCurrentStudent(@NotNull Long itemId) {
         Item item = this.itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("未找到id为" + itemId + "的实验"));
@@ -81,10 +104,6 @@ public class WorkServiceImpl implements WorkService {
         return this.save(work);
     }
 
-    @Override
-    public Work update(Long id, Work work) {
-        return null;
-    }
 
     @Override
     public Work updateOfCurrentStudent(Long id, @NotNull Work work) {
