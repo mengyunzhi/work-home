@@ -3,6 +3,7 @@ import {first} from 'rxjs/operators';
 import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 import {UserService} from './service/user.service';
 import {isDefined} from './utils';
+import {Subscription} from 'rxjs/src/internal/Subscription';
 
 @Component({
   selector: 'app-root',
@@ -123,6 +124,7 @@ export class AppComponent implements OnInit {
       cancelButtonText: '取消'
     });
 
+    let cancel = null;
     /**
      * 订阅提示框确认消息
      */
@@ -131,11 +133,15 @@ export class AppComponent implements OnInit {
       if (callback) {
         callback();
       }
-      // 取消订阅
-      cancel.unsubscribe();
+
+      if (cancel) {
+        // 取消订阅
+        cancel.unsubscribe();
+      }
+
     });
 
-    const cancel = this.alert.cancel.pipe(first()).subscribe(() => {
+    cancel = this.alert.cancel.pipe(first()).subscribe(() => {
       result.unsubscribe();
     });
 
