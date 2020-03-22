@@ -38,7 +38,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.userService.logout()
-      .subscribe();
+      .subscribe(() => {
+      }, () => {
+      }, () => {
+        this.router.navigateByUrl('');
+      });
   }
 
   ngOnDestroy(): void {

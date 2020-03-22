@@ -1,4 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Attachment} from '../../../common/attachment';
+import {HttpErrorResponse} from '@angular/common/http';
+import {AttachmentService} from '../../../service/attachment.service';
 
 @Component({
   selector: 'app-editor-component',
@@ -6,6 +9,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./editor-component.component.sass']
 })
 export class EditorComponentComponent implements OnInit {
+  constructor(private attachmentService: AttachmentService ) {
+  }
 
   @Input()
   content: string;
@@ -23,17 +28,14 @@ export class EditorComponentComponent implements OnInit {
     language: 'zh_CN',
     toolbar: 'undo redo | bold italic underline strikethrough | subscript superscript' +
       ' | alignleft aligncenter alignright | table image fullscreen | charmap',
-    // // 文件上传拦截器
-    // Todo: 配置文件上传接口
-    // images_upload_handler: (blobInfo, success, failure): void => {
-    //   this.attachmentService.upload(blobInfo.blob())
-    //     .subscribe((attachment: Attachment) => {
-    //       success('/api/attachment/' + attachment.md5 + '/'
-    //         + attachment.sha1 + '/' + attachment.id + '/' + attachment.originName);
-    //     }, (response: HttpErrorResponse) => {
-    //       failure('上传图片异常: ' + response.error);
-    //     });
-    // },
+    images_upload_handler: (blobInfo, success, failure): void => {
+      this.attachmentService.upload(blobInfo.blob())
+        .subscribe((attachment: Attachment) => {
+          success(`/${attachment.savePath}/${attachment.saveName}`);
+        }, (response: HttpErrorResponse) => {
+          failure('上传图片异常: ' + response.error);
+        });
+    },
     // 允许拖拽图片
     paste_data_images: true,
     height: '100'

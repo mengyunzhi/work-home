@@ -15,7 +15,7 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./edit.component.sass']
 })
 export class EditComponent implements OnInit {
-  work: Work;
+  work = new Work();
   selectFiles = new Array<File>();
   maxFileSize = 1024 * 1024 * 20;
 
@@ -43,6 +43,7 @@ export class EditComponent implements OnInit {
     this.workService.updateOfCurrentStudent(this.work.id, this.work)
       .subscribe(() => {
         this.appComponent.success(() => {
+          this.router.navigateByUrl('work');
         }, '', '保存成功!');
       });
   }
@@ -109,7 +110,6 @@ export class EditComponent implements OnInit {
    * @param attachmentId 附件id
    */
   deleteAttachment(workId: number, attachmentId: number) {
-
     this.appComponent.confirm(() => {
       this.workService.deleteAttachment(workId, attachmentId)
         .subscribe(() => {
