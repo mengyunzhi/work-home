@@ -82,6 +82,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
   }
 
+  register(): void {
+    console.log(this.registerForm.value);
+  }
+
   changeToLogin(): void {
     this.mode = 'login';
   }

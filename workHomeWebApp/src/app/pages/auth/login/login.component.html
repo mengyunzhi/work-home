@@ -41,7 +41,7 @@
             登录
           </button>
         </form>
-        <form [formGroup]="registerForm" *ngIf="mode === 'register'">
+        <form [formGroup]="registerForm" (ngSubmit)="register()" *ngIf="mode === 'register'">
           <div class="form-group">
             <label for="register-no">
               <small>学号<code>*</code></small>
