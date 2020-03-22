@@ -9,5 +9,6 @@ export class Item {
   beginTime: number;
   endTime: number;
   description: string;
-  attachements: Array<Attachment>;
+  attachments: Array<Attachment>;
+  active: boolean;
 }
