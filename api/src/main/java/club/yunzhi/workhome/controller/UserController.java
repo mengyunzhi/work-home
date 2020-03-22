@@ -1,12 +1,14 @@
 package club.yunzhi.workhome.controller;
 
+import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
+import club.yunzhi.workhome.service.StudentService;
 import club.yunzhi.workhome.service.UserService;
+import club.yunzhi.workhome.transfer.StudentRegisterInformation;
 import club.yunzhi.workhome.vo.VUser;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
@@ -26,10 +28,12 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    final UserService userService;
+    private final UserService userService;
+    private final StudentService studentService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, StudentService studentService) {
         this.userService = userService;
+        this.studentService = studentService;
     }
 
     @GetMapping("me")
@@ -57,7 +61,6 @@ public class UserController {
     @JsonView(GetCurrentLoginUser.class)
     public User getCurrentLoginUser() {
         return this.userService.getCurrentLoginUser();
-
     }
 
     /**
@@ -79,6 +82,21 @@ public class UserController {
     @PutMapping("updatePassword")
     public void updatePassword(@RequestBody VUser vUser) {
         this.userService.updatePassword(vUser);
+    }
+
+    @PostMapping("register")
+    public void register(@RequestBody StudentRegisterInformation information) {
+        logger.debug("传输对象转换");
+        User user = new User();
+        user.setUsername(information.getUsername());
+        user.setPassword(information.getPassword());
+        Student student = new Student();
+        student.setNo(information.getNo());
+        student.setName(information.getName());
+        student.setUser(user);
+
+        logger.debug("保存");
+        studentService.save(student);
     }
 
     public interface MeJsonView {

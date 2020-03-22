@@ -13,14 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * @author yz
+ * 作业
  */
 @Service
 public class WorkServiceImpl implements WorkService {
@@ -96,7 +95,7 @@ public class WorkServiceImpl implements WorkService {
         Assert.notNull(work, "更新的作业实体不能为null");
         Work oldWork = this.workRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
-        if (!oldWork.getStudent().getId().equals(this.studentService.getCurrentStudent().get().getId())) {
+        if (!oldWork.getStudent().getId().equals(this.studentService.getCurrentStudent().getId())) {
             throw new AccessDeniedException("无权更新其它学生的作业");
         }
 
