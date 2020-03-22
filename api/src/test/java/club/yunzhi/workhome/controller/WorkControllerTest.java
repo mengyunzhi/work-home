@@ -3,7 +3,6 @@ package club.yunzhi.workhome.controller;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.service.WorkService;
-import com.sun.tools.javac.util.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -11,10 +10,6 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class WorkControllerTest extends ControllerTest {
     private String url = "/work";
