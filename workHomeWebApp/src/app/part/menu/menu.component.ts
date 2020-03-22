@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {MenuService} from '../../service/menu.service';
 import {Menu} from '../../common/menu';
 import {UserService} from '../../service/user.service';
+import {isDefined} from '../../utils';
 
 @Component({
   selector: 'app-menu',
@@ -35,11 +36,15 @@ export class MenuComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.userService.currentLoginUser$
           .subscribe(user => {
-            if (user )
+            this.menus = [];
+            if (isDefined(user)) {
+              data.forEach((menu) => {
+                if (menu.roles.includes(user.role)) {
+                  this.menus.push(menu);
+                }
+              });
+            }
           });
-        this.menus = [];
-        data.forEach()
-        this.menus = data;
       });
 
     // this.primaryMenus = menus;
