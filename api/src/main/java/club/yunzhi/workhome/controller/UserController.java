@@ -4,7 +4,6 @@ import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.service.StudentService;
 import club.yunzhi.workhome.service.UserService;
-import club.yunzhi.workhome.transfer.StudentRegisterInformation;
 import club.yunzhi.workhome.vo.VUser;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.slf4j.Logger;
@@ -85,16 +84,7 @@ public class UserController {
     }
 
     @PostMapping("register")
-    public void register(@RequestBody StudentRegisterInformation information) {
-        logger.debug("传输对象转换");
-        User user = new User();
-        user.setUsername(information.getUsername());
-        user.setPassword(information.getPassword());
-        Student student = new Student();
-        student.setNo(information.getNo());
-        student.setName(information.getName());
-        student.setUser(user);
-
+    public void register(@RequestBody Student student) {
         logger.debug("保存");
         studentService.save(student);
     }

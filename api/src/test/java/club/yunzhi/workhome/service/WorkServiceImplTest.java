@@ -92,7 +92,6 @@ class WorkServiceImplTest extends ServiceTest {
         Work oldWork = new Work();
         oldWork.setStudent(this.currentStudent);
         oldWork.setItem(new Item());
-        oldWork.getItem().setActive(true);
 
         Mockito.when(this.workRepository.findById(Mockito.eq(id)))
                 .thenReturn(Optional.of(oldWork));
