@@ -1,11 +1,13 @@
 package club.yunzhi.workhome.service;
 
+import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.util.Optional;
@@ -56,6 +58,21 @@ class WorkServiceImplTest extends ServiceTest {
 
     @Test
     void saveWorkByItemIdOfCurrentStudent() {
+        Long itemId = this.random.nextLong();
+        Item item = new Item();
+        Mockito.when(this.itemRepository.findById(Mockito.eq(itemId)))
+                .thenReturn(Optional.of(item));
+
+        Work work = new Work();
+        Mockito.doReturn(work).when(this.workService)
+                .save(Mockito.any(Work.class));
+
+        this.workService.saveWorkByItemIdOfCurrentStudent(itemId);
+
+        ArgumentCaptor<Work> workArgumentCaptor = ArgumentCaptor.forClass(Work.class);
+        Mockito.verify(this.workService).save(workArgumentCaptor.capture());
+        Assertions.assertEquals(item, workArgumentCaptor.getValue().getItem());
+        Assertions.assertEquals(currentStudent, workArgumentCaptor.getValue().getStudent());
     }
 
     @Test
