@@ -15,8 +15,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 // basic 认证
                 .httpBasic()
+                // 设置授权配置
+                .and().authorizeRequests()
+                // 开放注册接口
+                .antMatchers("/user/register").permitAll()
                 // 任何请求都需要认证
-                .and().authorizeRequests().anyRequest().authenticated()
+                .anyRequest().authenticated()
                 // 禁用 csrf
                 .and().csrf().disable();
     }
