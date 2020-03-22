@@ -29,7 +29,7 @@ export class WorkService {
   getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
     Assert.isNumber(itemId, '学期号必须是有效的numbert');
     const params = new HttpParams().set('itemId', itemId.toString());
-    return this.httpClient.get<Work>(`#{this.url}/getByItemIdOfCurrentStudent`, {params});
+    return this.httpClient.get<Work>(`${this.url}/getByItemIdOfCurrentStudent`, {params});
   }
 
   /**

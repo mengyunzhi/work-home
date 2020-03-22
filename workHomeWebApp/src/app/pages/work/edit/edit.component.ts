@@ -25,15 +25,9 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getEditWork();
-  }
-
-  /**
-   * 获取要编辑的大纲
-   */
-  public getEditWork() {
     this.route.params.subscribe(params => {
-      this.workService.getByItemIdOfCurrentStudent(params.itemId).subscribe((data) => {
+      const itemId = params.itemId as string;
+      this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
         this.work = data;
       });
     });
