@@ -7,6 +7,7 @@ import { Attachment } from '../../../common/attachment';
 import { AttachmentService } from '../../../service/attachment.service';
 import { saveAs } from 'file-saver';
 import { AppComponent } from '../../../app.component';
+import {isDefined} from '../../../utils';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(params => {
       const itemId = params.itemId as string;
       this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
-        if (data.content.length === 0) {
+        if (!isDefined(data.content.length) || data.content.length === 0) {
           data.content = '请将源代码、网页截图（支持拖拽）等按实验要求添加到此处。';
         }
         this.work = data;

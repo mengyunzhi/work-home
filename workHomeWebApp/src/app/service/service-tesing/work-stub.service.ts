@@ -15,6 +15,7 @@ export class WorkStubService {
     work.item.beginTime = TestingUtils.randomNumber();
     work.item.endTime = TestingUtils.randomNumber();
     work.item.active = (TestingUtils.randomNumber() % 2) === 0;
+    work.content = null;
     work.reviewed = true;
     work.score = 90;
     return of([work]);
