@@ -16,7 +16,7 @@ import { AppComponent } from '../../../app.component';
 })
 export class EditComponent implements OnInit {
   work: Work;
-  selectFiles: File[];
+  selectFiles = new Array<File>();
 
   constructor(private router: Router,
               private commonService: CommonService,
@@ -31,6 +31,7 @@ export class EditComponent implements OnInit {
       const itemId = params.itemId as string;
       this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
         this.work = data;
+        console.log(data);
       });
     });
   }
@@ -72,7 +73,8 @@ export class EditComponent implements OnInit {
       saveAs(data, `${attachment.originName}`);
     }, () => {
       console.log('请确定是否修改了nginx配置');
-      this.appComponent.error(() => {}, '', '下载发生错误');
+      this.appComponent.error(() => {
+      }, '', '下载发生错误');
     });
   }
 
@@ -95,10 +97,13 @@ export class EditComponent implements OnInit {
     this.appComponent.confirm(() => {
       this.workService.deleteAttachment(workId, attachmentId)
         .subscribe(() => {
+          this.work.attachments = this.work.attachments.filter(attachment => attachment.id !== attachmentId);
+
           this.appComponent.success(() => {
           }, '', '删除成功!');
         }, () => {
-          this.appComponent.error(() => {}, '', '删除失败!');
+          this.appComponent.error(() => {
+          }, '', '删除失败!');
         });
 
     }, '', '确定删除吗?');

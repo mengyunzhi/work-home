@@ -39,6 +39,6 @@ export class WorkService {
 
   getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
     const params: { [key: string]: any } = {itemId};
-    return this.httpClient.get<Work>(this.url + '/getByItemIdOfCurrentStudent/' + itemId, {params});
+    return this.httpClient.get<Work>(this.url + '/getByItemIdOfCurrentStudent', {params});
   }
 }
