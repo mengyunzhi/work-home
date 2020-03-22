@@ -3,6 +3,7 @@ package club.yunzhi.workhome.controller;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.service.WorkService;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,11 +33,20 @@ public class WorkController {
         return workService.getOrElseCreateNewByItemIdOfCurrentStudent(itemId);
     }
 
+    @PutMapping("{id}")
+    @JsonView(UpdateJsonView.class)
+    public Work update(@PathVariable Long id, @RequestBody Work work) {
+        return this.workService.update(id, work);
+    }
+
     private interface GetAllOfCurrentStudentJsonView
             extends Work.ItemJsonView {
     }
 
     private interface GetByItemIdJsonView
             extends Work.ItemJsonView, Work.AttachmentsJsonView {
+    }
+
+    private interface UpdateJsonView extends GetByItemIdJsonView {
     }
 }
