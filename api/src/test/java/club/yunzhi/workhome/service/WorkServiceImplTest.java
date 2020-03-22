@@ -20,12 +20,13 @@ class WorkServiceImplTest extends ServiceTest {
     WorkRepository workRepository;
     UserService userService;
     ItemRepository itemRepository;
-
+    ItemService itemService;
     WorkServiceImpl workService;
 
     @BeforeEach
     public void beforeEach() {
         super.beforeEach();
+        this.itemService = Mockito.mock(ItemService.class);
         this.workRepository = Mockito.mock(WorkRepository.class);
         this.userService = Mockito.mock(UserService.class);
         this.itemRepository = Mockito.mock(ItemRepository.class);

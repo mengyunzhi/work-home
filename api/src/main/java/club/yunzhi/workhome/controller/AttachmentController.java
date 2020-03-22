@@ -29,13 +29,8 @@ public class AttachmentController {
     public Attachment upload(@RequestParam("attachment") MultipartFile multipartFile) {
         return attachmentService.upload(multipartFile);
     }
-
-    @GetMapping("{md5}/{sha1}/{id}/{originName:.+}")
-    public void getResource(@PathVariable String md5,
-                            @PathVariable String sha1,
-                            @PathVariable Long id,
-                            @PathVariable String originName,
-                            HttpServletResponse response) throws IOException {
-        attachmentService.download(md5, sha1, id, originName, response.getOutputStream());
-    }
+//    @GetMapping("{originName:.+}")
+//    public void downloadFile(@PathVariable String originName, HttpServletResponse response) throws IOException {
+//        this.attachmentService.downloadFile(originName, response);
+//    }
 }

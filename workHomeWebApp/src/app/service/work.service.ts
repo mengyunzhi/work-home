@@ -23,16 +23,6 @@ export class WorkService {
   }
 
   /**
-   * 根据实验ID获取当前学生对应的作业
-   * @param itemId 实验
-   */
-  getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
-    Assert.isNumber(itemId, '学期号必须是有效的numbert');
-    const params = new HttpParams().set('itemId', itemId.toString());
-    return this.httpClient.get<Work>(`${this.url}/getByItemIdOfCurrentStudent`, {params});
-  }
-
-  /**
    * 更新前台学生作业
    * @param id 作业ID
    * @param work 作业
@@ -41,5 +31,14 @@ export class WorkService {
     Assert.isNumber(id, '未接收到有效的id值 ');
     Assert.isDefined(work, '未接收到有效的work值');
     return this.httpClient.put<Work>(this.url + '/updateOfCurrentStudent/' + id, work);
+  }
+
+  deleteAttachment(workId: number, attachmentId: number): Observable<void> {
+    return this.httpClient.delete<void>(this.url + '/deleteAttachment/' + workId + '/' + attachmentId);
+  }
+
+  getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
+    const params: { [key: string]: any } = {itemId};
+    return this.httpClient.get<Work>(this.url + '/getByItemIdOfCurrentStudent/' + itemId, {params});
   }
 }

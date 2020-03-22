@@ -3,6 +3,8 @@ package club.yunzhi.workhome.service;
 import club.yunzhi.workhome.entity.Attachment;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Random;
@@ -17,15 +19,6 @@ public interface AttachmentService {
         attachment.setId(new Random().nextLong());
         return attachment;
     }
-    
-    /**
-     * 下载附件
-     * @param md5 文件 MD5 值
-     * @param sha1 文件 SHA-1 值
-     * @param id 附件id
-     * @param originName 附件原始名称
-     */
-    void download(String md5, String sha1, Long id, String originName, OutputStream out);
 
     /**
      * 获取附件
@@ -40,4 +33,7 @@ public interface AttachmentService {
      */
     Attachment upload(MultipartFile multipartFile);
 
+    void downloadFile(String fileName, HttpServletResponse response) throws IOException;
+
+    String getMediaTypeBySaveName(String saveName);
 }

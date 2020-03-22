@@ -6,6 +6,7 @@ import { Work } from '../../../common/work';
 import { Attachment } from '../../../common/attachment';
 import { AttachmentService } from '../../../service/attachment.service';
 import { saveAs } from 'file-saver';
+import { AppComponent } from '../../../app.component';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class EditComponent implements OnInit {
               private commonService: CommonService,
               private route: ActivatedRoute,
               private workService: WorkService,
-              private attachmentService: AttachmentService) {
+              private attachmentService: AttachmentService,
+              private appComponent: AppComponent) {
   }
 
   ngOnInit() {
@@ -44,8 +46,15 @@ export class EditComponent implements OnInit {
           this.work.attachments.push(attachment);
           // 最后一个附件上传以后更新作业信息
           if (i === this.selectFiles.length - 1) {
-            this.workService.updateOfCurrentStudent(this.work.id, this.work);
+            this.workService.updateOfCurrentStudent(this.work.id, this.work)
+              .subscribe(() => {
+                this.appComponent.success(() => {
+                }, '', '保存成功!');
+              });
           }
+        }, () => {
+          this.appComponent.error(() => {
+          }, '', '保存失败!');
         });
     }
   }
@@ -61,6 +70,9 @@ export class EditComponent implements OnInit {
   downloadAttachment(attachment: Attachment) {
     this.attachmentService.download(attachment).subscribe((data) => {
       saveAs(data, `${attachment.originName}`);
+    }, () => {
+      console.log('请确定是否修改了nginx配置');
+      this.appComponent.error(() => {}, '', '下载发生错误');
     });
   }
 
@@ -80,5 +92,15 @@ export class EditComponent implements OnInit {
    */
   deleteAttachment(workId: number, attachmentId: number) {
 
+    this.appComponent.confirm(() => {
+      this.workService.deleteAttachment(workId, attachmentId)
+        .subscribe(() => {
+          this.appComponent.success(() => {
+          }, '', '删除成功!');
+        }, () => {
+          this.appComponent.error(() => {}, '', '删除失败!');
+        });
+
+    }, '', '确定删除吗?');
   }
 }

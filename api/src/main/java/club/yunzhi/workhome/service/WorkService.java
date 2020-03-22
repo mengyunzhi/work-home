@@ -1,6 +1,5 @@
 package club.yunzhi.workhome.service;
 
-import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.Work;
 
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.Optional;
 
 /**
  * 作业
- *
  * @author yz
  */
 public interface WorkService {
@@ -44,15 +42,6 @@ public interface WorkService {
     Work getOrElseCreateNewByItemIdOfCurrentStudent(Long itemId);
 
     /**
-     * 更新
-     *
-     * @param id   作业ID
-     * @param work 作业
-     * @return 更新后的作业
-     */
-    Work update(Long id, Work work);
-
-    /**
      * 更新当前学生
      * @param id  作业ID
      * @param work 作业
@@ -73,4 +62,19 @@ public interface WorkService {
      * @return 作业
      */
     Work save(Work work);
+
+    /**
+     * 删除某个作业的某个附件
+     * @param workId 作业id
+     * @param attachmentId 附件id
+     */
+    void deleteAttachment(Long workId, Long attachmentId);
+
+    /**
+     * 通过id获取作业
+     * @param id 作业id
+     * @return 作业
+     */
+    Work findById(Long id);
+
 }
