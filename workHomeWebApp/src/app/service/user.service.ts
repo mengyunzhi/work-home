@@ -7,6 +7,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {User} from '../common/user';
 import {VUser} from '../base/vuser';
 import {AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {Student} from '../common/student';
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +71,7 @@ export class UserService {
    * 学生注册
    * @param student 学生
    */
-  register(student): Observable<void> {
+  register(student: Student): Observable<void> {
     return this.httpClient.post<void>(`${this.url}/register`, student);
   }
 

@@ -28,6 +28,9 @@
       <span *ngIf="work.reviewed">{{work.score}}</span>
       <span *ngIf="!work.reviewed">-</span>
     </td>
-    <td><a class="btn btn-sm btn-outline-primary" routerLink="/work/edit/{{work.item.id}}">作答</a></td>
+    <td>
+      <a *ngIf="work.item.active" class="btn btn-sm btn-outline-primary" routerLink="/work/edit/{{work.item.id}}">作答</a>
+      <a *ngIf="!work.item.active" class="btn btn-sm btn-outline-info" routerLink="/work/{{work.id}}">查看</a>
+    </td>
   </tr>
 </table>

@@ -25,8 +25,6 @@ public class Item extends AbstractEntity implements YunzhiEntity {
 
     private String description;
 
-    private Boolean active = false;
-
     @ManyToMany
     @JsonView(AttachmentsJsonView.class)
     private List<Attachment> attachments = new ArrayList<>();
@@ -80,12 +78,15 @@ public class Item extends AbstractEntity implements YunzhiEntity {
     }
 
     public Boolean getActive() {
-        return active;
+        long current = System.currentTimeMillis();
+        if (this.beginTime != null && this.endTime != null) {
+            if (current > this.beginTime.getTime() && current < this.endTime.getTime()) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public interface AttachmentsJsonView {
     }
-
-    public interface AttachmentsJsonView {}
 }

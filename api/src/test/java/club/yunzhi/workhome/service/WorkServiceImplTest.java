@@ -91,11 +91,14 @@ class WorkServiceImplTest extends ServiceTest {
         Long id = this.random.nextLong();
         Work oldWork = new Work();
         oldWork.setStudent(this.currentStudent);
-        oldWork.setItem(new Item());
-        oldWork.getItem().setActive(true);
+        oldWork.setItem(Mockito.spy(new Item()));
 
         Mockito.when(this.workRepository.findById(Mockito.eq(id)))
                 .thenReturn(Optional.of(oldWork));
+
+        Mockito.doReturn(true)
+                .when(oldWork.getItem())
+                .getActive();
 
         Work work = new Work();
         work.setContent(RandomString.make(10));
