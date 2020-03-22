@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../../service/user.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserService} from '../../../service/user.service';
+import {HttpErrorResponse} from '@angular/common/http';
 import {Student} from '../../../common/student';
 
 @Component({
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     student.no = this.registerForm.get('no').value;
     student.user.username = student.no;
     student.user.password = this.registerForm.get('confirmPassword').value;
-    console.log(student);
+
     this.userService.register(student)
       .subscribe(() => {
         this.showRegisterErrorInfo = false;
