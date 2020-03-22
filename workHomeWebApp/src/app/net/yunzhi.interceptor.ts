@@ -1,16 +1,11 @@
-import {Injectable} from '@angular/core';
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent, HttpErrorResponse, HttpParams
-} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {catchError, mergeMap} from 'rxjs/operators';
-import {config} from '../conf/app.config';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
+import { config } from '../conf/app.config';
+import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import {isDefined} from '../utils';
+import { isDefined } from '../utils';
 
 /**
  * Yunzhi拦截器，用于实现添加url，添加header，全局异常处理
@@ -32,9 +27,14 @@ export class YunzhiInterceptor implements HttpInterceptor {
      * 为request加上服务端前缀
      */
     let url = req.url;
-    if (!url.startsWith('https://') && !url.startsWith('http://')) {
+    const firstUrl = url.split('/');
+    console.log(firstUrl, 111);
+    console.log(String(firstUrl.includes('Attachment1')));
+    if (!url.startsWith('https://') && !url.startsWith('http://') && !firstUrl.includes('Attachment1')) {
+      console.log(url);
       url = config.server + url;
     }
+
     let request = req.clone({url});
 
     /**
