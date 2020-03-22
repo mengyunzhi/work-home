@@ -61,6 +61,13 @@
 			<artifactId>core</artifactId>
 			<version>3.0.1.release</version>
 		</dependency>
+
+		<!-- Spring Security Test -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

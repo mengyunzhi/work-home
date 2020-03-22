@@ -5,6 +5,7 @@ import club.yunzhi.workhome.entity.Work;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 作业
@@ -20,4 +21,12 @@ public interface WorkRepository extends CrudRepository<Work, Long> {
      * @return 作业
      */
     List<Work> findAllByStudent(Student student);
+
+    /**
+     * 获取作业
+     * @param itemId 实验ID
+     * @param studentId 学生ID
+     * @return 作业
+     */
+    Optional<Work> findByItemIdAndStudentId(Long itemId, Long studentId);
 }

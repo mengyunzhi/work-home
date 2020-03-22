@@ -3,6 +3,7 @@ package club.yunzhi.workhome.service;
 import club.yunzhi.workhome.entity.Student;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentService {
 
@@ -35,7 +36,7 @@ public interface StudentService {
 
     /**
      * 删除学生
-     * @param id
+     * @param id 学生ID
      */
     void delete(Long id);
 
@@ -43,5 +44,5 @@ public interface StudentService {
      * 获取当前登录的学生
      * @return 学生 | null
      */
-    Student getCurrentStudent();
+    Optional<Student> getCurrentStudent();
 }
