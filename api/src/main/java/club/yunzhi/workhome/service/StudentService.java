@@ -44,5 +44,5 @@ public interface StudentService {
      * 获取当前登录的学生
      * @return 学生 | null
      */
-    Optional<Student> getCurrentStudent();
+    Student getCurrentStudent();
 }
