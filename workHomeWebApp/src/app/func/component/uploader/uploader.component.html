@@ -1,0 +1,58 @@
+<button class="{{styleClasses}}" data-toggle="modal" data-target="#staticBackdrop">
+  <i class="fas fa-upload"></i>{{buttonText}}
+</button>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+        <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="drop-container" appFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)"
+             [uploadInput]="uploadInput">
+          <p>
+            <label class="upload-button">
+              <input hidden type="file" appFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
+                     [uploadInput]="uploadInput" multiple>{{description}}
+            </label>
+          </p>
+        </div>
+        <!--上传进度-->
+        <div *ngFor="let f of files; let i = index;">
+          <div>
+            <div>
+              <span>{{ f.name }}</span>
+              <i class="fas fa-trash-alt btn-outline-danger" (click)="cancelUpload(f.id)"></i>
+            </div>
+            <div class="progress">
+              <span class="progress-bar" [style.width]="f?.progress?.data?.percentage + '%'">
+              </span>
+
+            </div>
+            <div>
+              <span>
+                <span>{{ f.progress?.data?.percentage }}% </span>
+                <span *ngIf="f.progress?.data?.percentage !== 100">Uploading...</span>
+                <span *ngIf="f.progress?.data?.percentage === 100">Done</span>
+              </span>
+              <span
+                *ngIf="f.progress?.data?.percentage !== 0 && f.progress?.data?.percentage !== 100">
+                      <span>{{ f.progress?.data?.speedHuman }} </span>
+                      <span>ETA {{ f.progress?.data?.etaHuman }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button (click)="close()" type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>

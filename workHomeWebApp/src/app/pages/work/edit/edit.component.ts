@@ -16,8 +16,6 @@ import { AppComponent } from '../../../app.component';
 })
 export class EditComponent implements OnInit {
   work = new Work();
-  selectFiles = new Array<File>();
-  maxFileSize = 1024 * 1024 * 20;
 
   constructor(private router: Router,
               private commonService: CommonService,
@@ -28,6 +26,10 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.load();
+  }
+
+  public load() {
     this.route.params.subscribe(params => {
       const itemId = params.itemId as string;
       this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
@@ -37,6 +39,16 @@ export class EditComponent implements OnInit {
         this.work = data;
       });
     });
+  }
+
+  /**
+   * 上传完一个附件以后
+   * @param attachment 附件
+   */
+  attachmentUploaded(attachment: Attachment) {
+    if (!this.containAttachment(attachment, this.work.attachments)) {
+      this.work.attachments.push(attachment);
+    }
   }
 
   /**
@@ -53,34 +65,7 @@ export class EditComponent implements OnInit {
 
   submit() {
     // 上传的附件为空直接更新数据
-    if (this.selectFiles.length === 0) {
-      this.update();
-    }
-
-    // 先上传每个附件
-    let fileUploadCount = 0;
-    for (const file of this.selectFiles) {
-      if (file.size > this.maxFileSize) {
-        this.appComponent.error(() => {
-        }, '最大传送20M的文件', '文件大小超过上传限制');
-        return;
-      }
-      this.attachmentService.upload(file)
-        .subscribe((attachment) => {
-          fileUploadCount++;
-
-          if (!this.containAttachment(attachment, this.work.attachments)) {
-            this.work.attachments.push(attachment);
-          }
-          // 最后一个附件上传以后更新作业信息
-          if (fileUploadCount === this.selectFiles.length) {
-            this.update();
-          }
-        }, () => {
-          this.appComponent.error(() => {
-          }, '', '保存失败!');
-        });
-    }
+    this.update();
   }
 
 
@@ -101,11 +86,6 @@ export class EditComponent implements OnInit {
   contentChange($event) {
     this.work.content = $event;
   }
-
-  fileChange(files: File[]) {
-    this.selectFiles = files;
-  }
-
 
   /**
    * 删除附件
@@ -141,5 +121,12 @@ export class EditComponent implements OnInit {
     }
 
     return false;
+  }
+
+  uploadRejected(reject: boolean) {
+    if (reject) {
+      this.appComponent.error(() => {
+      }, '可能是因为上传的文件过大或上传的数量过多', '上传失败');
+    }
   }
 }
