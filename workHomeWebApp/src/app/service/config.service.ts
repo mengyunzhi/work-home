@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +28,16 @@ export class ConfigService {
         if (data.version !== this.config.version) {
           location.reload(true);
         }
+        if (data.maxFileSize !== this.config.maxFileSize) {
+          location.reload(true);
+        }
       });
   }
 }
 
 class Config {
   version: string;
+  maxFileSize: string;
 }
+
+

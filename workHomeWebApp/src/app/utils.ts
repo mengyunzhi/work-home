@@ -44,6 +44,15 @@ export function cloneArray(array: Array<any>) {
 }
 
 /**
+ * 计算一个算式的字符串
+ * @param string
+ * https://stackoverflow.com/questions/6479236/calculate-string-value-in-javascript-not-using-eval
+ */
+export function stringToNumber(string) {
+  return new Function('return ' + string)();
+}
+
+/**
  * 断言。用于对参数是否符合要求进行判断。不符合要求则抛出异常
  */
 export class Assert {
@@ -140,4 +149,6 @@ export class Random {
     }
     return prefix + result;
   }
+
+
 }

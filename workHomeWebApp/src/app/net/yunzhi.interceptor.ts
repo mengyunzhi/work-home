@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import {catchError, finalize, mergeMap} from 'rxjs/operators';
+import { catchError, finalize, mergeMap } from 'rxjs/operators';
 import { config } from '../conf/app.config';
 import { isDefined } from '../utils';
-import {CommonService} from '../service/common.service';
+import { CommonService } from '../service/common.service';
 
 /**
  * Yunzhi拦截器，用于实现添加url，添加header，全局异常处理
@@ -26,7 +26,9 @@ export class YunzhiInterceptor implements HttpInterceptor {
      * 为request加上服务端前缀
      */
     let url = req.url;
-    if (!url.startsWith('https://') && !url.startsWith('http://') && !url.endsWith('config.json')) {
+    if (url.startsWith('attachment') && req.method !== 'GET' ||
+      !url.startsWith('attachment') && !url.startsWith('https://') && !url.startsWith('http://') && !url.endsWith('config.json')
+    ) {
       url = config.server + url;
     }
 
