@@ -1,37 +1,18 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {StudentIndexComponent} from './student-index/student-index.component';
-import {StudentAddComponent} from './student-add/student-add.component';
-import {StudentEditComponent} from './student-edit/student-edit.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
   {
-    path: '',
-    component: StudentIndexComponent,
+    path: 'work',
+    loadChildren: () => import('./work/work.module').then(m => m.WorkModule),
     data: {
-      title: '首页'
+      title: '交作业模块'
     }
-  },
-  {
-    path: 'add',
-    component: StudentAddComponent,
-    data: {
-      title: '新增'
-    }
-  },
-  {
-    path: 'edit/:id',
-    component: StudentEditComponent,
-    data: {
-      title: '编辑'
-    }
-  }
-];
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class StudentRoutingModule {
-}
+export class StudentRoutingModule { }

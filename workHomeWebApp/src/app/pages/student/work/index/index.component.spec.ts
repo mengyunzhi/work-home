@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndexComponent } from './index.component';
 import {CommonModule} from '@angular/common';
-import {ServiceTestingModule} from '../../../service/service-tesing/service-testing.module';
+import {ServiceTestingModule} from '../../../../service/service-tesing/service-testing.module';
 import {RouterTestingModule} from '@angular/router/testing';
 
 describe('IndexComponent', () => {

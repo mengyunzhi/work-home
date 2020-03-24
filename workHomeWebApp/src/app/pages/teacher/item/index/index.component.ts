@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AppComponent} from '../../../app.component';
+import {AppComponent} from '../../../../app.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ItemService} from '../../../service/item.service';
-import {Item} from '../../../common/item';
-import {Page} from '../../../base/page';
-import {config} from '../../../conf/app.config';
+import {ItemService} from '../../../../service/item.service';
+import {Item} from '../../../../common/item';
+import {Page} from '../../../../base/page';
+import {config} from '../../../../conf/app.config';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Work} from '../../../common/work';
-import {WorkService} from '../../../service/work.service';
-import {Item} from '../../../common/item';
-import {ItemService} from '../../../service/item.service';
+import {Work} from '../../../../common/work';
+import {WorkService} from '../../../../service/work.service';
+import {Item} from '../../../../common/item';
+import {ItemService} from '../../../../service/item.service';
 
 @Component({
   selector: 'app-index',

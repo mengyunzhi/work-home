@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {StudentService} from '../../../service/student.service';
-import {AppComponent} from '../../../app.component';
-import {config} from '../../../conf/app.config';
+import {StudentService} from '../../../../service/student.service';
+import {AppComponent} from '../../../../app.component';
+import {config} from '../../../../conf/app.config';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Item} from '../../../common/item';
-import {ItemService} from '../../../service/item.service';
+import {Item} from '../../../../common/item';
+import {ItemService} from '../../../../service/item.service';
 
 @Component({
   selector: 'app-add',
