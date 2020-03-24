@@ -1,0 +1,24 @@
+<table class="table table-striped table-bordered mt-3">
+  <thead class="thead-light">
+  <tr>
+    <th scope="col">序号</th>
+    <th scope="col">学号</th>
+    <th scope="col">姓名</th>
+    <th scope="col">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let student of students, index as i">
+    <td>{{i + 1}}</td>
+    <td>{{student.no}}</td>
+    <td>{{student.name}}</td>
+    <td>
+      <button class="btn btn-primary btn-sm mr-2" routerLink="{{student.id}}">
+        <i class="fas fa-edit"></i>
+        查看
+      </button>
+
+    </td>
+  </tr>
+  </tbody>
+</table>
