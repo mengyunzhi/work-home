@@ -1,6 +1,8 @@
 package club.yunzhi.workhome.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -15,10 +17,12 @@ import java.util.List;
 public class Work extends AbstractEntity {
 
 	@Column(columnDefinition = "text")
-	private String content;
+	private String content = "";
 
+	@CreationTimestamp
 	private Timestamp createTime;
 
+	@UpdateTimestamp
 	private Timestamp updateTime;
 
 	private Integer score = 0;
