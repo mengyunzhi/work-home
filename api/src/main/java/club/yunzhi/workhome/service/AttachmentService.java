@@ -5,12 +5,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 import java.util.Random;
 
 public interface AttachmentService {
     /**
      * 获取一个附件
-     *
      * @return
      */
     static Attachment getOneAttachment() {
@@ -21,12 +22,10 @@ public interface AttachmentService {
 
     /**
      * 获取附件
-     *
      * @param id id
      * @return 附件
      */
     Attachment getById(Long id);
-
     /**
      * 上传附件
      *
@@ -37,12 +36,4 @@ public interface AttachmentService {
     void downloadFile(String fileName, HttpServletResponse response) throws IOException;
 
     String getMediaTypeBySaveName(String saveName);
-
-    /**
-     * 上传作业并将作业保存在自己的目录下
-     *
-     * @param multipartFile 文件
-     * @return 附件实体
-     */
-    Attachment uploadWork(MultipartFile multipartFile);
 }
