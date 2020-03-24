@@ -5,7 +5,6 @@ import { FuncModule } from '../../../func/func.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ServiceTestingModule } from '../../../service/service-tesing/service-testing.module';
 import { AppTestingModule } from '../../../app-testing/app-testing.module';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('EditComponent', () => {
   let component: EditComponent;
@@ -18,8 +17,7 @@ describe('EditComponent', () => {
         FuncModule,
         RouterTestingModule,
         ServiceTestingModule,
-        AppTestingModule,
-        HttpClientTestingModule
+        AppTestingModule
       ]
     })
     .compileComponents();
