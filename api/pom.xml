@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>club.yunzhi</groupId>
-	<artifactId>workHome</artifactId>
+	<artifactId>work-home</artifactId>
 	<version>1.0.0</version>
 	<name>work-home</name>
 	<description>作业提交系统</description>
