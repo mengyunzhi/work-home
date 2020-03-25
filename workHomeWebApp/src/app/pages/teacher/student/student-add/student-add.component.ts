@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {config} from '../../../conf/app.config';
-import {StudentService} from '../../../service/student.service';
-import {AppComponent} from '../../../app.component';
+import {config} from '../../../../conf/app.config';
+import {StudentService} from '../../../../service/student.service';
+import {AppComponent} from '../../../../app.component';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
