@@ -2,9 +2,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {StudentAddComponent} from './student-add.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ServiceTestingModule} from '../../../service/service-tesing/service-testing.module';
+import {ServiceTestingModule} from '../../../../service/service-tesing/service-testing.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {AppTestingModule} from '../../../app-testing/app-testing.module';
+import {AppTestingModule} from '../../../../app-testing/app-testing.module';
 
 describe('StudentAddComponent', () => {
   let component: StudentAddComponent;

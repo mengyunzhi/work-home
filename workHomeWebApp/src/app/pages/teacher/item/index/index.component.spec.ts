@@ -1,28 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StudentIndexComponent } from './student-index.component';
+import { IndexComponent } from './index.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {AppTestingModule} from '../../../app-testing/app-testing.module';
+import {AppTestingModule} from '../../../../app-testing/app-testing.module';
+import {ReactiveFormsModule} from '@angular/forms';
 
-describe('StudentIndexComponent', () => {
-  let component: StudentIndexComponent;
-  let fixture: ComponentFixture<StudentIndexComponent>;
+describe('IndexComponent', () => {
+  let component: IndexComponent;
+  let fixture: ComponentFixture<IndexComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StudentIndexComponent ],
+      declarations: [ IndexComponent ],
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        AppTestingModule
+        AppTestingModule,
+        ReactiveFormsModule
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StudentIndexComponent);
+    fixture = TestBed.createComponent(IndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

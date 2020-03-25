@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StudentEditComponent } from './student-edit.component';
+import { AddComponent } from './add.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ServiceTestingModule} from '../../../../service/service-tesing/service-testing.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {ServiceTestingModule} from '../../../service/service-tesing/service-testing.module';
-import {AppTestingModule} from '../../../app-testing/app-testing.module';
+import {AppTestingModule} from '../../../../app-testing/app-testing.module';
 
-describe('StudentEditComponent', () => {
-  let component: StudentEditComponent;
-  let fixture: ComponentFixture<StudentEditComponent>;
+describe('AddComponent', () => {
+  let component: AddComponent;
+  let fixture: ComponentFixture<AddComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StudentEditComponent ],
+      declarations: [ AddComponent ],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule,
         ServiceTestingModule,
+        RouterTestingModule,
         AppTestingModule
       ]
     })
@@ -24,7 +24,7 @@ describe('StudentEditComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StudentEditComponent);
+    fixture = TestBed.createComponent(AddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

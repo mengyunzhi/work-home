@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonService } from '../../../service/common.service';
-import { WorkService } from '../../../service/work.service';
-import { Work } from '../../../common/work';
-import { Attachment } from '../../../common/attachment';
-import { AttachmentService } from '../../../service/attachment.service';
+import { CommonService } from '../../../../service/common.service';
+import { WorkService } from '../../../../service/work.service';
+import { Work } from '../../../../common/work';
+import { Attachment } from '../../../../common/attachment';
+import { AttachmentService } from '../../../../service/attachment.service';
 import { saveAs } from 'file-saver';
-import { AppComponent } from '../../../app.component';
-import {isDefined} from '../../../utils';
+import { AppComponent } from '../../../../app.component';
+import {isDefined} from '../../../../utils';
 
 
 @Component({

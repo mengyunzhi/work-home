@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {StudentService} from '../../../service/student.service';
-import {Student} from '../../../common/student';
+import {StudentService} from '../../../../service/student.service';
+import {Student} from '../../../../common/student';
 import {AppComponent} from 'src/app/app.component';
 import {HttpErrorResponse} from '@angular/common/http';
 

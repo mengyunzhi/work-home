@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditComponent } from './edit.component';
-import { FuncModule } from '../../../func/func.module';
+import { FuncModule } from '../../../../func/func.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ServiceTestingModule } from '../../../service/service-tesing/service-testing.module';
-import { AppTestingModule } from '../../../app-testing/app-testing.module';
+import { ServiceTestingModule } from '../../../../service/service-tesing/service-testing.module';
+import { AppTestingModule } from '../../../../app-testing/app-testing.module';
 
 describe('EditComponent', () => {
   let component: EditComponent;
