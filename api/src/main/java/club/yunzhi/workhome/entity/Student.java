@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Student extends AbstractEntity {
 
 	private String name;
-
+	private String password;
 	@Column(nullable =  false)
 	private String no;
 

@@ -76,4 +76,5 @@ public class StudentController {
 
     public interface studentJsonView {
     }
+
 }

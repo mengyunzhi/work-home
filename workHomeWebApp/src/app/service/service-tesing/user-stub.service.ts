@@ -5,6 +5,7 @@
 import {TestingUtils} from '../../testing/testingUtils';
 import {Observable, of, Subject} from 'rxjs';
 import {User} from '../../common/user';
+import {Student} from '../../common/student';
 
 export class UserStubService {
   currentLoginUser$ = new Subject<User>();
@@ -26,6 +27,8 @@ export class UserStubService {
   setCurrentLoginUser(user: User): void {
     return;
   }
-
+  resetPassword(student: Student): Observable<void> {
+    return of();
+  }
 
 }

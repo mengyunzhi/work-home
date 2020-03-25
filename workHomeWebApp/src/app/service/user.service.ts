@@ -132,4 +132,14 @@ export class UserService {
 
     return this.httpClient.put<void>(`${this.url}/updatePassword`, vUser);
   }
+
+  /**
+   * 重置密码
+   * @param id  学生id
+   * @param student  学生
+   */
+  public resetPassword(student: Student): Observable<void> {
+    console.log(`${this.url}/resetPassword`);
+    return this.httpClient.put<void>(`${this.url}/resetPassword`, student);
+  }
 }

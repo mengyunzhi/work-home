@@ -1,5 +1,6 @@
 package club.yunzhi.workhome.service;
 
+import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.repository.UserRepository;
 import club.yunzhi.workhome.vo.VUser;
@@ -18,11 +19,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder encoder;
+    //重置后的密码
+    private String initialPassword = "yunzhi";
 
-
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.encoder = encoder;
     }
 
     @Override
@@ -68,5 +72,15 @@ public class UserServiceImpl implements UserService {
         logger.debug("更新密码");
         currentUser.setPassword(this.passwordEncoder.encode(vUser.getNewPassword()));
         this.userRepository.save(currentUser);
+    }
+
+    @Override
+    public void resetPassword(Student student){
+        logger.debug("获取学生对应的用户信息");
+        User user1 =  userRepository.findByUsername(student.getNo());
+        if (user1 != null){
+            user1.setPassword(encoder.encode(this.initialPassword));
+        }
+        userRepository.save(user1);
     }
 }
