@@ -11,8 +11,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -113,4 +118,30 @@ class WorkServiceImplTest extends ServiceTest {
         Assertions.assertEquals(oldWork.getContent(), work.getContent());
         Assertions.assertEquals(oldWork.getAttachments(), work.getAttachments());
     }
+
+    /**
+     * 分页查询
+     * 1. 模拟输入、输出、调用WorkRepository
+     * 2. 调用测试方法
+     * 3. 断言输入与输出与模拟值相符
+     */
+    @Test
+    public void getAll() {
+        Pageable mockInPageable = PageRequest.of(1, 20);
+        List<Work> mockWorks = Arrays.asList(new Work());
+        Page<Work> mockOutWrokPage = new PageImpl<Work>(
+                mockWorks,
+                PageRequest.of(1, 20),
+                21);
+        Mockito.when(this.workRepository.findAll(Mockito.any(Pageable.class)))
+                .thenReturn(mockOutWrokPage);
+
+        Page<Work> workPage = this.workService.getAll(mockInPageable);
+
+        org.assertj.core.api.Assertions.assertThat(workPage).isEqualTo(mockOutWrokPage);
+        ArgumentCaptor<Pageable> pageableArgumentCaptor = ArgumentCaptor.forClass(Pageable.class);
+        Mockito.verify(this.workRepository).findAll(pageableArgumentCaptor.capture());
+        org.assertj.core.api.Assertions.assertThat(pageableArgumentCaptor.getValue()).isEqualTo(mockInPageable);
+    }
+
 }

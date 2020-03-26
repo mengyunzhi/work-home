@@ -47,6 +47,7 @@ public class StudentServiceImpl implements StudentService {
         if (student.getUser().getUsername() == null) {
             student.getUser().setUsername(student.getNo());
         }
+        student.getUser().setId(null);
         student.getUser().setRole(1);
         student.getUser().setPassword(encoder.encode(student.getUser().getPassword()));
         userRepository.save(student.getUser());

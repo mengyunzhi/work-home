@@ -4,10 +4,13 @@ import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.service.WorkService;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yz
@@ -43,6 +46,33 @@ public class WorkController {
     @JsonView(UpdateJsonView.class)
     public Work updateOfCurrentStudent(@PathVariable Long id, @RequestBody Work work) {
         return this.workService.updateOfCurrentStudent(id, work);
+    }
+
+    @GetMapping("getAll")
+    public Page<Work> getAll(@RequestParam int page,
+                             @RequestParam int size) {
+        return workService.getAll(PageRequest.of(page, size));
+    }
+
+    /**
+     * 查看某一学生某一实验作业
+     * @param itemId 实验id
+     * @param studentId 学生id
+     * @return 作业
+     */
+    @GetMapping("getByItemIdAndStudentId")
+    public Optional<Work> getByItemIdAndStudentId(@RequestParam Long itemId, @RequestParam Long studentId) {
+        return workService.getByItemIdAndStudentId(itemId, studentId);
+    }
+
+    /**
+     * 根据id获取作业
+     * @param id 作业id
+     * @return 作业
+     */
+    @GetMapping("{id}")
+    public Work getById(@PathVariable Long id) {
+        return this.workService.findById(id);
     }
 
     private interface GetAllOfCurrentStudentJsonView
