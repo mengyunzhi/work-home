@@ -1,41 +1,30 @@
 package club.yunzhi.workhome.controller;
 
 
-import ch.qos.logback.classic.Level;
-import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
-import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.UserRepository;
-import club.yunzhi.workhome.service.UserService;
-import net.bytebuddy.utility.RandomString;
 import org.json.JSONObject;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Random;
-
-
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
 public class UserControllerTest extends ControllerTest{
     private String url = "/user";
+    private static final Logger logger = LoggerFactory.getLogger(UserControllerTest.class);
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    PasswordEncoder encoder;
     @MockBean
     StudentRepository studentRepository;
 
@@ -56,20 +45,15 @@ public class UserControllerTest extends ControllerTest{
      */
     @Test
      public void resetPassword() throws Exception {
-        // 准备替身及调用替身后的模拟返回值
-        // 第一个替身（间谍）
-        Long id = this.random.nextLong();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id",id.toString());
-        Student student = new Student();
-        student.setId(this.random.nextLong());
-        student.setUser(new User());
-        student.getUser().setId(this.random.nextLong());
-        String url = "/user/resetPassword";
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .put(this.url + "/resetPassword" ,student)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonObject.toString()))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        Long Id = this.random.nextLong();
+        JSONObject userJsonObject = new JSONObject();
+        userJsonObject.put("id", Id.toString());
+        User user = new User();
+        user.setId(this.random.nextLong());
+        MockHttpServletRequestBuilder putRequest = MockMvcRequestBuilders.put(this.url + "/resetPassword",user)
+                .contentType("application/json;charset=UTF-8")
+                .content(String.valueOf(userJsonObject));
+        this.mockMvc.perform(putRequest)
+                .andExpect(status().isOk());
     }
 }

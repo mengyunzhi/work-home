@@ -5,6 +5,7 @@ import {AppComponent} from 'src/app/app.component';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {UserService} from '../../../../service/user.service';
+import {User} from '../../../../common/user';
 
 
 @Component({
@@ -15,7 +16,6 @@ import {UserService} from '../../../../service/user.service';
 export class StudentIndexComponent implements OnInit {
 
   students: Student[];
-
   constructor(private studentService: StudentService,
               private userService: UserService,
               private appComponent: AppComponent,
@@ -45,8 +45,8 @@ export class StudentIndexComponent implements OnInit {
     }, '即将删除学生');
   }
 
-  resetPassword(student: Student) {
-    this.userService.resetPassword(student)
+  resetPassword(user: User) {
+    this.userService.resetPassword(user)
       .subscribe(() => {
         this.appComponent.success(() => {
           this.router.navigateByUrl('/teacher/student');

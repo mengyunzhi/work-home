@@ -61,7 +61,8 @@ describe('StudentIndexComponent', () => {
      const service  = TestBed.get(UserService) as UserService;
      console.log(service);
      spyOn(service, 'resetPassword').and.returnValue(of());
-     component.resetPassword(component.students.pop());
+     const user = new  User();
+     component.resetPassword(user);
      expect(service.resetPassword).toHaveBeenCalled();
    });
 

@@ -31,8 +31,8 @@ public interface UserService {
     void updatePassword(VUser vUser);
     /**
      * 重置密码
-     * @param student
+     * @param user
      */
-    void resetPassword(Student student);
+    void resetPassword(User user);
 
 }

@@ -1,6 +1,5 @@
 package club.yunzhi.workhome.service;
 
-import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.repository.UserRepository;
 import club.yunzhi.workhome.vo.VUser;
@@ -75,12 +74,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void resetPassword(Student student){
+    public void resetPassword(User user){
         logger.debug("获取学生对应的用户信息");
-        User user1 =  userRepository.findByUsername(student.getNo());
-        if (user1 != null){
-            user1.setPassword(encoder.encode(this.initialPassword));
-        }
-        userRepository.save(user1);
+           user.setPassword(encoder.encode(this.initialPassword));
+        userRepository.save(user);
     }
 }

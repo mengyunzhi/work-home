@@ -90,9 +90,9 @@ public class UserController {
     }
 
     @PutMapping("resetPassword")
-    public void resetPassword(@RequestBody Student student){
-        logger.info("密码重置");
-        userService.resetPassword(student);
+    public void resetPassword(@RequestBody User user){
+        logger.debug("密码重置");
+        userService.resetPassword(user);
     }
 
     public interface MeJsonView {

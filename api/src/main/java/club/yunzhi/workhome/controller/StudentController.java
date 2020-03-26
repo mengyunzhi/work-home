@@ -74,7 +74,7 @@ public class StudentController {
         studentService.delete(id);
     }
 
-    public interface studentJsonView {
+    public interface studentJsonView extends Student.UserJsonView {
     }
 
 }

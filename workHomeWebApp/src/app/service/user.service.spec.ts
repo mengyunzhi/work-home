@@ -33,16 +33,10 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   });
   it('resetPassword', () => {
-    const student = new Student();
-    student.id = Math.floor(Math.random() * 100);
-    student.name = Math.random().toString(36).slice(-10);
-    student.no = Math.floor(Math.random() * 100).toString();
-    student.user = new User();
-    student.user.id = Math.floor(Math.random() * 100);
-    student.user.username = student.no;
+    const user = new User();
     let resultUser;
     let called = false;
-    service.resetPassword(student)
+    service.resetPassword(user)
       .subscribe(result => {
         resultUser = result;
         called = true;
@@ -53,10 +47,10 @@ describe('UserService', () => {
 
     // 断言请求的参数及方法符合预期
     expect(req.request.method).toEqual('PUT');
-    expect(req.request.body).toBe(student);
+    expect(req.request.body).toBe(user);
     // 返回值为可被观察者，该观察者携带的内容为`void`
     expect(called).toBeFalsy();
     req.flush(of());
     expect(called).toBeTruthy();
   });
-});
+ });
