@@ -2,11 +2,21 @@ import {Observable, of} from 'rxjs';
 import {Work} from '../../common/work';
 import {TestingUtils} from '../../testing/testingUtils';
 import {Attachment} from '../../common/attachment';
+import {Page} from '../../base/page';
+import {Injectable} from '@angular/core';
+import {Item} from '../../common/item';
+import {Student} from '../../common/student';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class WorkStubService {
 
   constructor() {
   }
+
+  /* 传入参数缓存 */
+  pageParamsCache: { page: number, size: number ,workId: number};
 
   getAllOfCurrentStudent(): Observable<Array<Work>> {
     const work = new Work();
@@ -21,9 +31,10 @@ export class WorkStubService {
     return of([work]);
   }
 
-  getById(id: number) {
+  // 之前的getById，没有被调用过
+  /*getById(id: number) {
     return of(new Work());
-  }
+  }*/
 
   getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
     const work = new Work();
@@ -41,5 +52,34 @@ export class WorkStubService {
     resultWork.content = TestingUtils.randomString('作业内容');
     resultWork.attachments = [new Attachment()];
     return of(resultWork);
+  }
+
+  /**
+   * getAll模拟方法
+   * @param params 查询参数
+   */
+  getAll(params: { page: number, size: number })
+    : Observable<Page<Work>> {
+    this.pageParamsCache.page = params.page;
+    this.pageParamsCache.size = params.size;
+    const mockResult = new Page<Work>(
+      {content: new Array<Work>(
+        new Work({
+          id: 1, content: '123', item: new Item({name: 'Item'}), score: 100, student: new Student({name: 'Student'}), reviewed: true}),
+        new Work({
+          id: 2, content: '456', item: new Item({name: 'Item'}), score: 100, student: new Student({name: 'Student'}), reviewed: true})
+        ), number: 1, size: 2, totalPages: 5}
+    );
+    return of(mockResult);
+  }
+
+  getById(id: number)
+    : Observable<Work> {
+    this.pageParamsCache.workId = id;
+    const mockResult = new Work(
+      {
+            id: 1, content: '<p>content</p>', item: new Item({name: 'Item'}),
+            score: 100, student: new Student({name: 'Student'}), reviewed: true});
+    return of(mockResult);
   }
 }

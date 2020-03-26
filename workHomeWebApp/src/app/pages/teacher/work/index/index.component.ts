@@ -10,51 +10,6 @@ import {config} from '../../../../conf/app.config';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.sass']
 })
-/* export class IndexComponent implements OnInit {
-
-  works: Page<Work>;
-
-  /**
-   * 页码
-   */
-  // page: number;
-
-  /*
-   * 每页大小
-   */
-/*  size: number;
-
-  workForm: FormGroup;
-
-  constructor(private builder: FormBuilder,
-              private appComponent: AppComponent,
-              private workService: WorkService) {
-  }
-
-  createForm() {
-    this.workForm = this.builder.group({
-      name: null,
-    });
-  }
-
-  ngOnInit() {
-    this.page = 0;
-    this.size = config.size;
-
-    this.createForm();
-    this.pageAll();
-  }
-
-  public pageAll() {
-    this.workService.getAll({page: this.page, size: this.size})
-      .subscribe((data: Page<Work>) => {
-        this.works = data;
-      }, () => {
-        console.work('error');
-      });
-  }
-}
-**/
 
 export class IndexComponent implements OnInit {
   /* 分页数据 */
