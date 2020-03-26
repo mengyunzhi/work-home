@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { saveAs } from 'file-saver';
+import { Work } from '../../../../common/work';
 import { CommonService } from '../../../../service/common.service';
 import { WorkService } from '../../../../service/work.service';
-import { Work } from '../../../../common/work';
-import { Attachment } from '../../../../common/attachment';
 import { AttachmentService } from '../../../../service/attachment.service';
-import { saveAs } from 'file-saver';
 import { AppComponent } from '../../../../app.component';
-import {isDefined} from '../../../../utils';
+import { Attachment } from '../../../../common/attachment';
 
 
 @Component({
@@ -17,8 +16,6 @@ import {isDefined} from '../../../../utils';
 })
 export class EditComponent implements OnInit {
   work = new Work();
-  selectFiles = new Array<File>();
-  maxFileSize = 1024 * 1024 * 20;
 
   constructor(private router: Router,
               private commonService: CommonService,
@@ -29,15 +26,29 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.load();
+  }
+
+  public load() {
     this.route.params.subscribe(params => {
       const itemId = params.itemId as string;
       this.workService.getByItemIdOfCurrentStudent(+itemId).subscribe((data) => {
-        if (!isDefined(data.content.length) || data.content.length === 0) {
+        if (data.content.length === 0) {
           data.content = '请将源代码、网页截图（支持拖拽）等按实验要求添加到此处。';
         }
         this.work = data;
       });
     });
+  }
+
+  /**
+   * 上传完一个附件以后
+   * @param attachment 附件
+   */
+  attachmentUploaded(attachment: Attachment) {
+    if (!this.containAttachment(attachment, this.work.attachments)) {
+      this.work.attachments.push(attachment);
+    }
   }
 
   /**
@@ -54,34 +65,7 @@ export class EditComponent implements OnInit {
 
   submit() {
     // 上传的附件为空直接更新数据
-    if (this.selectFiles.length === 0) {
-      this.update();
-    }
-
-    // 先上传每个附件
-    let fileUploadCount = 0;
-    for (const file of this.selectFiles) {
-      if (file.size > this.maxFileSize) {
-        this.appComponent.error(() => {
-        }, '最大传送20M的文件', '文件大小超过上传限制');
-        return;
-      }
-      this.attachmentService.upload(file)
-        .subscribe((attachment) => {
-          fileUploadCount++;
-
-          if (!this.containAttachment(attachment, this.work.attachments)) {
-            this.work.attachments.push(attachment);
-          }
-          // 最后一个附件上传以后更新作业信息
-          if (fileUploadCount === this.selectFiles.length) {
-            this.update();
-          }
-        }, () => {
-          this.appComponent.error(() => {
-          }, '', '保存失败!');
-        });
-    }
+    this.update();
   }
 
 
@@ -102,11 +86,6 @@ export class EditComponent implements OnInit {
   contentChange($event) {
     this.work.content = $event;
   }
-
-  fileChange(files: File[]) {
-    this.selectFiles = files;
-  }
-
 
   /**
    * 删除附件
@@ -142,5 +121,12 @@ export class EditComponent implements OnInit {
     }
 
     return false;
+  }
+
+  uploadRejected(rejectReason: string) {
+    if (rejectReason) {
+      this.appComponent.error(() => {
+      }, rejectReason, '上传失败');
+    }
   }
 }
