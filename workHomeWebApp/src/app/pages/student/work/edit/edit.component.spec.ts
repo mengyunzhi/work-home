@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ServiceTestingModule } from '../../../../service/service-tesing/service-testing.module';
 import { AppTestingModule } from '../../../../app-testing/app-testing.module';
 
-describe('EditComponent', () => {
+describe('Page -> Student -> EditComponent', () => {
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
 

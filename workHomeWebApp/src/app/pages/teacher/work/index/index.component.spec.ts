@@ -9,7 +9,7 @@ import {By} from '@angular/platform-browser';
 import {FormTest} from '../../../../testing/formTest';
 
 
-fdescribe('BackgroundIndexComponent', () => {
+describe('BackgroundIndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 
