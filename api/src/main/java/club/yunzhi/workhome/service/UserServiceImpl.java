@@ -18,14 +18,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final PasswordEncoder encoder;
     //重置后的密码
     private String initialPassword = "yunzhi";
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, PasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.encoder = encoder;
     }
 
     @Override
@@ -76,7 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void resetPassword(User user){
         logger.debug("获取学生对应的用户信息");
-           user.setPassword(encoder.encode(this.initialPassword));
+        user.setPassword(passwordEncoder.encode(this.initialPassword));
         userRepository.save(user);
     }
 }
