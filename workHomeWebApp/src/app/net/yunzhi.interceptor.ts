@@ -5,6 +5,7 @@ import {catchError, finalize, mergeMap} from 'rxjs/operators';
 import { config } from '../conf/app.config';
 import { isDefined } from '../utils';
 import {CommonService} from '../service/common.service';
+import {UserService} from '../service/user.service';
 
 /**
  * Yunzhi拦截器，用于实现添加url，添加header，全局异常处理
@@ -14,7 +15,8 @@ import {CommonService} from '../service/common.service';
 })
 export class YunzhiInterceptor implements HttpInterceptor {
 
-  constructor(private commonService: CommonService) {
+  constructor(private commonService: CommonService,
+              private userService: UserService) {
 
   }
 
@@ -76,10 +78,9 @@ export class YunzhiInterceptor implements HttpInterceptor {
   private handleHttpException(error: HttpErrorResponse): Observable<HttpErrorResponse> {
     switch (error.status) {
       case 401:
+        this.userService.setCurrentLoginUser(null);
         break;
-      case 403:
-        break;
-      case 404:
+      default:
         break;
     }
     // 最终将异常抛出来，便于组件个性化处理
