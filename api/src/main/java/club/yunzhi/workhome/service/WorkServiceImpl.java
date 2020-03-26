@@ -50,7 +50,7 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Optional<Work> getByItemIdOfCurrentStudent(Long itemId) {
         Student student = this.studentService.getCurrentStudent();
-                                                                                                                                                                                             return this.getByItemIdAndStudentId(itemId, student.getId());
+        return this.getByItemIdAndStudentId(itemId, student.getId());                                                                                                                                                                                     return this.getByItemIdAndStudentId(itemId, student.getId());
     }
 
     @Override

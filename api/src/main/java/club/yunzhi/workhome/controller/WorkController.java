@@ -2,13 +2,16 @@ package club.yunzhi.workhome.controller;
 
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Work;
+import club.yunzhi.workhome.exception.ObjectNotFoundException;
 import club.yunzhi.workhome.service.WorkService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,10 +51,11 @@ public class WorkController {
         return this.workService.updateOfCurrentStudent(id, work);
     }
 
+
     @GetMapping("getAll")
-    public Page<Work> getAll(@RequestParam int page,
-                             @RequestParam int size) {
-        return workService.getAll(PageRequest.of(page, size));
+    @JsonView(getAllJsonView.class)
+    public Page<Work> getAll(Pageable pageable) {
+        return workService.getAll(pageable);
     }
 
     /**
@@ -61,8 +65,12 @@ public class WorkController {
      * @return 作业
      */
     @GetMapping("getByItemIdAndStudentId")
-    public Optional<Work> getByItemIdAndStudentId(@RequestParam Long itemId, @RequestParam Long studentId) {
-        return workService.getByItemIdAndStudentId(itemId, studentId);
+    public Work getByItemIdAndStudentId(@RequestParam Long itemId, @RequestParam Long studentId) {
+        Optional<Work> workOptional = workService.getByItemIdAndStudentId(itemId, studentId);
+        if (workOptional.isPresent()) {
+            throw new ObjectNotFoundException("未找到相关作业");
+        }
+        return workOptional.get();
     }
 
     /**
@@ -71,6 +79,7 @@ public class WorkController {
      * @return 作业
      */
     @GetMapping("{id}")
+    @JsonView(getByIdJsonView.class)
     public Work getById(@PathVariable Long id) {
         return this.workService.findById(id);
     }
@@ -84,5 +93,12 @@ public class WorkController {
     }
 
     private interface UpdateJsonView extends GetByItemIdJsonView {
+    }
+
+    private interface getAllJsonView extends  {
+    }
+
+    private interface getByIdJsonView extends   {
+
     }
 }

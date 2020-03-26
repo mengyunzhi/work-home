@@ -11,7 +11,8 @@ import javax.persistence.Entity;
 @Entity
 public class User extends AbstractEntity {
 
-	@Column(unique = true, nullable = false)
+	public static final int ROLE_STUDENT = 1;
+    @Column(unique = true, nullable = false)
 	private String username;
 
 	@JsonView(PasswordJsonView.class)
