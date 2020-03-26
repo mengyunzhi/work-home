@@ -1,0 +1,51 @@
+<div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>实验名称：</label>
+    </div>
+    <div class="col-md-8">
+      {{work?.item?.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>任务描述：</label>
+    </div>
+    <div class="col-md-8">
+      {{work?.item?.description}}
+    </div>
+  </div>
+  <hr>
+  <div class="row mt-4">
+    <div class="col-md-2 form-text text-right">
+      <label>作答：</label>
+    </div>
+
+    <pre>{{work?.content}}</pre>
+
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-8 offset-md-2">
+      <button type="button" (click)="submitBest()" class="btn btn-info btn-sm">
+        <i class="far fa-save"></i>
+        &nbsp;优
+      </button>
+      &nbsp;
+      <button type="button" (click)="submitGood()" class="btn btn-warning btn-sm">
+        <i class="far fa-save"></i>
+        &nbsp;良
+      </button>
+      &nbsp;
+      <button type="button" (click)="submitMiddle()" class="btn btn-danger btn-sm">
+        <i class="far fa-save"></i>
+        &nbsp;中
+      </button>
+      &nbsp;
+      <button type="button" (click)="submitBad()" class="btn btn-dark btn-sm">
+        <i class="far fa-save"></i>
+        &nbsp;差
+      </button>
+
+    </div>
+  </div>
+</div>
