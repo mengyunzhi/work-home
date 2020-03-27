@@ -107,7 +107,6 @@ export class UploaderComponent implements OnInit {
 
   checkDir(dir: string): boolean {
     const reg = '^\\/(\\w+\\/?)+$';
-    console.log(dir.search(reg));
     return dir.search(reg) === 0;
   }
 
