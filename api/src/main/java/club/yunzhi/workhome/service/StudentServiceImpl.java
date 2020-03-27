@@ -55,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
         newStudent.getUser().setPassword(encoder.encode(student.getUser().getPassword()));
         newStudent.getUser().setUsername(student.getUser().getUsername());
         userRepository.save(newStudent.getUser());
-        return this.studentRepository.save(student);
+        return this.studentRepository.save(newStudent);
     }
 
     @Override

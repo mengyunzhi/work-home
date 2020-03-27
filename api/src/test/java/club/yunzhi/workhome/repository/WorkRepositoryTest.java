@@ -56,9 +56,9 @@ class WorkRepositoryTest {
         student.getUser().setPassword(RandomString.make(6));
         Work work = new Work();
         work.setItem(item);
-        work.setStudent(student);
+
         work.setAttachments(workOptional.get().getAttachments());
-        this.studentService.save(student);
+        work.setStudent(this.studentService.save(student));
         this.itemService.save(item);
         this.workService.save(work);
 

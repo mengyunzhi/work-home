@@ -65,6 +65,7 @@ public class WorkController {
      * @return 作业
      */
     @GetMapping("getByItemIdAndStudentId")
+    @JsonView(getByItemIdAndStudentIdJsonView.class)
     public Work getByItemIdAndStudentId(@RequestParam Long itemId, @RequestParam Long studentId) {
         Optional<Work> workOptional = workService.getByItemIdAndStudentId(itemId, studentId);
         if (workOptional.isPresent()) {
@@ -95,10 +96,12 @@ public class WorkController {
     private interface UpdateJsonView extends GetByItemIdJsonView {
     }
 
-    private interface getAllJsonView extends  {
+    private interface getAllJsonView extends Work.StudentJsonView, Work.ItemJsonView  {
     }
 
-    private interface getByIdJsonView extends   {
+    private interface getByIdJsonView extends Work.AttachmentsJsonView, Work.StudentJsonView, Work.ItemJsonView   {
+    }
 
+    private interface getByItemIdAndStudentIdJsonView extends getByIdJsonView {
     }
 }
