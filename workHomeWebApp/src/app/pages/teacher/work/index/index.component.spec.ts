@@ -3,13 +3,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IndexComponent } from './index.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {WorkService} from '../../../../service/work.service';
 import {WorkStubService} from '../../../../service/service-tesing/work-stub.service';
 import {By} from '@angular/platform-browser';
 import {FormTest} from '../../../../testing/formTest';
+import {WorkService} from '../../../../service/work.service';
 
 
-describe('BackgroundIndexComponent', () => {
+fdescribe('BackgroundIndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 

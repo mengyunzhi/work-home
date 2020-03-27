@@ -1,4 +1,4 @@
-<form [formGroup]="workForm" (ngSubmit)="pageAll()">
+<form [formGroup]="workForm">
   <div class="row">
     <div class="col-md-4">
       <div class="row">
@@ -48,18 +48,9 @@
     <td>{{ work.item.endTime | date:"yyyy-MM-dd" }}</td>
     <td>{{ work.reviewed}}</td>
     <td>{{ work.score}}</td>
-    <a class="btn btn-sm btn-outline-primary" routerLink="./edit/{{work.id}}">评分</a>
+
   </tr>
-  <tr>
-    <td>{{-1}}</td>
-    <td>假数据</td>
-    <td>假实验</td>
-    <td>2020-02-02</td>
-    <td>2020-02-04</td>
-    <td>是</td>
-    <td>100</td>
-    <a class="btn btn-sm btn-outline-primary" routerLink="./edit/1">评分</a>
-  </tr>
+
   </tbody>
 </table>
 

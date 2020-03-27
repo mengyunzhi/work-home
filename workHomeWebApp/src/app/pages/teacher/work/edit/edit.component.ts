@@ -7,6 +7,8 @@ import {AttachmentService} from '../../../../service/attachment.service';
 import {AppComponent} from '../../../../app.component';
 import {isDefined} from '../../../../utils';
 import {Attachment} from '../../../../common/attachment';
+import {config} from '../../../../conf/app.config';
+import {Page} from '../../../../base/page';
 
 @Component({
   selector: 'app-edit',
@@ -18,13 +20,10 @@ export class EditComponent implements OnInit {
   params = {
     workId: 0
   };
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private workService: WorkService,
-              private appComponent: AppComponent) {
+  constructor(private workService: WorkService) {
   }
 
-  ngOnInit() {
+  /*ngOnInit() {
     this.route.params.subscribe(params => {
       this.params.workId = params.id;
       console.log(params);
@@ -35,17 +34,21 @@ export class EditComponent implements OnInit {
         this.work = data;
       });
     });
+  }*/
+
+  ngOnInit() {
+    this.params.workId = 0;
+    this.load();
   }
 
-  /**
-   * 更新数据
-   */
-  public update() {
-    this.workService.updateOfCurrentStudent(this.work.id, this.work)
-      .subscribe(() => {
-        this.appComponent.success(() => {
-          this.router.navigateByUrl('work');
-        }, '', '保存成功!');
+
+  public load() {
+    this.workService.getById({id: this.params.workId})
+      .subscribe((data) => {
+        this.work = data;
+        console.log(this.work);
+      }, () => {
+        console.log('error');
       });
   }
 
