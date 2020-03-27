@@ -20,6 +20,10 @@ describe('EditComponent', () => {
         ServiceTestingModule,
         AppTestingModule,
         HttpClientTestingModule
+      ],
+      providers: [
+        {provide: Window, useValue: window},
+
       ]
     })
     .compileComponents();
