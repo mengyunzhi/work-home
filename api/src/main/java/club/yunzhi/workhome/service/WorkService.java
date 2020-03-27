@@ -1,6 +1,8 @@
 package club.yunzhi.workhome.service;
 
 import club.yunzhi.workhome.entity.Work;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -77,4 +79,9 @@ public interface WorkService {
      */
     Work findById(Long id);
 
+    /**
+     * 获取所有作业
+     * @return 所有作业
+     */
+    Page<Work> getAll(Pageable pageable);
 }
