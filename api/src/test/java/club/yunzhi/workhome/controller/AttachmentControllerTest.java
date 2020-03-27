@@ -20,33 +20,7 @@ class AttachmentControllerTest extends ControllerTest {
 
     private String url = "/attachment";
 
-    @Autowired
-    private ResourceLoader loader;
-
     @MockBean
     AttachmentService attachmentService;
 
-    @Test
-    void uploadWork() throws Exception {
-        logger.debug("定义常量");
-        final String NAME = "attachment";
-        final String FILE_NAME = "example.jpeg";
-
-        logger.debug("获取资源");
-        Resource resource = loader.getResource(ResourceUtils.CLASSPATH_URL_PREFIX + FILE_NAME);
-
-        logger.debug("创建模拟文件");
-        MockMultipartFile multipartFile = new MockMultipartFile(NAME, FILE_NAME, "image/jpeg", resource.getInputStream());
-
-        logger.debug("断言请求成功");
-        this.mockMvc.perform(multipart("/attachment/uploadWork")
-                .file(multipartFile)
-                .param("option1", "")
-        )
-
-                .andExpect(status().isOk());
-
-        logger.debug("断言方法调用成功");
-        Mockito.verify(attachmentService).uploadWork(multipartFile, "", null);
-    }
 }
