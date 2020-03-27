@@ -1,16 +1,12 @@
 package club.yunzhi.workhome.service;
 
 import club.yunzhi.workhome.entity.User;
-import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.UserRepository;
-import club.yunzhi.workhome.repository.WorkRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
