@@ -45,5 +45,5 @@ public interface AttachmentService {
      * @param multipartFile 文件
      * @return 附件实体
      */
-    Attachment uploadWork(MultipartFile multipartFile, String workId, String uploadDir) throws IllegalFormatException;
+    Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) throws IllegalFormatException;
 }

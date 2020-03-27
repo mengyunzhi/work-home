@@ -81,10 +81,10 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public Attachment uploadWork(MultipartFile multipartFile, String workId, String uploadDir) {
+    public Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) {
 
         logger.debug("获取文件保存路径的实体");
-        Path saveFilePath = getWorkSavePath(uploadDir, workId);
+        Path saveFilePath = getWorkSavePath(uploadDir, itemId);
 
         return saveAttachment(multipartFile, saveFilePath, true);
     }
@@ -125,12 +125,12 @@ public class AttachmentServiceImpl implements AttachmentService {
      * 通过扩展名确定存储的目录
      *
      * @param uploadDir 扩展名
-     * @param workId
+     * @param itemId
      * @return 存储路径对象
      */
-    private Path getWorkSavePath(String uploadDir, String workId) {
-        if (workId != null) {
-            uploadDir = '/' + workId + uploadDir;
+    private Path getWorkSavePath(String uploadDir, String itemId) {
+        if (itemId != null) {
+            uploadDir = '/' + itemId + uploadDir;
         }
         if (!checkDir(uploadDir)) {
             throw new ValidationException("目录格式不合法");

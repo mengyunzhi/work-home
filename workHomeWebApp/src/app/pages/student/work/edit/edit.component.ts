@@ -52,7 +52,6 @@ export class EditComponent implements OnInit {
 
   public getCurrentUser() {
     this.currentUser = this.userService.getCurrentUser();
-    console.log(this.currentUser);
   }
 
   /**
@@ -145,10 +144,7 @@ export class EditComponent implements OnInit {
   }
 
   getItemIdForWork(): string {
-    console.log(this.work.item.finalExperiment);
-    console.log(this.work.item);
     if (this.work && !this.work.item.finalExperiment) {
-      console.log(1111111);
       return String(this.work.item.id);
     }
     return '';
