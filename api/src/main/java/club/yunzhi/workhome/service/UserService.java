@@ -1,5 +1,6 @@
 package club.yunzhi.workhome.service;
 
+import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.vo.VUser;
 
@@ -28,4 +29,10 @@ public interface UserService {
      * @param vUser 带有新密码和旧密码VUser
      */
     void updatePassword(VUser vUser);
+    /**
+     * 重置密码
+     * @param id
+     */
+    void resetPassword(Long id);
+
 }

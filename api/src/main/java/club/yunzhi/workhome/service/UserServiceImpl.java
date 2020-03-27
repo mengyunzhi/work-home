@@ -1,6 +1,7 @@
 package club.yunzhi.workhome.service;
 
 import club.yunzhi.workhome.entity.User;
+import club.yunzhi.workhome.exception.ObjectNotFoundException;
 import club.yunzhi.workhome.repository.UserRepository;
 import club.yunzhi.workhome.vo.VUser;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,7 +20,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    //重置后的密码
+    private String initialPassword = "yunzhi";
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -68,5 +71,17 @@ public class UserServiceImpl implements UserService {
         logger.debug("更新密码");
         currentUser.setPassword(this.passwordEncoder.encode(vUser.getNewPassword()));
         this.userRepository.save(currentUser);
+    }
+
+    @Override
+    public void resetPassword(Long id){
+        logger.debug("获取学生对应的用户信息");
+        Optional <User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent())
+        {
+            throw new ObjectNotFoundException("未找到相关用户");
+        }
+        userOptional.get().setPassword(passwordEncoder.encode(this.initialPassword));
+        userRepository.save(userOptional.get());
     }
 }

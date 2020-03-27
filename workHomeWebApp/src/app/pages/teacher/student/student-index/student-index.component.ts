@@ -3,6 +3,10 @@ import {StudentService} from '../../../../service/student.service';
 import {Student} from '../../../../common/student';
 import {AppComponent} from 'src/app/app.component';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {UserService} from '../../../../service/user.service';
+import {User} from '../../../../common/user';
+
 
 @Component({
   selector: 'app-student-index',
@@ -12,9 +16,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class StudentIndexComponent implements OnInit {
 
   students: Student[];
-
   constructor(private studentService: StudentService,
-              private appComponent: AppComponent) {
+              private userService: UserService,
+              private appComponent: AppComponent,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -40,4 +45,16 @@ export class StudentIndexComponent implements OnInit {
     }, '即将删除学生');
   }
 
+  resetPassword(id: number) {
+    console.log(id);
+    this.userService.resetPassword(id)
+      .subscribe(() => {
+        this.appComponent.success(() => {
+          this.router.navigateByUrl('/teacher/student');
+        }, '密码重置成功');
+      }, (res: HttpErrorResponse) => {
+        this.appComponent.error(() => {
+        }, `密码重置失败:${res.error.message}`);
+      });
+  }
 }
