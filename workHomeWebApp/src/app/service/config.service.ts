@@ -31,6 +31,9 @@ export class ConfigService {
         if (data.maxFileSize !== this.config.maxFileSize) {
           location.reload(true);
         }
+        if (data.domainName !== this.config.domainName) {
+          location.reload(true);
+        }
       });
   }
 }
@@ -38,4 +41,5 @@ export class ConfigService {
 class Config {
   version: string;
   maxFileSize: string;
+  domainName: string;
 }
