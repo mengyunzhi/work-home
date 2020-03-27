@@ -5,6 +5,7 @@ import {User} from './user';
  */
 
 export class Student {
+
   id: number;
 
   name: string;
@@ -12,4 +13,7 @@ export class Student {
   no: string;
 
   user = new User();
+  constructor() {
+
+  }
 }

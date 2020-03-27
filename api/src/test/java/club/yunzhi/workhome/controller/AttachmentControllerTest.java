@@ -23,7 +23,6 @@ class AttachmentControllerTest extends ControllerTest {
     private static final Logger logger = LoggerFactory.getLogger(AttachmentControllerTest.class);
 
     private String url = "/attachment";
-
     @Autowired
     private ResourceLoader loader;
 
