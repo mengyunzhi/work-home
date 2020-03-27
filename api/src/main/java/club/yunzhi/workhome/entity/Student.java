@@ -1,6 +1,8 @@
 package club.yunzhi.workhome.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 

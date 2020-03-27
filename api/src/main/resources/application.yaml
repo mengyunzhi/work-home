@@ -25,7 +25,3 @@ spring:
 server:
   # 配置端口
   port: ${port:8002}
-
-app:
-  # 32 位随机字符串 ASE 密钥
-  crypto: ${exam.crypto:Bm1RNJTCwDO2F607v4KoLai5pdHchj9n}

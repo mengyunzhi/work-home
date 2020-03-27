@@ -11,6 +11,8 @@ import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +59,6 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Optional<Work> getByItemIdOfCurrentStudent(Long itemId) {
         Student student = this.studentService.getCurrentStudent();
-
         return this.getByItemIdAndStudentId(itemId, student.getId());
     }
 
@@ -98,6 +99,11 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Work findById(Long id) {
         return this.workRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("未找到该作业"));
+    }
+
+    @Override
+    public Page<Work> getAll(Pageable pageable) {
+        return this.workRepository.findAll(pageable);
     }
 
     @Override
