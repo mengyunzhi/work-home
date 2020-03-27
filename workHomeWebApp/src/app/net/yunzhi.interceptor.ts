@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import {catchError, finalize, mergeMap} from 'rxjs/operators';
+import { catchError, finalize, mergeMap } from 'rxjs/operators';
 import { config } from '../conf/app.config';
 import { isDefined } from '../utils';
-import {CommonService} from '../service/common.service';
-import {UserService} from '../service/user.service';
+import { CommonService } from '../service/common.service';
+import { UserService } from '../service/user.service';
 
 /**
  * Yunzhi拦截器，用于实现添加url，添加header，全局异常处理
@@ -29,8 +29,9 @@ export class YunzhiInterceptor implements HttpInterceptor {
      */
     let url = req.url;
 
-    if (url.startsWith('attachment') && req.method !== 'GET' ||
-      !url.startsWith('attachment') && !url.startsWith('https://') && !url.startsWith('http://') && !url.endsWith('config.json')
+    // 满足 \\work\\/(-?[0-9]\\d*){6}代表是下载作业
+    if (url.match('\\work\\/(-?[0-9]\\d*){6}') === null && (url.startsWith('attachment') && req.method !== 'GET' ||
+      !url.startsWith('attachment') && !url.startsWith('https://') && !url.startsWith('http://') && !url.endsWith('config.json'))
     ) {
       url = config.server + url;
     }

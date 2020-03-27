@@ -150,3 +150,14 @@ export class Random {
 export function stringToNumber(string) {
   return new Function('return ' + string)();
 }
+
+/**
+ * 检查目录格式是否符合 /test1/test2/..
+ * 只能使用数字,字母和下划线
+ * @param dir 目录
+ *
+ */
+export function checkDir(dir: string): boolean {
+  const reg = '^\\/(\\w+\\/?)+$';
+  return dir.search(reg) === 0;
+}

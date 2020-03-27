@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UploaderOptions, UploadFile, UploadInput, UploadOutput, UploadStatus } from '../../directive/ngxUploader/interfaces';
 import { Attachment } from '../../../common/attachment';
 import { ConfigService } from '../../../service/config.service';
-import { stringToNumber } from '../../../utils';
+import { checkDir, stringToNumber } from '../../../utils';
 
 @Component({
   selector: 'app-uploader',
@@ -59,7 +59,7 @@ export class UploaderComponent implements OnInit {
   // 上传过程,根据文件上传的不同状态调整
   onUploadOutput(output: UploadOutput): void {
     // 是否设置目录,目录是否符合要求
-    if (this.uploadDir && !this.checkDir(this.uploadDir)) {
+    if (this.uploadDir && !checkDir(this.uploadDir)) {
       this.uploadRejected.emit('上传目录格式错误');
       return;
     }
@@ -103,12 +103,6 @@ export class UploaderComponent implements OnInit {
   // 关闭上传窗口
   close() {
     this.closeUploader.emit(true);
-  }
-
-  checkDir(dir: string): boolean {
-    const reg = '^\\/(\\w+\\/?)+$';
-    console.log(dir.search(reg));
-    return dir.search(reg) === 0;
   }
 
 }

@@ -22,26 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AttachmentServiceImplTest extends ServiceTest{
     private final static Logger logger = LoggerFactory.getLogger(AttachmentServiceImplTest.class);
 
-    @Autowired
-    private ResourceLoader loader;
-
     @Mock
     AttachmentService attachmentService;
 
-    @Test
-    void uploadWork() throws IOException {
-        logger.debug("定义常量");
-        final String NAME = "attachment";
-        final String FILE_NAME = "example.jpeg";
-        Attachment attachment = AttachmentService.getOneAttachment();
-
-        logger.debug("获取资源");
-        Resource resource = loader.getResource(ResourceUtils.CLASSPATH_URL_PREFIX + FILE_NAME);
-
-        logger.debug("创建模拟文件");
-        MultipartFile multipartFile = new MockMultipartFile(NAME, FILE_NAME, "image/jpeg", resource.getInputStream());
-        Mockito.doReturn(attachment).when(attachmentService).uploadWork(multipartFile, null, null);
-
-        Assertions.assertEquals(attachment, this.attachmentService.uploadWork(multipartFile, null, null));
-    }
 }

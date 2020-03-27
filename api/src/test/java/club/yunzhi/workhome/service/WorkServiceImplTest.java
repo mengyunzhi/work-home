@@ -11,22 +11,36 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 
 class WorkServiceImplTest extends ServiceTest {
+    private static final Logger logger = LoggerFactory.getLogger(WorkServiceImplTest.class);
+
     WorkRepository workRepository;
     UserService userService;
     ItemRepository itemRepository;
     ItemService itemService;
     WorkServiceImpl workService;
+    AttachmentService attachmentService;
+    @Autowired
+    private ResourceLoader loader;
 
     @BeforeEach
     public void beforeEach() {
@@ -36,7 +50,7 @@ class WorkServiceImplTest extends ServiceTest {
         this.userService = Mockito.mock(UserService.class);
         this.itemRepository = Mockito.mock(ItemRepository.class);
         this.workService = Mockito.spy(new WorkServiceImpl(this.workRepository, this.studentService,
-                this.userService, this.itemRepository));
+                this.userService, this.itemRepository, this.attachmentService));
     }
 
     @Test
@@ -117,6 +131,23 @@ class WorkServiceImplTest extends ServiceTest {
         Assertions.assertEquals(resultWork, this.workService.updateOfCurrentStudent(id, work));
         Assertions.assertEquals(oldWork.getContent(), work.getContent());
         Assertions.assertEquals(oldWork.getAttachments(), work.getAttachments());
+    }
+
+    @Test
+    void uploadWork() throws IOException {
+        logger.debug("定义常量");
+        final String NAME = "attachment";
+        final String FILE_NAME = "example.jpeg";
+        Attachment attachment = AttachmentService.getOneAttachment();
+
+        logger.debug("获取资源");
+        Resource resource = loader.getResource(ResourceUtils.CLASSPATH_URL_PREFIX + FILE_NAME);
+
+        logger.debug("创建模拟文件");
+        MultipartFile multipartFile = new MockMultipartFile(NAME, FILE_NAME, "image/jpeg", resource.getInputStream());
+        Mockito.doReturn(attachment).when(workService).uploadWork(multipartFile, null, null);
+
+        Assertions.assertEquals(attachment, this.workService.uploadWork(multipartFile, null, null));
     }
 
     /**

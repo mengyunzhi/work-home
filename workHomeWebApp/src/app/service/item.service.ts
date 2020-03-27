@@ -1,8 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Item} from '../common/item';
-import {HttpClient} from '@angular/common/http';
-import {Page} from '../base/page';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Item } from '../common/item';
+import { HttpClient } from '@angular/common/http';
+import { Page } from '../base/page';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { checkDir } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -63,5 +65,15 @@ export class ItemService {
    */
   public update(itemId: number, item: Item): Observable<Item> {
     return this.httpClient.put<Item>(`${this.url}/${itemId}`, item);
+  }
+
+  /**
+   * 目录是否合法的验证器
+   */
+  dirValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const dir = '/' + control.value;
+      return checkDir(dir) ? null : {dirFormatError: true};
+    };
   }
 }
