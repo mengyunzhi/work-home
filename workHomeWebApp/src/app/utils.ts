@@ -141,3 +141,12 @@ export class Random {
     return prefix + result;
   }
 }
+
+/**
+ * 计算一个算式的字符串
+ * @param string
+ * https://stackoverflow.com/questions/6479236/calculate-string-value-in-javascript-not-using-eval
+ */
+export function stringToNumber(string) {
+  return new Function('return ' + string)();
+}
