@@ -29,7 +29,8 @@ import {AuthModule} from './pages/auth/auth.module';
       provide: HTTP_INTERCEPTORS,
       useClass: YunzhiInterceptor,
       multi: true
-    }
+    },
+    {provide: Window, useValue: window},
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { Work } from '../../../../common/work';
@@ -30,13 +30,15 @@ export class EditComponent implements OnInit {
               private attachmentService: AttachmentService,
               private appComponent: AppComponent,
               private configService: ConfigService,
-              private userService: UserService) {
+              private userService: UserService,
+              @Inject(Window) private _window: Window
+  ) {
   }
 
   ngOnInit() {
 
-    this.host = window.location.host;
-    this.protocol = window.location.protocol;
+    this.host = this._window.location.host;
+    this.protocol = this._window.location.protocol;
     this.getCurrentUser();
     this.load();
   }
