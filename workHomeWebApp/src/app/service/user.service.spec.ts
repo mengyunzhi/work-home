@@ -33,21 +33,21 @@ describe('UserService', () => {
     expect(service).toBeTruthy();
   });
   it('resetPassword', () => {
-    const user = new User();
-    let resultUser;
+    const id = Math.floor(Math.random() * 100);
+    let resultId;
     let called = false;
-    service.resetPassword(user)
+    service.resetPassword(id)
       .subscribe(result => {
-        resultUser = result;
+        resultId = result;
         called = true;
       });
     const httpTestingController: HttpTestingController = TestBed.get(HttpTestingController);
-    const req = httpTestingController.expectOne('user/resetPassword');
+    const req = httpTestingController.expectOne(`user/resetPassword/${id}`);
     expect(req.request.method).toEqual('PUT');
 
     // 断言请求的参数及方法符合预期
     expect(req.request.method).toEqual('PUT');
-    expect(req.request.body).toBe(user);
+    expect(req.request.body).toBe(id);
     // 返回值为可被观察者，该观察者携带的内容为`void`
     expect(called).toBeFalsy();
     req.flush(of());

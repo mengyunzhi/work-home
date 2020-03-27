@@ -138,7 +138,8 @@ export class UserService {
    * @param id  学生id
    * @param student  学生
    */
-  public resetPassword(user: User): Observable<void> {
-    return this.httpClient.put<void>(`${this.url}/resetPassword`, user);
+  public resetPassword(id: number): Observable<void> {
+    console.log(this.url + '/resetPassword/' + id);
+    return this.httpClient.put<void>(this.url + '/resetPassword/' + id , id);
   }
 }

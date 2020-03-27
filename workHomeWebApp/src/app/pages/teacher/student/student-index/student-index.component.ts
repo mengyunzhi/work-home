@@ -45,8 +45,9 @@ export class StudentIndexComponent implements OnInit {
     }, '即将删除学生');
   }
 
-  resetPassword(user: User) {
-    this.userService.resetPassword(user)
+  resetPassword(id: number) {
+    console.log(id);
+    this.userService.resetPassword(id)
       .subscribe(() => {
         this.appComponent.success(() => {
           this.router.navigateByUrl('/teacher/student');

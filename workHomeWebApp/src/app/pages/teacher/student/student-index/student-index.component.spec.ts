@@ -57,13 +57,11 @@ describe('StudentIndexComponent', () => {
    FormTest.clickButton(fixture, '#resetPassword');
    expect(component.resetPassword).toHaveBeenCalled();
   });
-  it('resetPassword', () => {
+  it('pages -> teacher -> student -> resetPassword', () => {
      const service  = TestBed.get(UserService) as UserService;
-     console.log(service);
      spyOn(service, 'resetPassword').and.returnValue(of());
-     const user = new  User();
-     component.resetPassword(user);
+     const id = 1;
+     component.resetPassword(id);
      expect(service.resetPassword).toHaveBeenCalled();
    });
-
 });

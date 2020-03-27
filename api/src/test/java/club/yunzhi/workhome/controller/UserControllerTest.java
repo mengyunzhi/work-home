@@ -30,16 +30,12 @@ public class UserControllerTest extends ControllerTest{
      */
     @Test
      public void resetPassword() throws Exception {
-        Long Id = this.random.nextLong();
-        JSONObject userJsonObject = new JSONObject();
-        userJsonObject.put("id", Id.toString());
-        userJsonObject.put("username",RandomString.make(6));
-        User user = new User();
-        user.setId(this.random.nextLong());
-        user.setUsername(RandomString.make(6));
-        MockHttpServletRequestBuilder putRequest = MockMvcRequestBuilders.put( "/user/resetPassword",user)
+        Long id = this.random.nextLong();
+        JSONObject JsonObject = new JSONObject();
+        JsonObject.put("id", id.toString());
+        MockHttpServletRequestBuilder putRequest = MockMvcRequestBuilders.put( "/user/resetPassword/{id}",id)
                 .contentType("application/json;charset=UTF-8")
-                .content(String.valueOf(userJsonObject));
+                .content(String.valueOf(JsonObject));
         this.mockMvc.perform(putRequest)
                 .andExpect(status().isOk());
     }
