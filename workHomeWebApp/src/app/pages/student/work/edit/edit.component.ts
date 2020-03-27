@@ -8,8 +8,8 @@ import { AttachmentService } from '../../../../service/attachment.service';
 import { AppComponent } from '../../../../app.component';
 import { Attachment } from '../../../../common/attachment';
 import { ConfigService } from '../../../../service/config.service';
-import { StudentService } from '../../../../service/student.service';
-import { Student } from '../../../../common/student';
+import { UserService } from '../../../../service/user.service';
+import { User } from '../../../../common/user';
 
 
 @Component({
@@ -20,7 +20,7 @@ import { Student } from '../../../../common/student';
 export class EditComponent implements OnInit {
   work = new Work();
   domainName: string;
-  currentStudent: Student;
+  currentUser: User;
 
   constructor(private router: Router,
               private commonService: CommonService,
@@ -29,11 +29,12 @@ export class EditComponent implements OnInit {
               private attachmentService: AttachmentService,
               private appComponent: AppComponent,
               private configService: ConfigService,
-              private studentService: StudentService) {
+              private userService: UserService) {
   }
 
   ngOnInit() {
     this.domainName = this.configService.config.domainName;
+    this.getCurrentUser();
     this.load();
   }
 
@@ -49,9 +50,11 @@ export class EditComponent implements OnInit {
     });
   }
 
-  public getCurrentStudent() {
-    this.studentService.
+  public getCurrentUser() {
+    this.currentUser = this.userService.getCurrentUser();
+    console.log(this.currentUser);
   }
+
   /**
    * 上传完一个附件以后
    * @param attachment 附件
@@ -141,9 +144,13 @@ export class EditComponent implements OnInit {
     }
   }
 
-  getItemIdForUpload(): string {
-    if (this.work.item.isFinalExperiment) {
-      return this.work.item.id.toString();
+  getItemIdForWork(): string {
+    console.log(this.work.item.finalExperiment);
+    console.log(this.work.item);
+    if (this.work && !this.work.item.finalExperiment) {
+      console.log(1111111);
+      return String(this.work.item.id);
     }
+    return '';
   }
 }

@@ -46,7 +46,7 @@
     </div>
     <div class="col-md-8">
       <app-uploader url="/api/attachment/uploadWork" description="拖动文件到此处或点击浏览(最大上传大小为20M)"
-                    [option1Value]="getItemIdForUpload()" [uploadDirSet]="true"
+                    [option1Value]="getItemIdForWork()" [uploadDirSet]="true"
                     (uploadRejected)="uploadRejected($event)"
                     (uploadedFile)="attachmentUploaded($event)" [buttonText]="'选择文件'"></app-uploader>
     </div>
@@ -68,14 +68,13 @@
       </span>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="work.attachments.length !== 0">
     <div class="col-md-2 form-text text-right">
       <label>查看作业效果：</label>
     </div>
     <div class="col-md-8">
-        <a target="_blank" [href]=""></a>
+      <a target="_blank" [href]="'https://' + (this.currentUser.username + '.' + domainName + '/' + getItemIdForWork()) | safeUrl">点击查看</a>
     </div>
-
   </div>
   <div class="row mt-5">
     <div class="col-md-8 offset-md-2">

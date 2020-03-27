@@ -1,12 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {StudentService} from '../../../../service/student.service';
-import {AppComponent} from '../../../../app.component';
-import {config} from '../../../../conf/app.config';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Item} from '../../../../common/item';
-import {ItemService} from '../../../../service/item.service';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AppComponent } from '../../../../app.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ItemService } from '../../../../service/item.service';
 
 @Component({
   selector: 'app-add',
@@ -28,7 +25,7 @@ export class AddComponent implements OnInit {
       name: ['', [Validators.required]],
       beginTime: ['', [Validators.required]],
       endTime: ['', [Validators.required]],
-      isFinalExperiment: [false, Validators.required],
+      finalExperiment: [false, Validators.required],
       description: [''],
     });
   }
@@ -40,14 +37,13 @@ export class AddComponent implements OnInit {
     this.itemService.save(this.itemForm.value)
       .subscribe(() => {
         this.appComponent.success(() => {
-          this.router.navigateByUrl('/item');
+          this.router.navigateByUrl('/teacher/item');
         }, '新增成功');
       }, (res: HttpErrorResponse) => {
         this.appComponent.error(() => {
         }, `新增失败:${res.error.message}`);
       });
   }
-
 
   get name(): AbstractControl {
     return this.itemForm.get('name');
