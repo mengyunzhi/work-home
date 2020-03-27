@@ -11,5 +11,5 @@ export class Item {
   description: string;
   attachments = new Array<Attachment>();
   active: boolean;
-  finalExperiment: boolean;
+  dir: string;
 }

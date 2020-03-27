@@ -28,15 +28,12 @@ public class AttachmentServiceImpl implements AttachmentService {
     private static final Logger logger = LoggerFactory.getLogger(AttachmentServiceImpl.class);
 
     private static final String CONFIG_PATH = "attachment/";
-    private static final String WORK_PATH = "work/";
 
     private final AttachmentRepository attachmentRepository;
-    private final StudentService studentService;
 
     @Autowired
-    public AttachmentServiceImpl(AttachmentRepository attachmentRepository, StudentService studentService) {
+    public AttachmentServiceImpl(AttachmentRepository attachmentRepository) {
         this.attachmentRepository = attachmentRepository;
-        this.studentService = studentService;
     }
 
     @Override
@@ -80,14 +77,6 @@ public class AttachmentServiceImpl implements AttachmentService {
         return attachment.getMIME();
     }
 
-    @Override
-    public Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) {
-
-        logger.debug("获取文件保存路径的实体");
-        Path saveFilePath = getWorkSavePath(uploadDir, itemId);
-
-        return saveAttachment(multipartFile, saveFilePath, true);
-    }
 
     /**
      * 从 输入 中读取并写入到 输出 中
@@ -116,29 +105,6 @@ public class AttachmentServiceImpl implements AttachmentService {
                 + calendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    private boolean checkDir(String dir) {
-
-        return Pattern.matches("^\\/(\\w+\\/?)+$", dir);
-    }
-
-    /**
-     * 通过扩展名确定存储的目录
-     *
-     * @param uploadDir 扩展名
-     * @param itemId
-     * @return 存储路径对象
-     */
-    private Path getWorkSavePath(String uploadDir, String itemId) {
-        if (itemId != null) {
-            uploadDir = '/' + itemId + uploadDir;
-        }
-        if (!checkDir(uploadDir)) {
-            throw new ValidationException("目录格式不合法");
-        }
-        Student student = this.studentService.getCurrentStudent();
-
-        return Paths.get(WORK_PATH + student.getNo() + uploadDir);
-    }
 
     /**
      * 保存上传的文件
@@ -148,7 +114,8 @@ public class AttachmentServiceImpl implements AttachmentService {
      * @param useOriginNameSave 是否使用文件原名存储
      * @return 保存的附件实体
      */
-    private Attachment saveAttachment(MultipartFile multipartFile, Path saveFilePath, Boolean useOriginNameSave) {
+    @Override
+    public Attachment saveAttachment(MultipartFile multipartFile, Path saveFilePath, Boolean useOriginNameSave) {
         logger.debug("新建附件对象");
         Attachment attachment = new Attachment();
         logger.debug("获取文件名");

@@ -25,7 +25,7 @@ export class AddComponent implements OnInit {
       name: ['', [Validators.required]],
       beginTime: ['', [Validators.required]],
       endTime: ['', [Validators.required]],
-      finalExperiment: [false, Validators.required],
+      dir: ['', this.itemService.dirValidator()],
       description: [''],
     });
   }
@@ -55,6 +55,10 @@ export class AddComponent implements OnInit {
 
   get endTime(): AbstractControl {
     return this.itemForm.get('endTime');
+  }
+
+  get dir(): AbstractControl {
+    return this.itemForm.get('dir');
   }
 
 }

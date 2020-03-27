@@ -5,8 +5,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.IllegalFormatException;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public interface AttachmentService {
     /**
@@ -18,6 +20,16 @@ public interface AttachmentService {
         Attachment attachment = new Attachment();
         attachment.setId(new Random().nextLong());
         return attachment;
+    }
+
+    /**
+     * 检查目录是否合法
+     *
+     * @param dir 目录
+     * @return true 合法  false 不合法
+     */
+    static boolean checkDir(String dir) {
+        return Pattern.matches("^\\/(\\w+\\/?)+$", dir);
     }
 
     /**
@@ -40,10 +52,12 @@ public interface AttachmentService {
     String getMediaTypeBySaveName(String saveName);
 
     /**
-     * 上传作业并将作业保存在自己的目录下
+     * 保存上传的文件
      *
-     * @param multipartFile 文件
-     * @return 附件实体
+     * @param multipartFile     上传的文件
+     * @param saveFilePath      文件保存路径
+     * @param useOriginNameSave 是否使用文件原名存储
+     * @return 保存的附件实体
      */
-    Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) throws IllegalFormatException;
+    Attachment saveAttachment(MultipartFile multipartFile, Path saveFilePath, Boolean useOriginNameSave);
 }

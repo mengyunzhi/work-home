@@ -19,7 +19,8 @@ import { User } from '../../../../common/user';
 })
 export class EditComponent implements OnInit {
   work = new Work();
-  domainName: string;
+  host: string;
+  protocol: string;  // 协议
   currentUser: User;
 
   constructor(private router: Router,
@@ -33,7 +34,9 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.domainName = this.configService.config.domainName;
+
+    this.host = window.location.host;
+    this.protocol = window.location.protocol;
     this.getCurrentUser();
     this.load();
   }
@@ -132,7 +135,6 @@ export class EditComponent implements OnInit {
         return true;
       }
     }
-
     return false;
   }
 
@@ -143,9 +145,9 @@ export class EditComponent implements OnInit {
     }
   }
 
-  getItemIdForWork(): string {
-    if (this.work && !this.work.item.finalExperiment) {
-      return String(this.work.item.id);
+  getWorkDir(): string {
+    if (this.work.item.dir) {
+      return this.work.item.dir;
     }
     return '';
   }

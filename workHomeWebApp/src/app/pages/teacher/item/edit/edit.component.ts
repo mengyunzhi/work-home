@@ -38,7 +38,7 @@ export class EditComponent implements OnInit {
       name: ['', [Validators.required]],
       beginTime: ['', [Validators.required]],
       endTime: ['', [Validators.required]],
-      finalExperiment: [null, Validators.required],
+      dir: ['', [this.itemService.dirValidator()]],
       description: [''],
     });
   }
@@ -48,7 +48,7 @@ export class EditComponent implements OnInit {
       name: data.name,
       beginTime: this.datePipe.transform(new Date(data.beginTime), 'yyyy-MM-dd'),
       endTime: this.datePipe.transform(new Date(data.endTime), 'yyyy-MM-dd'),
-      finalExperiment: data.finalExperiment,
+      dir: data.dir,
       description: data.description,
     });
   }
@@ -93,7 +93,8 @@ export class EditComponent implements OnInit {
   get endTime(): AbstractControl {
     return this.itemForm.get('endTime');
   }
-  get finalExperiment(): AbstractControl {
-    return this.itemForm.get('finalExperiment');
+
+  get dir(): AbstractControl {
+    return this.itemForm.get('dir');
   }
 }

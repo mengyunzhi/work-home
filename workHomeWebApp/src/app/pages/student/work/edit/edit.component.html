@@ -45,8 +45,8 @@
       <label for="content">其它有必要的附件：</label>
     </div>
     <div class="col-md-8">
-      <app-uploader url="/api/attachment/uploadWork" description="拖动文件到此处或点击浏览(最大上传大小为20M)"
-                    [option1Value]="getItemIdForWork()" [uploadDirSet]="true"
+      <app-uploader url="/api/work/uploadWork" description="拖动文件到此处或点击浏览(最大上传大小为20M)"
+                    [option1Value]="getWorkDir()" [uploadDirSet]="true"
                     (uploadRejected)="uploadRejected($event)"
                     (uploadedFile)="attachmentUploaded($event)" [buttonText]="'选择文件'"></app-uploader>
     </div>
@@ -73,7 +73,8 @@
       <label>查看作业效果：</label>
     </div>
     <div class="col-md-8">
-      <a target="_blank" [href]="'https://' + (this.currentUser.username + '.' + domainName + '/' + getItemIdForWork()) | safeUrl">点击查看</a>
+      <a target="_blank"
+         [href]="protocol + '//' + (this.currentUser.username + '.' + host + '/' + getWorkDir()) | safeUrl">点击查看</a>
     </div>
   </div>
   <div class="row mt-5">

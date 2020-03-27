@@ -26,9 +26,9 @@ public class Item extends AbstractEntity implements YunzhiEntity {
     private String description;
 
     /**
-     * 是否是最终实验
+     * 实验保存目录
      */
-    private Boolean finalExperiment = false;
+    private String dir = "";
 
     @ManyToMany
     @JsonView(AttachmentsJsonView.class)
@@ -92,12 +92,12 @@ public class Item extends AbstractEntity implements YunzhiEntity {
         return false;
     }
 
-    public Boolean getFinalExperiment() {
-        return finalExperiment;
+    public String getDir() {
+        return dir;
     }
 
-    public void setFinalExperiment(Boolean finalExperiment) {
-        this.finalExperiment = finalExperiment;
+    public void setDir(String dir) {
+        this.dir = dir;
     }
 
     public interface AttachmentsJsonView {

@@ -1,7 +1,10 @@
 package club.yunzhi.workhome.service;
 
+import club.yunzhi.workhome.entity.Attachment;
 import club.yunzhi.workhome.entity.Work;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,4 +80,11 @@ public interface WorkService {
      */
     Work findById(Long id);
 
+    /**
+     * 上传作业并将作业保存在自己的目录下
+     *
+     * @param multipartFile 文件
+     * @return 附件实体
+     */
+    Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) throws IllegalFormatException;
 }

@@ -1,11 +1,13 @@
 package club.yunzhi.workhome.controller;
 
+import club.yunzhi.workhome.entity.Attachment;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.service.WorkService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -45,6 +47,23 @@ public class WorkController {
         return this.workService.updateOfCurrentStudent(id, work);
     }
 
+
+    /**
+     * 上传作业
+     *
+     * @param multipartFile 作业文件
+     * @param itemId        实验id
+     * @param uploadDir     上传的目录
+     * @return 附件实体
+     */
+    @PostMapping("uploadWork")
+    @JsonView(UploadWork.class)
+    public Attachment uploadWork(@RequestParam("attachment") MultipartFile multipartFile,
+                                 @RequestParam(name = "option1", required = false) String itemId,
+                                 @RequestParam(required = false) String uploadDir) {
+        return workService.uploadWork(multipartFile, itemId, uploadDir);
+    }
+
     private interface GetAllOfCurrentStudentJsonView
             extends Work.ItemJsonView {
     }
@@ -55,4 +74,6 @@ public class WorkController {
 
     private interface UpdateJsonView extends GetByItemIdJsonView {
     }
+
+    public interface UploadWork {}
 }
