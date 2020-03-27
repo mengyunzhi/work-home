@@ -129,7 +129,9 @@ public class AttachmentServiceImpl implements AttachmentService {
      * @return 存储路径对象
      */
     private Path getWorkSavePath(String uploadDir, String workId) {
-        uploadDir = '/' + workId + uploadDir;
+        if (workId != null) {
+            uploadDir = '/' + workId + uploadDir;
+        }
         if (!checkDir(uploadDir)) {
             throw new ValidationException("目录格式不合法");
         }
@@ -156,9 +158,7 @@ public class AttachmentServiceImpl implements AttachmentService {
         // 从"."最后一次出现的位置的下一位开始截取，获取扩展名
         assert fileName != null;
         String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
-
         try {
-
             logger.debug("对文件进行sha1,md5加密");
             String sha1ToMultipartFile = CommonService.encrypt(multipartFile, "SHA-1");
             String md5ToMultipartFile = CommonService.encrypt(multipartFile, "MD5");

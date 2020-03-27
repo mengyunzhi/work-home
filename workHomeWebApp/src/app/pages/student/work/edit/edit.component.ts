@@ -7,6 +7,9 @@ import { WorkService } from '../../../../service/work.service';
 import { AttachmentService } from '../../../../service/attachment.service';
 import { AppComponent } from '../../../../app.component';
 import { Attachment } from '../../../../common/attachment';
+import { ConfigService } from '../../../../service/config.service';
+import { StudentService } from '../../../../service/student.service';
+import { Student } from '../../../../common/student';
 
 
 @Component({
@@ -16,16 +19,21 @@ import { Attachment } from '../../../../common/attachment';
 })
 export class EditComponent implements OnInit {
   work = new Work();
+  domainName: string;
+  currentStudent: Student;
 
   constructor(private router: Router,
               private commonService: CommonService,
               private route: ActivatedRoute,
               private workService: WorkService,
               private attachmentService: AttachmentService,
-              private appComponent: AppComponent) {
+              private appComponent: AppComponent,
+              private configService: ConfigService,
+              private studentService: StudentService) {
   }
 
   ngOnInit() {
+    this.domainName = this.configService.config.domainName;
     this.load();
   }
 
@@ -41,6 +49,9 @@ export class EditComponent implements OnInit {
     });
   }
 
+  public getCurrentStudent() {
+    this.studentService.
+  }
   /**
    * 上传完一个附件以后
    * @param attachment 附件
@@ -127,6 +138,12 @@ export class EditComponent implements OnInit {
     if (rejectReason) {
       this.appComponent.error(() => {
       }, rejectReason, '上传失败');
+    }
+  }
+
+  getItemIdForUpload(): string {
+    if (this.work.item.isFinalExperiment) {
+      return this.work.item.id.toString();
     }
   }
 }

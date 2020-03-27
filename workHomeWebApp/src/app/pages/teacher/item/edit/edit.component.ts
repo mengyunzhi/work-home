@@ -1,13 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Student} from '../../../../common/student';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {StudentService} from '../../../../service/student.service';
-import {AppComponent} from '../../../../app.component';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ItemService} from '../../../../service/item.service';
-import {Item} from '../../../../common/item';
-import {DatePipe} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AppComponent } from '../../../../app.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ItemService } from '../../../../service/item.service';
+import { Item } from '../../../../common/item';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit',
@@ -40,6 +38,7 @@ export class EditComponent implements OnInit {
       name: ['', [Validators.required]],
       beginTime: ['', [Validators.required]],
       endTime: ['', [Validators.required]],
+      isFinalExperiment: [null, Validators.required],
       description: [''],
     });
   }
@@ -49,6 +48,7 @@ export class EditComponent implements OnInit {
       name: data.name,
       beginTime: this.datePipe.transform(new Date(data.beginTime), 'yyyy-MM-dd'),
       endTime: this.datePipe.transform(new Date(data.endTime), 'yyyy-MM-dd'),
+      isFinalExperiment: data.isFinalExperiment,
       description: data.description,
     });
   }
@@ -92,5 +92,8 @@ export class EditComponent implements OnInit {
 
   get endTime(): AbstractControl {
     return this.itemForm.get('endTime');
+  }
+  get isFinalExperiment(): AbstractControl {
+    return this.itemForm.get('isFinalExperiment');
   }
 }

@@ -28,6 +28,7 @@ export class AddComponent implements OnInit {
       name: ['', [Validators.required]],
       beginTime: ['', [Validators.required]],
       endTime: ['', [Validators.required]],
+      isFinalExperiment: [false, Validators.required],
       description: [''],
     });
   }

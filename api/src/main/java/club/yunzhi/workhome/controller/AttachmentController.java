@@ -33,14 +33,17 @@ public class AttachmentController {
 
     /**
      * 上传作业
+     *
      * @param multipartFile 作业文件
-     * @param workId 课程id
-     * @param uploadDir 上传的目录
+     * @param itemId        实验id
+     * @param uploadDir     上传的目录
      * @return 附件实体
      */
     @PostMapping("uploadWork")
     @JsonView(upload.class)
-    public Attachment uploadWork(@RequestParam("attachment") MultipartFile multipartFile, @RequestParam(name = "option1") String workId, @RequestParam(required = false) String uploadDir) {
-         return attachmentService.uploadWork(multipartFile,workId, uploadDir);
+    public Attachment uploadWork(@RequestParam("attachment") MultipartFile multipartFile,
+                                 @RequestParam(name = "option1", required = false) String itemId,
+                                 @RequestParam(required = false) String uploadDir) {
+        return attachmentService.uploadWork(multipartFile, itemId, uploadDir);
     }
 }
