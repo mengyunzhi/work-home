@@ -20,6 +20,9 @@ describe('EditComponent', () => {
         ServiceTestingModule,
         AppTestingModule,
         HttpClientTestingModule
+      ],
+      providers: [
+
       ]
     })
     .compileComponents();

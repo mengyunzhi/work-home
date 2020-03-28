@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app/app.component';
-import { AppComponent as appC} from '../app.component';
-import {AppTestingController} from './app-testing-controller';
+import { AppComponent as appC } from '../app.component';
+import { AppTestingController } from './app-testing-controller';
+import { WINDOW_PROVIDERS } from '../func/provider/window.provider';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import {AppTestingController} from './app-testing-controller';
   ],
   providers: [
     AppTestingController,
-    {provide: appC, useClass: AppComponent}
+    {provide: appC, useClass: AppComponent},
+    WINDOW_PROVIDERS
   ]
 })
-export class AppTestingModule { }
+export class AppTestingModule {
+}

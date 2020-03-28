@@ -29,7 +29,7 @@ public interface AttachmentService {
      * @return true 合法  false 不合法
      */
     static boolean checkDir(String dir) {
-        return Pattern.matches("^\\/(\\w+\\/?)+$", dir);
+        return Pattern.matches("^$|\\/(\\w+\\/?)+$", dir);
     }
 
     /**

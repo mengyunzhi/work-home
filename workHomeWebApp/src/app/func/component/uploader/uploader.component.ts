@@ -61,6 +61,7 @@ export class UploaderComponent implements OnInit {
     // 是否设置目录,目录是否符合要求
     if (this.uploadDir && !checkDir(this.uploadDir)) {
       this.uploadRejected.emit('上传目录格式错误');
+      output.type = 'cancelled';
       return;
     }
     if (output.type === 'allAddedToQueue') {
