@@ -153,7 +153,7 @@ public class WorkServiceImpl implements WorkService {
      * @return 存储路径对象
      */
     private Path getWorkSavePath(String uploadDir, String workDir) {
-        if (workDir != null) {
+        if (workDir != null && !workDir.isEmpty()) {
             uploadDir = '/' + workDir + uploadDir;
         }
         if (!checkDir(uploadDir)) {

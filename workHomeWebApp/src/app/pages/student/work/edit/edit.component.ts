@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { Work } from '../../../../common/work';
@@ -10,6 +10,7 @@ import { Attachment } from '../../../../common/attachment';
 import { ConfigService } from '../../../../service/config.service';
 import { UserService } from '../../../../service/user.service';
 import { User } from '../../../../common/user';
+import { WINDOW } from '../../../../func/provider/WINDOW_PROVIDERS';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class EditComponent implements OnInit {
               private appComponent: AppComponent,
               private configService: ConfigService,
               private userService: UserService,
-              @Inject(Window) private _window: Window
+              @Inject(WINDOW) private _window: Window
   ) {
   }
 
