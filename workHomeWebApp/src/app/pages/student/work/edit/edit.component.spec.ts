@@ -22,7 +22,6 @@ describe('EditComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        {provide: Window, useValue: window},
 
       ]
     })
