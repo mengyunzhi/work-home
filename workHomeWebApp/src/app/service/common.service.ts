@@ -1,6 +1,46 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
+
+/**
+ * 应用程序准备完毕的影响元素
+ * 用于程序程序时，设置：应用程序准备完毕状态
+ * 比如系统启用动需要首先获取当前登录用户及系统菜单
+ * 当所有的加载完成后，我们认为系统已准备完毕，此时可以进行相应的其它请求
+ *
+ * 使用示例详见：userService
+ */
+export class AppOnReadyItem {
+  /*本元素（比如：系统菜单）是否准备完毕*/
+  private _ready = false;
+
+  /* 当发送是否准备完毕状态时执行的回调方法 */
+  sendReadyFn: (state: boolean) => void = (() => {
+  });
+
+  /* 设置回调方法 */
+  setSendReadyFn(fn: (readyState: boolean) => void) {
+    this.sendReadyFn = fn;
+  }
+
+  get ready(): boolean {
+    return this._ready;
+  }
+
+  set ready(value: boolean) {
+    this._ready = value;
+    this.sendReadyFn(value);
+  }
+}
+
+/**
+ * 返回window
+ */
+function _window(): any {
+  return window;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -87,6 +127,10 @@ export class CommonService {
     }
   }
 
+  get nativeWindow(): any {
+    return _window();
+  }
+
   /**
    * 调用缓存的回调方法，并在调用后清空缓存以防止被二次调用
    */
@@ -102,34 +146,3 @@ export class CommonService {
   }
 }
 
-
-/**
- * 应用程序准备完毕的影响元素
- * 用于程序程序时，设置：应用程序准备完毕状态
- * 比如系统启用动需要首先获取当前登录用户及系统菜单
- * 当所有的加载完成后，我们认为系统已准备完毕，此时可以进行相应的其它请求
- *
- * 使用示例详见：userService
- */
-export class AppOnReadyItem {
-  /*本元素（比如：系统菜单）是否准备完毕*/
-  private _ready = false;
-
-  /* 当发送是否准备完毕状态时执行的回调方法 */
-  sendReadyFn: (state: boolean) => void = (() => {
-  });
-
-  /* 设置回调方法 */
-  setSendReadyFn(fn: (readyState: boolean) => void) {
-    this.sendReadyFn = fn;
-  }
-
-  get ready(): boolean {
-    return this._ready;
-  }
-
-  set ready(value: boolean) {
-    this._ready = value;
-    this.sendReadyFn(value);
-  }
-}

@@ -10,7 +10,7 @@ import { PartModule } from './part/part.module';
 import { FuncModule } from './func/func.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AuthModule } from './pages/auth/auth.module';
-import { WINDOW_PROVIDERS } from './func/provider/window.provider';
+import { WindowService } from './service/window.service';
 
 @NgModule({
   declarations: [
@@ -30,8 +30,7 @@ import { WINDOW_PROVIDERS } from './func/provider/window.provider';
       provide: HTTP_INTERCEPTORS,
       useClass: YunzhiInterceptor,
       multi: true
-    },
-    WINDOW_PROVIDERS
+    }
   ],
   bootstrap: [AppComponent]
 })
