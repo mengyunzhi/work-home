@@ -10,7 +10,7 @@ import { Attachment } from '../../../../common/attachment';
 import { ConfigService } from '../../../../service/config.service';
 import { UserService } from '../../../../service/user.service';
 import { User } from '../../../../common/user';
-import { WINDOW } from '../../../../func/provider/WINDOW_PROVIDERS';
+import { WINDOW } from '../../../../func/provider/window.provider';
 
 
 @Component({

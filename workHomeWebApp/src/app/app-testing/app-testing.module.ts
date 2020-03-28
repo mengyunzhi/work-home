@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app/app.component';
 import { AppComponent as appC } from '../app.component';
 import { AppTestingController } from './app-testing-controller';
-import { WINDOW_PROVIDERS } from '../func/provider/WINDOW_PROVIDERS';
+import { WINDOW_PROVIDERS } from '../func/provider/window.provider';
 
 
 @NgModule({
