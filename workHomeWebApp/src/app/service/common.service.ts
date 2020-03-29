@@ -1,6 +1,69 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
+
+/**
+ * 应用程序准备完毕的影响元素
+ * 用于程序程序时，设置：应用程序准备完毕状态
+ * 比如系统启用动需要首先获取当前登录用户及系统菜单
+ * 当所有的加载完成后，我们认为系统已准备完毕，此时可以进行相应的其它请求
+ *
+ * 使用示例详见：userService
+ */
+export class AppOnReadyItem {
+  /*本元素（比如：系统菜单）是否准备完毕*/
+  private _ready = false;
+
+  /* 当发送是否准备完毕状态时执行的回调方法 */
+  private sendReadyFn: (state: boolean) => void = (() => {
+  });
+
+  /* 设置回调方法 */
+  protected setSendReadyFn(fn: (readyState: boolean) => void) {
+    this.sendReadyFn = fn;
+  }
+
+  get ready(): boolean {
+    return this._ready;
+  }
+
+  set ready(value: boolean) {
+    this._ready = value;
+    this.sendReadyFn(value);
+  }
+}
+
+/**
+ * 类似于装饰器
+ * 主要目的是暴露sendReadyFn以及setSendReadyFn方法
+ */
+class AppOnReadyItemWrapper extends AppOnReadyItem {
+  constructor(appOnReadyItem: AppOnReadyItem) {
+    super();
+    super.ready = appOnReadyItem.ready;
+  }
+
+  /* 设置回调方法 */
+  public setSendReadyFn(fn: (readyState: boolean) => void) {
+    super.setSendReadyFn(fn);
+  }
+
+  get ready(): boolean {
+    return super.ready;
+  }
+
+  set ready(value: boolean) {
+    super.ready = value;
+  }
+}
+
+/**
+ * 返回window
+ */
+function _window(): any {
+  return window;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +73,7 @@ export class CommonService {
    * 应用是否准备完毕
    */
   private appIsReadySubject = new BehaviorSubject<boolean>(true);
-  public appIsReady$: Observable<boolean>;
+  private appIsReady$: Observable<boolean>;
   private loadingSubject = new Subject<boolean>();
   public loading$: Observable<boolean>;
 
@@ -43,16 +106,17 @@ export class CommonService {
   /**
    * 添加影响APP是否准备好的项
    * 1. 每新添加一项，则重新计算一次系统是否准备好，并对应的发送通知
-   * 2. 每新项增加回调函数（以使得其在变更_ready时，能够解发重新计算APP是否准备好的方法并发送通知）
+   * 2. 每项增加回调函数（以使得其在变更_ready时，能够解发重新计算APP是否准备好的方法并发送通知）
    * 3. 将新添加的项添加到影响系统是否启动完毕的数组中
    * @param appOnReadyItem 应用准备完毕项
    */
   addAppOnReadyItem(appOnReadyItem: AppOnReadyItem): void {
-    this.computeAppIsReady(appOnReadyItem.ready);
-    appOnReadyItem.setSendReadyFn((readyState) => {
+    const appOnReadyItemWrapper = new AppOnReadyItemWrapper(appOnReadyItem);
+    this.computeAppIsReady(appOnReadyItemWrapper.ready);
+    appOnReadyItemWrapper.setSendReadyFn((readyState) => {
       this.computeAppIsReady(readyState);
     });
-    this.appOnReadyItems.push(appOnReadyItem);
+    this.appOnReadyItems.push(appOnReadyItemWrapper);
   }
 
   /**
@@ -73,7 +137,7 @@ export class CommonService {
    * 遍历元素，所有的元素全部准备完毕，发送true
    * @param readyState 准备状态
    */
-  computeAppIsReady(readyState) {
+  private computeAppIsReady(readyState) {
     if (!readyState) {
       this.appIsReadySubject.next(false);
     } else {
@@ -85,6 +149,10 @@ export class CommonService {
       });
       this.appIsReadySubject.next(result);
     }
+  }
+
+  get nativeWindow(): any {
+    return _window();
   }
 
   /**
@@ -102,34 +170,3 @@ export class CommonService {
   }
 }
 
-
-/**
- * 应用程序准备完毕的影响元素
- * 用于程序程序时，设置：应用程序准备完毕状态
- * 比如系统启用动需要首先获取当前登录用户及系统菜单
- * 当所有的加载完成后，我们认为系统已准备完毕，此时可以进行相应的其它请求
- *
- * 使用示例详见：userService
- */
-export class AppOnReadyItem {
-  /*本元素（比如：系统菜单）是否准备完毕*/
-  private _ready = false;
-
-  /* 当发送是否准备完毕状态时执行的回调方法 */
-  sendReadyFn: (state: boolean) => void = (() => {
-  });
-
-  /* 设置回调方法 */
-  setSendReadyFn(fn: (readyState: boolean) => void) {
-    this.sendReadyFn = fn;
-  }
-
-  get ready(): boolean {
-    return this._ready;
-  }
-
-  set ready(value: boolean) {
-    this._ready = value;
-    this.sendReadyFn(value);
-  }
-}
