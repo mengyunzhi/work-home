@@ -36,11 +36,13 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._window = this.commonService.nativeWindow;
-    this.host = this._window.location.host;
-    this.protocol = this._window.location.protocol;
-    this.getCurrentUser();
-    this.load();
+    this.commonService.appOnReady(() => {
+      this._window = this.commonService.nativeWindow;
+      this.host = this._window.location.host;
+      this.protocol = this._window.location.protocol;
+      this.getCurrentUser();
+      this.load();
+    });
   }
 
   public load() {
