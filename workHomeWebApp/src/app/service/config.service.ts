@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { YunzhiInterceptor } from '../net/yunzhi.interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class ConfigService {
   config: Config;
   private url = 'config.json';
+
 
   constructor(private httpClient: HttpClient) {
     this.config = require('./../../config.json');
@@ -23,13 +25,15 @@ export class ConfigService {
    * 从而达到清空缓存的目的
    */
   $onInit() {
-    this.httpClient.get<Config>(this.url)
+    const headers = new HttpHeaders()
+      .set('Cache-Control', 'no-cache')
+      .set('Pragma', 'no-cache')
+      .set(YunzhiInterceptor.DONT_INTERCEPT_HEADER_KEY, 'true');
+    this.httpClient.get<Config>(this.url, {headers})
       .subscribe(data => {
         if (data.version !== this.config.version) {
-          location.reload(true);
-        }
-        if (data.maxFileSize !== this.config.maxFileSize) {
-          location.reload(true);
+          this.httpClient.get('', {headers, responseType: 'text'})
+            .subscribe(() => location.reload());
         }
       });
   }

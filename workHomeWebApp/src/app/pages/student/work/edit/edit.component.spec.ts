@@ -7,7 +7,7 @@ import { FuncModule } from '../../../../func/func.module';
 import { ServiceTestingModule } from '../../../../service/service-tesing/service-testing.module';
 import { AppTestingModule } from '../../../../app-testing/app-testing.module';
 
-fdescribe('EditComponent', () => {
+describe('pages -> student -> work -> EditComponent', () => {
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
 

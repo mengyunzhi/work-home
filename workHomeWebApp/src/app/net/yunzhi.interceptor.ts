@@ -31,14 +31,13 @@ export class YunzhiInterceptor implements HttpInterceptor {
      */
     let url = req.url;
 
-    let request = req.clone({url});
-
     // header中带有do_not_intercept，且值为true，则不添加url前缀
     if (('true' !== req.headers.get(YunzhiInterceptor.DONT_INTERCEPT_HEADER_KEY))
       && !url.startsWith('https://') && !url.startsWith('http://')) {
       url = config.server + url;
     }
 
+    let request = req.clone({url});
     /**
      * 设置headers，防止弹出对话框
      * https://stackoverflow.com/questions/37763186/spring-boot-security-shows-http-basic-auth-popup-after-failed-login
