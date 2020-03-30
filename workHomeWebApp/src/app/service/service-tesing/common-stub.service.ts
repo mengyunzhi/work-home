@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import { AppOnReadyItem, CommonService } from '../common.service';
+import { CommonService } from '../common.service';
 
 export class CommonStubService extends CommonService {
   /**
@@ -21,10 +21,6 @@ export class CommonStubService extends CommonService {
 
   constructor() {
     super();
-  }
-
-  addAppOnReadyItem(appOnReadyItem: AppOnReadyItem): void {
-    return;
   }
 
   /**
