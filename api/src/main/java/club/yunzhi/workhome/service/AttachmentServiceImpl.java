@@ -27,8 +27,6 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     private static final Logger logger = LoggerFactory.getLogger(AttachmentServiceImpl.class);
 
-    private static final String CONFIG_PATH = "attachment/";
-
     private final AttachmentRepository attachmentRepository;
 
     @Autowired

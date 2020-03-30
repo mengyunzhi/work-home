@@ -73,6 +73,9 @@ export class ItemService {
   dirValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const dir = '/' + control.value;
+      if (dir === '/') {
+        return null;
+      }
       return checkDir(dir) ? null : {dirFormatError: true};
     };
   }

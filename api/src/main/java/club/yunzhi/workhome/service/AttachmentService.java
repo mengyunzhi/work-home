@@ -11,6 +11,8 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 public interface AttachmentService {
+
+    String CONFIG_PATH = "attachment/";
     /**
      * 获取一个附件
      *

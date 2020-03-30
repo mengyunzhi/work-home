@@ -78,8 +78,10 @@ export class EditComponent implements OnInit {
     this.workService.updateOfCurrentStudent(this.work.id, this.work)
       .subscribe(() => {
         this.appComponent.success(() => {
-          this.router.navigateByUrl('work');
+          this.router.navigateByUrl('/student/work');
         }, '', '保存成功!');
+      }, () => {
+        this.appComponent.error(() => {}, '', '保存失败');
       });
   }
 
@@ -117,7 +119,6 @@ export class EditComponent implements OnInit {
       this.workService.deleteAttachment(workId, attachmentId)
         .subscribe(() => {
           this.work.attachments = this.work.attachments.filter(attachment => attachment.id !== attachmentId);
-
           this.appComponent.success(() => {
           }, '', '删除成功!');
         }, () => {

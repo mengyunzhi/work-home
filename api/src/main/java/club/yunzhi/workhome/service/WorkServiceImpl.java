@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+import static club.yunzhi.workhome.service.AttachmentService.CONFIG_PATH;
 import static club.yunzhi.workhome.service.AttachmentService.checkDir;
 
 /**
@@ -149,7 +150,7 @@ public class WorkServiceImpl implements WorkService {
      * 通过扩展名确定存储的目录
      *
      * @param uploadDir 扩展名
-     * @param workDir 设置的作业目录
+     * @param workDir   设置的作业目录
      * @return 存储路径对象
      */
     private Path getWorkSavePath(String uploadDir, String workDir) {
@@ -161,6 +162,6 @@ public class WorkServiceImpl implements WorkService {
         }
         Student student = this.studentService.getCurrentStudent();
 
-        return Paths.get(WORK_PATH + student.getNo() + uploadDir);
+        return Paths.get(CONFIG_PATH + WORK_PATH + student.getNo() + uploadDir);
     }
 }
