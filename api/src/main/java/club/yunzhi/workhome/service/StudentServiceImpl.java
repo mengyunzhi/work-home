@@ -47,10 +47,15 @@ public class StudentServiceImpl implements StudentService {
         if (student.getUser().getUsername() == null) {
             student.getUser().setUsername(student.getNo());
         }
-        student.getUser().setRole(1);
-        student.getUser().setPassword(encoder.encode(student.getUser().getPassword()));
-        userRepository.save(student.getUser());
-        return this.studentRepository.save(student);
+        Student newStudent = new Student();
+        newStudent.setNo(student.getNo());
+        newStudent.setName(student.getName());
+        newStudent.setUser(new User());
+        newStudent.getUser().setRole(User.ROLE_STUDENT);
+        newStudent.getUser().setPassword(encoder.encode(student.getUser().getPassword()));
+        newStudent.getUser().setUsername(student.getUser().getUsername());
+        userRepository.save(newStudent.getUser());
+        return this.studentRepository.save(newStudent);
     }
 
     @Override

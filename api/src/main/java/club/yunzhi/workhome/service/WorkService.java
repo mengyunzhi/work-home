@@ -1,12 +1,18 @@
 package club.yunzhi.workhome.service;
 
+import club.yunzhi.workhome.entity.Attachment;
 import club.yunzhi.workhome.entity.Work;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * 作业
+ *
  * @author yz
  */
 public interface WorkService {
@@ -28,7 +34,7 @@ public interface WorkService {
     /**
      * 获取作业
      *
-     * @param itemId  实验
+     * @param itemId    实验
      * @param studentId 学生
      * @return 作业 | null
      */
@@ -36,6 +42,7 @@ public interface WorkService {
 
     /**
      * 获取作业，如果获取不到就待久化一个作业
+     *
      * @param itemId 学期
      * @return 作业
      */
@@ -43,7 +50,8 @@ public interface WorkService {
 
     /**
      * 更新当前学生
-     * @param id  作业ID
+     *
+     * @param id   作业ID
      * @param work 作业
      * @return 作业
      */
@@ -51,6 +59,7 @@ public interface WorkService {
 
     /**
      * 新建作业
+     *
      * @param itemId 学期
      * @return 作业
      */
@@ -58,6 +67,7 @@ public interface WorkService {
 
     /**
      * 新建作业
+     *
      * @param work 作业
      * @return 作业
      */
@@ -65,16 +75,32 @@ public interface WorkService {
 
     /**
      * 删除某个作业的某个附件
-     * @param workId 作业id
+     *
+     * @param workId       作业id
      * @param attachmentId 附件id
      */
     void deleteAttachment(Long workId, Long attachmentId);
 
     /**
      * 通过id获取作业
+     *
      * @param id 作业id
      * @return 作业
      */
     Work findById(Long id);
 
+    /**
+     * 上传作业并将作业保存在自己的目录下
+     *
+     * @param multipartFile 文件
+     * @return 附件实体
+     */
+    Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) throws IllegalFormatException;
+
+    /**
+     * 获取所有作业
+     *
+     * @return 所有作业
+     */
+    Page<Work> getAll(Pageable pageable);
 }

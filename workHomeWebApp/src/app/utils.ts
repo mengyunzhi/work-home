@@ -141,3 +141,23 @@ export class Random {
     return prefix + result;
   }
 }
+
+/**
+ * 计算一个算式的字符串
+ * @param string
+ * https://stackoverflow.com/questions/6479236/calculate-string-value-in-javascript-not-using-eval
+ */
+export function stringToNumber(string) {
+  return new Function('return ' + string)();
+}
+
+/**
+ * 检查目录格式是否符合 /test1/test2/..
+ * 只能使用数字,字母和下划线
+ * @param dir 目录
+ *
+ */
+export function checkDir(dir: string): boolean {
+  const reg = '^\\/(\\w+\\/?)+$';
+  return dir.search(reg) === 0;
+}

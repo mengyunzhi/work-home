@@ -5,6 +5,7 @@ import {User} from './user';
  */
 
 export class Student {
+
   id: number;
 
   name: string;
@@ -21,5 +22,6 @@ export class Student {
     this.name = params.name ? params.name : null;
     this.no = params.no ? params.no : null;
     this.user = params.user ? params.user : new User();
+
   }
 }

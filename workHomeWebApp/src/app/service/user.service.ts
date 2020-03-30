@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AppOnReadyItem, CommonService} from './common.service';
+import {CommonService} from './common.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {Router} from '@angular/router';
@@ -26,17 +26,15 @@ export class UserService {
   }
 
   private getCurrentLoginUser() {
-    const appOnReadyItem = new AppOnReadyItem();
-    this.commonService.addAppOnReadyItem(appOnReadyItem);
+    const appOnReadyItem = this.commonService.getAppOnReadyItem();
 
     this.httpClient.get<User>(`${this.url}/me`)
       .subscribe(user => {
+        appOnReadyItem.ready = true;
         this.setCurrentLoginUser(user);
       }, () => {
-        this.setCurrentLoginUser(null);
-      }, () => {
-        // 准备完完毕
         appOnReadyItem.ready = true;
+        this.setCurrentLoginUser(null);
       });
   }
 
@@ -131,5 +129,15 @@ export class UserService {
     vUser.newPassword = encodeURIComponent(newPassword);
 
     return this.httpClient.put<void>(`${this.url}/updatePassword`, vUser);
+  }
+
+  /**
+   * 重置密码
+   * @param id  学生id
+   * @param student  学生
+   */
+  public resetPassword(id: number): Observable<void> {
+    console.log(this.url + '/resetPassword/' + id);
+    return this.httpClient.put<void>(this.url + '/resetPassword/' + id , id);
   }
 }

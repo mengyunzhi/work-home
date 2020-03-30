@@ -11,13 +11,21 @@ import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+
+import static club.yunzhi.workhome.service.AttachmentService.CONFIG_PATH;
+import static club.yunzhi.workhome.service.AttachmentService.checkDir;
 
 /**
  * @author yz
@@ -27,16 +35,20 @@ import java.util.Optional;
 public class WorkServiceImpl implements WorkService {
     private static final Logger logger = LoggerFactory.getLogger(WorkServiceImpl.class);
 
+    private static final String WORK_PATH = "work/";
+
     final WorkRepository workRepository;
     final StudentService studentService;
     final UserService userService;
     final ItemRepository itemRepository;
+    final AttachmentService attachmentService;
 
-    public WorkServiceImpl(WorkRepository workRepository, StudentService studentService, UserService userService, ItemRepository itemRepository) {
+    public WorkServiceImpl(WorkRepository workRepository, StudentService studentService, UserService userService, ItemRepository itemRepository, AttachmentService attachmentService) {
         this.workRepository = workRepository;
         this.studentService = studentService;
         this.userService = userService;
         this.itemRepository = itemRepository;
+        this.attachmentService = attachmentService;
     }
 
     @Override
@@ -48,7 +60,6 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public Optional<Work> getByItemIdOfCurrentStudent(Long itemId) {
         Student student = this.studentService.getCurrentStudent();
-
         return this.getByItemIdAndStudentId(itemId, student.getId());
     }
 
@@ -92,6 +103,11 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    public Page<Work> getAll(Pageable pageable) {
+        return this.workRepository.findAll(pageable);
+    }
+
+    @Override
     public Work saveWorkByItemIdOfCurrentStudent(@NotNull Long itemId) {
         Item item = this.itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("未找到id为" + itemId + "的实验"));
@@ -103,7 +119,6 @@ public class WorkServiceImpl implements WorkService {
         work.setStudent(student);
         return this.save(work);
     }
-
 
     @Override
     public Work updateOfCurrentStudent(Long id, @NotNull Work work) {
@@ -121,5 +136,32 @@ public class WorkServiceImpl implements WorkService {
         oldWork.setContent(work.getContent());
         oldWork.setAttachments(work.getAttachments());
         return this.workRepository.save(oldWork);
+    }
+
+    @Override
+    public Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) {
+        logger.debug("获取文件保存路径的实体");
+        Path saveFilePath = getWorkSavePath(uploadDir, itemId);
+
+        return attachmentService.saveAttachment(multipartFile, saveFilePath, true);
+    }
+
+    /**
+     * 通过扩展名确定存储的目录
+     *
+     * @param uploadDir 扩展名
+     * @param workDir   设置的作业目录
+     * @return 存储路径对象
+     */
+    private Path getWorkSavePath(String uploadDir, String workDir) {
+        if (workDir != null && !workDir.isEmpty()) {
+            uploadDir = '/' + workDir + uploadDir;
+        }
+        if (!checkDir(uploadDir)) {
+            throw new ValidationException("目录格式不合法");
+        }
+        Student student = this.studentService.getCurrentStudent();
+
+        return Paths.get(CONFIG_PATH + WORK_PATH + student.getNo() + uploadDir);
     }
 }

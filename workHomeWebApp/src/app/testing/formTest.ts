@@ -26,7 +26,7 @@ export class FormTest<T> {
     const debugElement: DebugElement = fixture.debugElement;
     const nameElement = debugElement.query(By.css(cssSelector));
     if (isNull(nameElement)) {
-      return null;
+      throw new Error(`未找到css选器${cssSelector}对应的html元素`);
     }
     const nameInput: HTMLInputElement = nameElement.nativeElement;
     return nameInput.value;

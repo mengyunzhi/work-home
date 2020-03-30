@@ -38,7 +38,7 @@ export class StudentAddComponent implements OnInit {
     this.studentService.save(this.studentForm.value)
       .subscribe(() => {
         this.appComponent.success(() => {
-          this.router.navigateByUrl('/student');
+          this.router.navigateByUrl('/teacher/student');
         }, '学生新增成功');
       }, (res: HttpErrorResponse) => {
         this.appComponent.error(() => {

@@ -1,7 +1,7 @@
 /**
  * 实验项目
  */
-import {Attachment} from './attachment';
+import { Attachment } from './attachment';
 
 export class Item {
   id: number;
@@ -11,6 +11,7 @@ export class Item {
   description: string;
   attachments = new Array<Attachment>();
   active: boolean;
+  dir: string;
 
   constructor(params?: {
     id?: number;
@@ -31,4 +32,5 @@ export class Item {
     this.attachments = params.attachments ? params.attachments : null;
     this.active = params.active ? params.active : null;
   }
+
 }

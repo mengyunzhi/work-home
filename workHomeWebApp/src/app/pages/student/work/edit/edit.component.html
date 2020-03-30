@@ -45,7 +45,10 @@
       <label for="content">其它有必要的附件：</label>
     </div>
     <div class="col-md-8">
-      <input type="file" multiple (change)="fileChange($event.target.files)">
+      <app-uploader url="/api/work/uploadWork" description="拖动文件到此处或点击浏览(最大上传大小为20M)"
+                    [option1Value]="getWorkDir()" [uploadDirSet]="true"
+                    (uploadRejected)="uploadRejected($event)"
+                    (uploadedFile)="attachmentUploaded($event)" [buttonText]="'选择文件'"></app-uploader>
     </div>
   </div>
   <div class="row">
@@ -54,7 +57,7 @@
     </div>
     <div class="col-md-8">
             <span *ngFor="let attachment of work?.attachments">
-        {{ attachment.originName}}
+        {{attachment.originName}}
               &nbsp;
               <span (click)="
         downloadAttachment(attachment)" class="btn-outline-info"> <i class="fas fa-download"></i>下载</span>
@@ -63,6 +66,15 @@
         deleteAttachment(work.id, attachment.id)" class="btn-outline-danger"> <i class="fas fa-trash-alt"></i>删除</span>
         <br>
       </span>
+    </div>
+  </div>
+  <div class="row" *ngIf="work.attachments.length !== 0">
+    <div class="col-md-2 form-text text-right">
+      <label>查看作业效果：</label>
+    </div>
+    <div class="col-md-8">
+      <a target="_blank"
+         [href]="protocol + '//' + (this.currentUser.username + '.' + host + '/' + getWorkDir()) | safeUrl">点击查看</a>
     </div>
   </div>
   <div class="row mt-5">

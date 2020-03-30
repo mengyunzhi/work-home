@@ -1,6 +1,8 @@
 package club.yunzhi.workhome.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 
@@ -12,7 +14,6 @@ import javax.persistence.*;
 public class Student extends AbstractEntity {
 
 	private String name;
-
 	@Column(nullable =  false)
 	private String no;
 

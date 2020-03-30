@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import {catchError, finalize, mergeMap} from 'rxjs/operators';
+import { catchError, finalize, mergeMap } from 'rxjs/operators';
 import { config } from '../conf/app.config';
 import { isDefined } from '../utils';
-import {CommonService} from '../service/common.service';
+import { CommonService } from '../service/common.service';
+import { UserService } from '../service/user.service';
 
 /**
  * Yunzhi拦截器，用于实现添加url，添加header，全局异常处理
+ * 个别请求不需要进行拦截的，请在请求的header中加入：do_not_intercept,值为true
  */
 @Injectable({
   providedIn: 'root'
 })
 export class YunzhiInterceptor implements HttpInterceptor {
+  static DONT_INTERCEPT_HEADER_KEY = 'do_not_intercept';
 
-  constructor(private commonService: CommonService) {
+  constructor(private commonService: CommonService,
+              private userService: UserService) {
 
   }
 
@@ -26,12 +30,14 @@ export class YunzhiInterceptor implements HttpInterceptor {
      * 为request加上服务端前缀
      */
     let url = req.url;
-    if (!url.startsWith('https://') && !url.startsWith('http://') && !url.endsWith('config.json')) {
+
+    // header中带有do_not_intercept，且值为true，则不添加url前缀
+    if (('true' !== req.headers.get(YunzhiInterceptor.DONT_INTERCEPT_HEADER_KEY))
+      && !url.startsWith('https://') && !url.startsWith('http://')) {
       url = config.server + url;
     }
 
     let request = req.clone({url});
-
     /**
      * 设置headers，防止弹出对话框
      * https://stackoverflow.com/questions/37763186/spring-boot-security-shows-http-basic-auth-popup-after-failed-login
@@ -73,10 +79,9 @@ export class YunzhiInterceptor implements HttpInterceptor {
   private handleHttpException(error: HttpErrorResponse): Observable<HttpErrorResponse> {
     switch (error.status) {
       case 401:
+        this.userService.setCurrentLoginUser(null);
         break;
-      case 403:
-        break;
-      case 404:
+      default:
         break;
     }
     // 最终将异常抛出来，便于组件个性化处理
