@@ -3,8 +3,6 @@ import {first} from 'rxjs/operators';
 import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 import {UserService} from './service/user.service';
 import {isDefined} from './utils';
-import {Subscription} from 'rxjs/src/internal/Subscription';
-import {Utils} from 'tslint';
 import {CommonService} from './service/common.service';
 
 @Component({
@@ -28,17 +26,19 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.currentLoginUser$
-      .subscribe(user => {
-        if (isDefined(user)) {
-          this.showLogin = false;
-        } else {
-          this.showLogin = true;
-        }
-      });
+    this.commonService.appOnReady(() => {
+      this.userService.currentLoginUser$
+        .subscribe(user => {
+          if (isDefined(user)) {
+            this.showLogin = false;
+          } else {
+            this.showLogin = true;
+          }
+        });
 
-    this.commonService.loading$
-      .subscribe(data => this.setLoading(data));
+      this.commonService.loading$
+        .subscribe(data => this.setLoading(data));
+    });
   }
 
   /**

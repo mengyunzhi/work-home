@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { YunzhiInterceptor } from '../net/yunzhi.interceptor';
-import { AppOnReadyItem, CommonService } from './common.service';
+import { CommonService } from './common.service';
+
+declare var require: any;
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +28,7 @@ export class ConfigService {
    * 从而达到清空缓存的目的
    */
   $onInit() {
-    const readyItem = new AppOnReadyItem();
-    this.commonService.addAppOnReadyItem(readyItem);
+    const readyItem = this.commonService.getAppOnReadyItem();
     const headers = new HttpHeaders()
       .set('Cache-Control', 'no-cache')
       .set('Pragma', 'no-cache')

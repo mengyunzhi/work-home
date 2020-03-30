@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 
 /**
@@ -10,16 +10,16 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
  *
  * 使用示例详见：userService
  */
-export class AppOnReadyItem {
+class AppOnReadyItem {
+
   /*本元素（比如：系统菜单）是否准备完毕*/
   private _ready = false;
 
   /* 当发送是否准备完毕状态时执行的回调方法 */
-  private sendReadyFn: (state: boolean) => void = (() => {
+  private readonly sendReadyFn: (state: boolean) => void = (() => {
   });
 
-  /* 设置回调方法 */
-  protected setSendReadyFn(fn: (readyState: boolean) => void) {
+  constructor(fn: (readyState: boolean) => void) {
     this.sendReadyFn = fn;
   }
 
@@ -30,30 +30,6 @@ export class AppOnReadyItem {
   set ready(value: boolean) {
     this._ready = value;
     this.sendReadyFn(value);
-  }
-}
-
-/**
- * 类似于装饰器
- * 主要目的是暴露sendReadyFn以及setSendReadyFn方法
- */
-class AppOnReadyItemWrapper extends AppOnReadyItem {
-  constructor(appOnReadyItem: AppOnReadyItem) {
-    super();
-    super.ready = appOnReadyItem.ready;
-  }
-
-  /* 设置回调方法 */
-  public setSendReadyFn(fn: (readyState: boolean) => void) {
-    super.setSendReadyFn(fn);
-  }
-
-  get ready(): boolean {
-    return super.ready;
-  }
-
-  set ready(value: boolean) {
-    super.ready = value;
   }
 }
 
@@ -103,20 +79,12 @@ export class CommonService {
     });
   }
 
-  /**
-   * 添加影响APP是否准备好的项
-   * 1. 每新添加一项，则重新计算一次系统是否准备好，并对应的发送通知
-   * 2. 每项增加回调函数（以使得其在变更_ready时，能够解发重新计算APP是否准备好的方法并发送通知）
-   * 3. 将新添加的项添加到影响系统是否启动完毕的数组中
-   * @param appOnReadyItem 应用准备完毕项
-   */
-  addAppOnReadyItem(appOnReadyItem: AppOnReadyItem): void {
-    const appOnReadyItemWrapper = new AppOnReadyItemWrapper(appOnReadyItem);
-    this.computeAppIsReady(appOnReadyItemWrapper.ready);
-    appOnReadyItemWrapper.setSendReadyFn((readyState) => {
+  public getAppOnReadyItem(): AppOnReadyItem {
+    const appOnReadyItem = new AppOnReadyItem((readyState) => {
       this.computeAppIsReady(readyState);
     });
-    this.appOnReadyItems.push(appOnReadyItemWrapper);
+    this.appOnReadyItems.push(appOnReadyItem);
+    return appOnReadyItem;
   }
 
   /**
