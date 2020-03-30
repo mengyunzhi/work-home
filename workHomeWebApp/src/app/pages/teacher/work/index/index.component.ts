@@ -4,6 +4,7 @@ import {Work} from '../../../../common/work';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {WorkService} from '../../../../service/work.service';
 import {config} from '../../../../conf/app.config';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -26,7 +27,8 @@ export class IndexComponent implements OnInit {
   };
   workForm: FormGroup;
   constructor(private builder: FormBuilder,
-              private workService: WorkService) {
+              private workService: WorkService,
+              private routerModule: RouterModule) {
   }
 
   ngOnInit() {

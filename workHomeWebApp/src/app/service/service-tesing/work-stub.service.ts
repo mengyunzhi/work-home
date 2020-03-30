@@ -13,7 +13,8 @@ import {Student} from '../../common/student';
 export class WorkStubService {
 
   /* 传入参数缓存 */
-  pageParamsCache: { page: number, size: number , workId: number};
+  pageParamsCache: { page: number, size: number};
+  workIdCache: number;
 
   constructor() {
   }
@@ -59,8 +60,7 @@ export class WorkStubService {
    * @param params 查询参数
    */
   getAll(params: {page: number, size: number}): Observable<Page<Work>> {
-    this.pageParamsCache.page = params.page;
-    this.pageParamsCache.size = params.size;
+    this.pageParamsCache = params;
     const mockResult = new Page<Work>(
       {content: new Array<Work>(
         new Work({
@@ -73,10 +73,10 @@ export class WorkStubService {
   }
 
   getById(params: { id: number }): Observable<Work> {
-    this.pageParamsCache.workId = params.id;
+    this.workIdCache = params.id;
     const mockResult = new Work(
       {
-            id: 1, content: '<p>content</p>', item: new Item({name: 'Item'}),
+            id: 1, content: '<p>content</p>', item: new Item({name: 'Item', description: 'TestItem'}),
             score: 100, student: new Student({name: 'Student'}), reviewed: true});
     return of(mockResult);
   }

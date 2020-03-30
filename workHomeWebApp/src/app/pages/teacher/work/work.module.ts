@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { WorkRoutingModule } from './work-routing.module';
 import { IndexComponent } from './index/index.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EditComponent } from './edit/edit.component';
 import {FuncModule} from '../../../func/func.module';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -14,7 +15,9 @@ import {FuncModule} from '../../../func/func.module';
     CommonModule,
     WorkRoutingModule,
     ReactiveFormsModule,
-    FuncModule
+    FuncModule,
+    FormsModule,
+    RouterModule
   ]
 })
 export class WorkModule { }

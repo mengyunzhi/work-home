@@ -7,9 +7,11 @@ import {WorkStubService} from '../../../../service/service-tesing/work-stub.serv
 import {By} from '@angular/platform-browser';
 import {FormTest} from '../../../../testing/formTest';
 import {WorkService} from '../../../../service/work.service';
+import {RouterModule} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
 
 
-fdescribe('BackgroundIndexComponent', () => {
+describe('Page -> Teacher -> IndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 
@@ -20,6 +22,7 @@ fdescribe('BackgroundIndexComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
+        RouterTestingModule
       ],
       providers: [
         {provide: WorkService, useClass: WorkStubService}

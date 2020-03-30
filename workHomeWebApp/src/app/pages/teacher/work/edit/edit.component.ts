@@ -52,17 +52,22 @@ export class EditComponent implements OnInit {
       });
   }
 
-  submitBest() {
-
+  scoreBest() {
+    console.log('best click');
+    this.work.score = 95;
+    this.submit();
   }
-  submitGood() {
-
+  scoreGood() {
+    this.work.score = 90;
+    this.submit();
   }
-  submitMiddle() {
-
+  scoreMiddle() {
+    this.work.score = 80;
+    this.submit();
   }
-  submitBad() {
-
+  scoreBad() {
+    this.work.score = 60;
+    this.submit();
   }
 
   submit() {
