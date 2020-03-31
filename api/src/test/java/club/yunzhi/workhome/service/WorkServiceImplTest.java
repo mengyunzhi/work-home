@@ -134,7 +134,7 @@ class WorkServiceImplTest extends ServiceTest {
     }
 
     @Test
-    void uploadWork() throws IOException {
+    public void uploadWork() throws IOException {
         logger.debug("定义常量");
         final String NAME = "attachment";
         final String FILE_NAME = "example.jpeg";
@@ -173,6 +173,34 @@ class WorkServiceImplTest extends ServiceTest {
         ArgumentCaptor<Pageable> pageableArgumentCaptor = ArgumentCaptor.forClass(Pageable.class);
         Mockito.verify(this.workRepository).findAll(pageableArgumentCaptor.capture());
         org.assertj.core.api.Assertions.assertThat(pageableArgumentCaptor.getValue()).isEqualTo(mockInPageable);
+    }
+
+    @Test
+    public void updateScore() {
+        Long id = this.random.nextLong();
+        Work oldWork = new Work();
+        oldWork.setStudent(this.currentStudent);
+        oldWork.setItem(Mockito.spy(new Item()));
+        int score = 100;
+
+        Mockito.when(this.workRepository.findById(Mockito.eq(id)))
+                .thenReturn(Optional.of(oldWork));
+
+        Mockito.doReturn(true)
+                .when(oldWork.getItem())
+                .getActive();
+
+        Work work = new Work();
+        work.setScore(score);
+
+
+        Work resultWork = new Work();
+        Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
+                .thenReturn(resultWork);
+
+        Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
+        Assertions.assertEquals(oldWork.getScore(), work.getScore());
+
     }
 
 }
