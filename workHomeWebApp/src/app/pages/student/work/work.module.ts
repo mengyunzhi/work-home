@@ -6,10 +6,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FuncModule } from '../../../func/func.module';
 import { RouterModule } from '@angular/router';
 import { WorkRoutingModule } from './work-routing.module';
+import { ViewComponent } from './view/view.component';
 
 
 @NgModule({
-  declarations: [IndexComponent, EditComponent],
+  declarations: [IndexComponent, EditComponent, ViewComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

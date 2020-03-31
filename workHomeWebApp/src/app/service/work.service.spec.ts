@@ -5,6 +5,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {Work} from '../common/work';
 import {Page} from '../base/page';
 import {HttpRequest} from '@angular/common/http';
+import {of} from 'rxjs';
 
 describe('workServiceTest', () => {
   let httpTestingController: HttpTestingController;
@@ -22,7 +23,22 @@ describe('workServiceTest', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
+  it('getById', () => {
+    const id = Math.floor(Math.random() * 100);
+    let resultWork;
+    const params = {id};
+    const _params = {id: params.id.toLocaleString()};
+    service.getById({id})
+      .subscribe(result => {
+        resultWork = result;
+      });
+    const req = httpTestingController.expectOne((request: HttpRequest<any>) => {
+      return request.url === `work/${_params.id}`;
+    });
+    // 断言请求的参数及方法符合预期
+    expect(req.request.method).toEqual('GET');
+    // 返回值为可被观察者，该观察者携带的内容为`void`
+  });
   it('getAllOfCurrentStudent', () => {
     let result;
     service.getAllOfCurrentStudent()
