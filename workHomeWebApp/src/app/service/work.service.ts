@@ -32,8 +32,9 @@ export class WorkService {
    * @param id 作业ID
    */
   getById(params: { id: number }): Observable<Work> {
+    console.log(params);
     const _params = {id: params.id.toLocaleString()};
-    return this.httpClient.get<Work>(`${this.url}`, {params: _params});
+    return this.httpClient.get<Work>(`${this.url}/${_params.id}`, {params: _params});
   }
 
   /*getById(id: number): Observable<Work> {

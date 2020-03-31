@@ -2,6 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { EditComponent } from './edit/edit.component';
 import { IndexComponent } from './index/index.component';
+import {ViewComponent} from './view/view.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,13 @@ const routes: Routes = [
       title: '首页'
     }
   },
-
+  {
+    path: ':workId',
+    component: ViewComponent,
+    data: {
+      title: '查看'
+    }
+  },
   {
     path: 'edit/:itemId',
     component: EditComponent,

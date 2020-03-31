@@ -4,7 +4,6 @@ import { IndexComponent } from './index.component';
 import {CommonModule} from '@angular/common';
 import {ServiceTestingModule} from '../../../../service/service-tesing/service-testing.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('IndexComponent', () => {
   let component: IndexComponent;
