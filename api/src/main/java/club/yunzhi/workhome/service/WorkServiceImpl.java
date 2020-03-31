@@ -108,6 +108,14 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
+    public Work updateScore(Long id, int score) {
+        Work work = this.workRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
+        work.setScore(score);
+        return this.save(work);
+    }
+
+    @Override
     public Work saveWorkByItemIdOfCurrentStudent(@NotNull Long itemId) {
         Item item = this.itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("未找到id为" + itemId + "的实验"));
