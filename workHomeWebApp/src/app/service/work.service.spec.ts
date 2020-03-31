@@ -26,13 +26,11 @@ describe('workServiceTest', () => {
   it('getById', () => {
     const id = Math.floor(Math.random() * 100);
     let resultWork;
-    let called = false;
     const params = {id};
     const _params = {id: params.id.toLocaleString()};
     service.getById({id})
       .subscribe(result => {
         resultWork = result;
-        called = true;
       });
     const req = httpTestingController.expectOne((request: HttpRequest<any>) => {
       return request.url === `work/${_params.id}`;
@@ -40,9 +38,6 @@ describe('workServiceTest', () => {
     // 断言请求的参数及方法符合预期
     expect(req.request.method).toEqual('GET');
     // 返回值为可被观察者，该观察者携带的内容为`void`
-    expect(called).toBeFalsy();
-    req.flush(of());
-    expect(called).toBeTruthy();
   });
   it('getAllOfCurrentStudent', () => {
     let result;
