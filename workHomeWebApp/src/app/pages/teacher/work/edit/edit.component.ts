@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Work} from '../../../../common/work';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonService} from '../../../../service/common.service';
@@ -16,28 +16,23 @@ import {Page} from '../../../../base/page';
   styleUrls: ['./edit.component.sass']
 })
 export class EditComponent implements OnInit {
-  work = new Work();
+
+  /* 使用ViewChild在C层中使用V层中定义的 跳转到首页按钮 */
+  @ViewChild('linkToIndex', {static: true})
+  linkToIndex: ElementRef;
+
+  work: Work = new Work();
   params = {
     workId: 0
   };
-  constructor(private workService: WorkService) {
+  constructor(private workService: WorkService,
+              private activatedRoute: ActivatedRoute) {
   }
 
-  /*ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.params.workId = params.id;
-      console.log(params);
-      this.workService.getById(+this.params.workId).subscribe((data) => {
-        if (!isDefined(data.content.length) || data.content.length === 0) {
-          data.content = '请将源代码、网页截图（支持拖拽）等按实验要求添加到此处。';
-        }
-        this.work = data;
-      });
-    });
-  }*/
-
   ngOnInit() {
-    this.params.workId = 0;
+    this.activatedRoute.params.subscribe((param: { id: number }) => {
+      this.params.workId = param.id;
+    });
     this.load();
   }
 
@@ -53,26 +48,32 @@ export class EditComponent implements OnInit {
   }
 
   scoreBest() {
-    console.log('best click');
     this.work.score = 95;
-    this.submit();
+    this.submit({id: this.work.id, work: this.work});
   }
   scoreGood() {
     this.work.score = 90;
-    this.submit();
+    this.submit({id: this.work.id, work: this.work});
   }
   scoreMiddle() {
     this.work.score = 80;
-    this.submit();
+    this.submit({id: this.work.id, work: this.work});
   }
   scoreBad() {
     this.work.score = 60;
-    this.submit();
+    this.submit({id: this.work.id, work: this.work});
   }
 
-  submit() {
-
+  submit(params: {id: number, work: Work}) {
+    this.work.reviewed = true;
+    this.workService.updateScore({id: params.id, work: params.work})
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.work = data;
+          this.linkToIndex.nativeElement.click();
+        }
+      );
   }
-
 
 }

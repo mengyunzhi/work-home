@@ -101,4 +101,30 @@ describe('workServiceTest', () => {
     req.flush(mockResult);
     expect(called).toBe(true);
   });
+
+  it('updateScore更新作业成绩', () => {
+    // 调用方法并订阅
+    const _work = new Work();
+    _work.id = Math.floor(Math.random() * 100);
+    let resultWork;
+    service.updateScore({ id: _work.id, work: _work })
+      .subscribe(result => {
+        resultWork = result;
+      });
+
+    // 断言发起了http请求
+    const httpTesting: HttpTestingController = TestBed.get(HttpTestingController);
+    const req = httpTesting.expectOne(`work/updateScore/${_work.id}`);
+
+    // 断言请求的参数及方法符合预期
+    expect(req.request.method).toEqual('PUT');
+    expect(req.request.body).toEqual(_work);
+
+    // 模拟返回数据
+    const mockWork = new Work();
+    req.flush(mockWork);
+
+    // 断言接收数据
+    expect(resultWork).toBe(mockWork);
+  });
 });
