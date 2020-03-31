@@ -42,4 +42,14 @@ export class Page<T> {
    * 总数据条数
    */
   totalElements: number;
+
+  constructor(params?: { content?: Array<T>, number?: number, size?: number, totalPages?: number}) { // 增加构造函数，刘宇轩
+    if (!params) {
+      return;
+    }
+    this.content = params.content ? params.content : null;
+    this.number = params.number ? params.number : null;
+    this.size = params.size ? params.size : null;
+    this.totalPages = params.totalPages ? params.totalPages : null;
+  }
 }

@@ -20,6 +20,24 @@
       <br>
       <div class="row">
         <div class="col-md-4 text-right">
+          <label for="dir" class="form-text">作业保存目录</label>
+        </div>
+        <div class="col-md-8">
+          <input type="text" class="form-control" id="dir" placeholder="目录格式:test1/test2" formControlName="dir"/>
+        </div>
+      </div>
+      <div class="row mt-2" *ngIf="dir.invalid && dir.dirty && dir.errors.dirFormatError">
+        <div class="col-md-8 offset-md-4">
+          <small class="text-danger">
+            <i class="fa fa-exclamation-triangle"></i>
+            目录格式不合法
+          </small>
+        </div>
+      </div>
+
+      <br>
+      <div class="row">
+        <div class="col-md-4 text-right">
           <label for="beginTime" class="form-text">开始时间<code>*</code></label>
         </div>
         <div class="col-md-8">

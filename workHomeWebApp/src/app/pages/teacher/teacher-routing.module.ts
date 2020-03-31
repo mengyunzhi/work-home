@@ -15,6 +15,13 @@ const routes: Routes = [
     data: {
       title: '实验项目管理'
     }
+  },
+  {
+    path: 'work',
+    loadChildren: () => import('./work/work.module').then(m => m.WorkModule),
+    data: {
+      title: '作业管理'
+    }
   }
 ];
 

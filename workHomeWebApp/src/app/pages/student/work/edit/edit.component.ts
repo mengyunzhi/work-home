@@ -7,6 +7,9 @@ import { WorkService } from '../../../../service/work.service';
 import { AttachmentService } from '../../../../service/attachment.service';
 import { AppComponent } from '../../../../app.component';
 import { Attachment } from '../../../../common/attachment';
+import { ConfigService } from '../../../../service/config.service';
+import { UserService } from '../../../../service/user.service';
+import { User } from '../../../../common/user';
 
 
 @Component({
@@ -16,17 +19,30 @@ import { Attachment } from '../../../../common/attachment';
 })
 export class EditComponent implements OnInit {
   work = new Work();
+  host: string;
+  protocol: string;  // 协议
+  currentUser: User;
+  _window: any;
 
   constructor(private router: Router,
               private commonService: CommonService,
               private route: ActivatedRoute,
               private workService: WorkService,
               private attachmentService: AttachmentService,
-              private appComponent: AppComponent) {
+              private appComponent: AppComponent,
+              private configService: ConfigService,
+              private userService: UserService,
+  ) {
   }
 
   ngOnInit() {
-    this.load();
+    this.commonService.appOnReady(() => {
+      this._window = this.commonService.nativeWindow;
+      this.host = this._window.location.host;
+      this.protocol = this._window.location.protocol;
+      this.getCurrentUser();
+      this.load();
+    });
   }
 
   public load() {
@@ -39,6 +55,10 @@ export class EditComponent implements OnInit {
         this.work = data;
       });
     });
+  }
+
+  public getCurrentUser() {
+    this.currentUser = this.userService.getCurrentUser();
   }
 
   /**
@@ -58,8 +78,10 @@ export class EditComponent implements OnInit {
     this.workService.updateOfCurrentStudent(this.work.id, this.work)
       .subscribe(() => {
         this.appComponent.success(() => {
-          this.router.navigateByUrl('work');
+          this.router.navigateByUrl('/student/work');
         }, '', '保存成功!');
+      }, () => {
+        this.appComponent.error(() => {}, '', '保存失败');
       });
   }
 
@@ -97,7 +119,6 @@ export class EditComponent implements OnInit {
       this.workService.deleteAttachment(workId, attachmentId)
         .subscribe(() => {
           this.work.attachments = this.work.attachments.filter(attachment => attachment.id !== attachmentId);
-
           this.appComponent.success(() => {
           }, '', '删除成功!');
         }, () => {
@@ -119,7 +140,6 @@ export class EditComponent implements OnInit {
         return true;
       }
     }
-
     return false;
   }
 
@@ -128,5 +148,12 @@ export class EditComponent implements OnInit {
       this.appComponent.error(() => {
       }, rejectReason, '上传失败');
     }
+  }
+
+  getWorkDir(): string {
+    if (this.work.item.dir) {
+      return this.work.item.dir;
+    }
+    return '';
   }
 }

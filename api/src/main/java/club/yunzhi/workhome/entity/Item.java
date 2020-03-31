@@ -25,6 +25,11 @@ public class Item extends AbstractEntity implements YunzhiEntity {
 
     private String description;
 
+    /**
+     * 实验保存目录
+     */
+    private String dir = "";
+
     @ManyToMany
     @JsonView(AttachmentsJsonView.class)
     private List<Attachment> attachments = new ArrayList<>();
@@ -85,6 +90,14 @@ public class Item extends AbstractEntity implements YunzhiEntity {
             }
         }
         return false;
+    }
+
+    public String getDir() {
+        return dir;
+    }
+
+    public void setDir(String dir) {
+        this.dir = dir;
     }
 
     public interface AttachmentsJsonView {

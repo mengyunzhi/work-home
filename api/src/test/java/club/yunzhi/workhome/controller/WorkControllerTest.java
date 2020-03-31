@@ -19,23 +19,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.util.ResourceUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -49,6 +55,8 @@ public class WorkControllerTest extends ControllerTest {
     private String url = "/work";
     @MockBean
     WorkService workService;
+    @Autowired
+    private ResourceLoader loader;
 
     @Test
     public void getByItemId() throws Exception {
@@ -99,6 +107,28 @@ public class WorkControllerTest extends ControllerTest {
         ArgumentCaptor<Work> workArgumentCaptor = ArgumentCaptor.forClass(Work.class);
         Mockito.verify(this.workService).updateOfCurrentStudent(Mockito.eq(workId), workArgumentCaptor.capture());
         Assertions.assertEquals(workId.compareTo(workArgumentCaptor.getValue().getId()), 0);
+    }
+
+    @Test
+    public void uploadWork() throws Exception {
+        logger.debug("定义常量");
+        final String NAME = "attachment";
+        final String FILE_NAME = "example.jpeg";
+
+        logger.debug("获取资源");
+        Resource resource = loader.getResource(ResourceUtils.CLASSPATH_URL_PREFIX + FILE_NAME);
+
+        logger.debug("创建模拟文件");
+        MockMultipartFile multipartFile = new MockMultipartFile(NAME, FILE_NAME, "image/jpeg", resource.getInputStream());
+
+        logger.debug("断言请求成功");
+        this.mockMvc.perform(multipart(this.url + "/uploadWork")
+                .file(multipartFile)
+                .param("option1", "")
+        ).andExpect(status().isOk());
+
+        logger.debug("断言方法调用成功");
+        Mockito.verify(workService).uploadWork(multipartFile, "", null);
     }
 
     @Test
@@ -201,7 +231,6 @@ public class WorkControllerTest extends ControllerTest {
             Assertions.assertEquals(itemHashMap.get("name"), "test item name");
         }
 
-        return;
     }
 
     @Test
@@ -213,9 +242,6 @@ public class WorkControllerTest extends ControllerTest {
         Work mockResult = new Work();
         mockResult.setId(id);
         mockResult.setScore(100);
-        mockResult.setStudent(new Student());
-        mockResult.getStudent().setId(new Random().nextLong());
-        mockResult.getStudent().setName(RandomString.make(10));
         Mockito.when(this.workService.updateScore(Mockito.anyLong(), Mockito.any(int.class))).thenReturn(mockResult);
 
         JSONObject workJsonObject = new JSONObject();
@@ -230,8 +256,6 @@ public class WorkControllerTest extends ControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("id").value(id))
                 .andExpect(MockMvcResultMatchers.jsonPath("score").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("student.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("student.name").exists())
         ;
 
         // 断言C层进行了数据转发（替身接收的参数值符合预期)

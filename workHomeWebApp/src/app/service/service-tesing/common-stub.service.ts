@@ -1,7 +1,7 @@
-import {Subject} from 'rxjs';
-import {AppOnReadyItem} from '../common.service';
+import { Subject } from 'rxjs';
+import { CommonService } from '../common.service';
 
-export class CommonStubService {
+export class CommonStubService extends CommonService {
   /**
    * 手动控制应用是否准备完毕
    */
@@ -20,18 +20,7 @@ export class CommonStubService {
   private isReadySubject = new Subject<boolean>();
 
   constructor() {
-    this.isReadySubject.asObservable().subscribe(isReady => {
-      this.onReadyCacheCallbacks.forEach(callback => {
-        if (callback) {
-          callback();
-        }
-      });
-      this.onReadyCacheCallbacks.splice(0, this.onReadyCacheCallbacks.length);
-    });
-  }
-
-  addAppOnReadyItem(appOnReadyItem: AppOnReadyItem): void {
-    return;
+    super();
   }
 
   /**
