@@ -51,7 +51,11 @@ public class WorkController {
         return this.workService.updateOfCurrentStudent(id, work);
     }
 
-
+    /**
+     * 获取所有作业
+     * @param pageable 分页信息
+     * @return 所有作业
+     */
     @GetMapping("getAll")
     @JsonView(getAllJsonView.class)
     public Page<Work> getAll(Pageable pageable) {
@@ -85,6 +89,17 @@ public class WorkController {
         return this.workService.findById(id);
     }
 
+    /**
+     * 更新分数
+     * @param id 作业id
+     * @param work 作业
+     * @return
+     */
+    @PutMapping("updateScore/{id}")
+    public Work updateScore (@PathVariable Long id, @RequestBody Work work) {
+        return this.workService.updateScore(id, work.getScore());
+    }
+
     private interface GetAllOfCurrentStudentJsonView
             extends Work.ItemJsonView {
     }
@@ -99,7 +114,7 @@ public class WorkController {
     private interface getAllJsonView extends Work.StudentJsonView, Work.ItemJsonView  {
     }
 
-    private interface getByIdJsonView extends Work.AttachmentsJsonView, Work.StudentJsonView, Work.ItemJsonView   {
+    private interface getByIdJsonView extends Work.AttachmentsJsonView, Work.StudentJsonView, Work.ItemJsonView  {
     }
 
     private interface getByItemIdAndStudentIdJsonView extends getByIdJsonView {

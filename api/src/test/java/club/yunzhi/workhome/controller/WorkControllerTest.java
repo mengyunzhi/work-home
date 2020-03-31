@@ -6,6 +6,7 @@ import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.service.WorkService;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
+import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -201,6 +202,47 @@ public class WorkControllerTest extends ControllerTest {
         }
 
         return;
+    }
+
+    @Test
+    public void updateScore() throws Exception {
+        // 准备传入参数的数据
+        Long id = new Random().nextLong();
+
+        // 准备服务层替身被调用后的返回数据
+        Work mockResult = new Work();
+        mockResult.setId(id);
+        mockResult.setScore(100);
+        mockResult.setStudent(new Student());
+        mockResult.getStudent().setId(new Random().nextLong());
+        mockResult.getStudent().setName(RandomString.make(10));
+        Mockito.when(this.workService.updateScore(Mockito.anyLong(), Mockito.any(int.class))).thenReturn(mockResult);
+
+        JSONObject workJsonObject = new JSONObject();
+        workJsonObject.put("score", 100);
+
+        // 按接口规范发起请求，断言状态码正常，接收的数据符合预期
+        String url = this.url +  "/updateScore/" + id.toString();
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.put(url)
+                        .content(workJsonObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("id").value(id))
+                .andExpect(MockMvcResultMatchers.jsonPath("score").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("student.id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("student.name").exists())
+        ;
+
+        // 断言C层进行了数据转发（替身接收的参数值符合预期)
+        ArgumentCaptor<Long> longArgumentCaptor = ArgumentCaptor.forClass(Long.class);
+        ArgumentCaptor<Integer> intArgumentCaptor = ArgumentCaptor.forClass(int.class);
+
+        Mockito.verify(this.workService).updateScore(longArgumentCaptor.capture(), intArgumentCaptor.capture());
+        Assertions.assertEquals(longArgumentCaptor.getValue(), id);
+        int resultScore = intArgumentCaptor.getValue();
+        Assertions.assertEquals(resultScore, workJsonObject.get("score"));
+
     }
 
 }

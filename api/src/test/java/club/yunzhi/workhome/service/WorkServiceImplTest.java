@@ -144,4 +144,32 @@ class WorkServiceImplTest extends ServiceTest {
         org.assertj.core.api.Assertions.assertThat(pageableArgumentCaptor.getValue()).isEqualTo(mockInPageable);
     }
 
+    @Test
+    public void updateScore() {
+        Long id = this.random.nextLong();
+        Work oldWork = new Work();
+        oldWork.setStudent(this.currentStudent);
+        oldWork.setItem(Mockito.spy(new Item()));
+        int score = 100;
+
+        Mockito.when(this.workRepository.findById(Mockito.eq(id)))
+                .thenReturn(Optional.of(oldWork));
+
+        Mockito.doReturn(true)
+                .when(oldWork.getItem())
+                .getActive();
+
+        Work work = new Work();
+        work.setScore(score);
+
+
+        Work resultWork = new Work();
+        Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
+                .thenReturn(resultWork);
+
+        Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
+        Assertions.assertEquals(oldWork.getScore(), work.getScore());
+
+    }
+
 }
