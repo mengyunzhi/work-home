@@ -43,8 +43,6 @@ describe('UserService', () => {
       });
     const httpTestingController: HttpTestingController = TestBed.get(HttpTestingController);
     const req = httpTestingController.expectOne(`user/resetPassword/${id}`);
-    expect(req.request.method).toEqual('PUT');
-
     // 断言请求的参数及方法符合预期
     expect(req.request.method).toEqual('PUT');
     expect(req.request.body).toBe(id);

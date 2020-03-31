@@ -1,0 +1,58 @@
+<div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>实验名称：</label>
+    </div>
+    <div class="col-md-8">
+      {{work?.item?.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>任务描述：</label>
+    </div>
+    <div class="col-md-8">
+      {{work?.item?.description}}
+    </div>
+  </div>
+  <hr>
+  <div class="row mt-4">
+    <div class="col-md-2 form-text text-right">
+      <label>作答情况：</label>
+    </div>
+
+    <textarea> {{work?.content}}</textarea>
+
+  </div>
+  <div class="row mt-5" *ngIf="work.reviewed">
+    <div class="col-md-2 form-text text-right">
+      <label>作业等级：</label>
+    </div>
+    <div class="col-md-8 offset-md-2">
+      <button *ngIf="work.score == 95" type="button" class="btn btn-info btn-sm">
+        <i class="fa fa-check-circle"></i>
+        &nbsp;优
+      </button>
+      &nbsp;
+      <button *ngIf="work.score == 90" type="button" class="btn btn-warning btn-sm">
+        <i class="fa fa-check-circle"></i>
+        &nbsp;良
+      </button>
+      &nbsp;
+      <button *ngIf="work.score == 80" type="button" class="btn btn-danger btn-sm">
+        <i class="fa fa-check-circle"></i>
+        &nbsp;中
+      </button>
+      &nbsp;
+      <button *ngIf="work.score == 60" type="button" class="btn btn-dark btn-sm">
+        <i class="fa fa-check-circle"></i>
+        &nbsp;差
+      </button>
+    </div>
+  </div>
+</div>
+<br>
+
+<div *ngIf="!work.reviewed" class="alert alert-primary" role="alert">
+ 该作业暂未批阅，请等待教师批阅。
+</div>
