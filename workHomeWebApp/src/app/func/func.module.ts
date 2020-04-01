@@ -7,14 +7,15 @@ import { LoadingComponent } from './component/loading/loading.component';
 import { UploaderComponent } from './component/uploader/uploader.component';
 import { NgxUploaderModule } from './directive/ngxUploader/ngx-uploader.module';
 import { SafeUrlPipe } from './pipe/safe-url.pipe';
-
+import { BypassSecurityTrustHtmlPipe } from './pipe/bypass-security-trust-html.pipe';
 @NgModule({
-  declarations: [EditorComponentComponent, LoadingComponent, UploaderComponent, SafeUrlPipe],
+  declarations: [EditorComponentComponent, LoadingComponent, UploaderComponent, SafeUrlPipe, BypassSecurityTrustHtmlPipe],
     exports: [
         EditorComponentComponent,
         LoadingComponent,
         UploaderComponent,
-        SafeUrlPipe
+        SafeUrlPipe,
+        BypassSecurityTrustHtmlPipe
     ],
   imports: [
     CommonModule,
