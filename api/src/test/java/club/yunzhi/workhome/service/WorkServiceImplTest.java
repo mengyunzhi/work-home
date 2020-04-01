@@ -200,12 +200,8 @@ class WorkServiceImplTest extends ServiceTest {
         Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
                 .thenReturn(resultWork);
 
-
-        WorkService workServiceSpy = Mockito.spy(this.workService);
-        WorkServiceImpl workServiceImplSpy = (WorkServiceImpl) workServiceSpy;
-        Mockito.doReturn(true).when(workServiceImplSpy).isTeacher();
-
-        Assertions.assertEquals(resultWork, workServiceImplSpy.updateScore(id, score));
+        Mockito.doReturn(true).when(workService).isTeacher();
+        Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
         Assertions.assertEquals(oldWork.getScore(), work.getScore());
     }
 

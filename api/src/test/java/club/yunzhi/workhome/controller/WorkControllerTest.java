@@ -198,16 +198,19 @@ public class WorkControllerTest extends ControllerTest {
         );
 
         Mockito.when(this.workService
-                .getAll(Mockito.any(Pageable.class)))
+                .getAll(Mockito.anyLong(),
+                        Mockito.anyString(),
+                        Mockito.anyString(),
+                        Mockito.any(Pageable.class)))
                 .thenReturn(mockOutWorkPage);
 
         logger.info("以'每页2条，请求第1页'为参数发起请求，断言返回状态码为200，并接收响应数据");
-        String url = "/Work/getAll";
+        String url = "/work/getAll";
         MvcResult mvcResult = this.mockMvc.perform(
                 MockMvcRequestBuilders.get(url)
                         .param("itemId", "1")
-                        .param("name", "testName")
-                        .param("sno", "testSno")
+                        .param("studentName", "testName")
+                        .param("studentNo", "testSno")
                         .param("page", "1")
                         .param("size", "2"))
                 .andDo(MockMvcResultHandlers.print())
