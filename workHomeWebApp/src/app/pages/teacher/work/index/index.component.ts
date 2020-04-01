@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Page} from '../../../../base/page';
 import {Work} from '../../../../common/work';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {WorkService} from '../../../../service/work.service';
 import {config} from '../../../../conf/app.config';
 import {RouterModule} from '@angular/router';
+import {Item} from '../../../../common/item';
 
 @Component({
   selector: 'app-index',
@@ -18,7 +19,10 @@ export class IndexComponent implements OnInit {
   /* 查询参数 */
   params = {
     page: 0,
-    size: 10
+    size: 10,
+    studentName: new FormControl(),
+    studentSno: new FormControl(),
+    item: new Item()
   };
   /* 分页数据 */
   workPage = {
@@ -46,7 +50,14 @@ export class IndexComponent implements OnInit {
   }
 
   public load() {
-    this.workService.getAll({page: this.params.page, size: this.params.size})
+    const queryParams = {
+      page: this.params.page,
+      size: this.params.size,
+      itemId: this.params.item.id,
+      studentName: this.params.studentName.value,
+      studentSno: this.params.studentSno.value
+    };
+    this.workService.getAll(queryParams)
       .subscribe((data: Page<Work>) => {
         this.workPage.content = data;
         this.workPage.totalPages = data.totalPages;
@@ -109,6 +120,17 @@ export class IndexComponent implements OnInit {
     }
 
     return new Array();
+  }
+
+
+  /* 查询 */
+  onQuery() {
+    this.load();
+  }
+
+  /* 选择班级 */
+  onSelectKlass(item: Item) {
+    this.params.item = item;
   }
 
 }
