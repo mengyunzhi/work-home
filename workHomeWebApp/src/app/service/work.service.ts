@@ -4,6 +4,7 @@ import {Work} from '../common/work';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Assert} from '../utils';
 import {Page} from '../base/page';
+import {Item} from '../common/item';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,13 @@ export class WorkService {
     return this.httpClient.get<Array<Work>>(`${this.url}/getAllOfCurrentStudent`);
   }
 
-  getAll(params: {page: number, size: number}): Observable<Page<Work>> {
+  getAll(params: {page: number, size: number, studentName?: string, studentSno?: string, itemId?: number}): Observable<Page<Work>> {
     const _params = {
       page: params.page.toLocaleString(),
-      size: params.size.toLocaleString()
+      size: params.size.toLocaleString(),
+      studentName: params.studentName ? params.studentName : null,
+      studentSno: params.studentSno ? params.studentSno : null,
+      itemId: params.itemId ? params.itemId.toLocaleString() : null
     };
 
     return this.httpClient.get<Page<Work>>(`${this.url}/getAll`, {params: _params});

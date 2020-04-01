@@ -7,17 +7,20 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EditComponent } from './edit/edit.component';
 import {FuncModule} from '../../../func/func.module';
 import {RouterModule} from '@angular/router';
+import { ItemSelectComponent } from './item-select/item-select.component';
+import {PartModule} from '../../../part/part.module';
 
 
 @NgModule({
-  declarations: [IndexComponent, EditComponent],
+  declarations: [IndexComponent, EditComponent, ItemSelectComponent],
   imports: [
     CommonModule,
     WorkRoutingModule,
     ReactiveFormsModule,
     FuncModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    PartModule
   ]
 })
 export class WorkModule { }
