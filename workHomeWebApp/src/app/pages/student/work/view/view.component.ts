@@ -21,8 +21,8 @@ export class ViewComponent implements OnInit {
   }
   public load() {
     this.route.params.subscribe((params: Params) => {
-      const id = +params.workId;
-      this.workService.getById({id})
+      const _id = params.workId;
+      this.workService.getById({id: _id})
         .subscribe((data) => {
           this.work = data;
           console.log(this.work);

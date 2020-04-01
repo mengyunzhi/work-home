@@ -275,12 +275,10 @@ describe('Page -> Teacher -> IndexComponent', () => {
       component.params.page = 2;
       component.workPage.totalPages = 4;
       fixture.detectChanges();
-
       /* 下一页（尾页）可点击 */
       const debugElement = fixture.debugElement.query(By.css(`ul.pagination>li:${value}`));
       const liElement: HTMLLIElement = debugElement.nativeElement;
       expect(liElement.classList.contains('disabled')).toBe(false);
-
       /* 总页数为3页，下一页（尾页)不可点击 */
       component.workPage.totalPages = 3;
       fixture.detectChanges();
