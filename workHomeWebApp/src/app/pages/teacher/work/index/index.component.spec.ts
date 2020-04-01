@@ -1,28 +1,31 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndexComponent } from './index.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController, TestRequest} from '@angular/common/http/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {WorkStubService} from '../../../../service/service-tesing/work-stub.service';
 import {By} from '@angular/platform-browser';
 import {FormTest} from '../../../../testing/formTest';
 import {WorkService} from '../../../../service/work.service';
-import {RouterModule} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
+import {Item} from '../../../../common/item';
+import {PartModule} from '../../../../part/part.module';
+import {ItemSelectComponent} from '../item-select/item-select.component';
 
 
-describe('Page -> Teacher -> IndexComponent', () => {
+fdescribe('Page -> Teacher -> IndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndexComponent ],
+      declarations: [ IndexComponent , ItemSelectComponent],
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        PartModule
       ],
       providers: [
         {provide: WorkService, useClass: WorkStubService}
@@ -79,7 +82,7 @@ describe('Page -> Teacher -> IndexComponent', () => {
     console.log(text);
 
     /* 断言绑定了C层的分页值 */
-    expect(text).toContain(`第${component.params.page}/${component.workPage.totalPages}页`);
+    expect(text).toContain(`第${component.params.page + 1}/${component.workPage.totalPages}页`);
     expect(text).toContain(`每页${component.params.size}条`);
   });
 
@@ -295,6 +298,62 @@ describe('Page -> Teacher -> IndexComponent', () => {
     spyOn(component, 'onPage');
     liElement.click();
     expect(component.onPage).toHaveBeenCalledWith(component.workPage.totalPages - 1);
+  });
+
+  it('选择项目组件', () => {
+    /* 获取请求 */
+    const httpTestingController = TestBed.get(HttpTestingController);
+    const req: TestRequest = httpTestingController.expectOne('api/item/active');
+    expect(req.request.method).toEqual('GET');
+
+    /* 模拟返回值 */
+    const mockResult = new Array<Item>(
+      new Item({ id: 0 }),
+      new Item({ id: 1 })
+    );
+    req.flush(mockResult);
+    fixture.detectChanges();
+
+    /* 获取select元素 */
+    const debugElement = fixture.debugElement.query(By.css('select'));
+    const select: HTMLSelectElement = debugElement.nativeElement;
+
+    /* 选中首个选项 */
+    select.value = select.options[0].value;
+    select.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+
+    /* 断言选中的值传给了C层 */
+    expect(component.params.item).toEqual(mockResult[0]);
+  });
+
+  it('姓名、学号input输入测试', () => {
+    /* 利用前期抽向出的表单测试类，对表单进行测试 */
+    const formTest = new FormTest(fixture);
+    expect(formTest.setInputValue('input[name="name"]', 'studentName')).toBe(true);
+    expect(formTest.setInputValue('input[name="sno"]', 'studentSno')).toBe(true);
+    fixture.detectChanges();
+
+    /* 断言选中的值传给了C层 */
+    expect(component.params.studentName.value).toEqual('studentName');
+    expect(component.params.studentSno.value).toEqual('studentSno');
+  });
+
+  it('查询按钮点击测试', () => {
+    spyOn(component, 'onQuery');
+
+    /* 点击按钮 */
+    const formTest = new FormTest(fixture);
+    formTest.clickButton('button');
+    expect(component.onQuery).toHaveBeenCalled();
+    // expect(component.loadData).toHaveBeenCalled();
+  });
+
+  it('onQuery', () => {
+    spyOn(component, 'load');
+
+    component.onQuery();
+    expect(component.load).toHaveBeenCalled();
   });
 });
 
