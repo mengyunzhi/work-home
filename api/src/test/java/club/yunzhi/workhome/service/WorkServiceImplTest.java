@@ -2,6 +2,7 @@ package club.yunzhi.workhome.service;
 
 import club.yunzhi.workhome.entity.Attachment;
 import club.yunzhi.workhome.entity.Item;
+import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
@@ -14,6 +15,7 @@ import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
@@ -198,9 +200,13 @@ class WorkServiceImplTest extends ServiceTest {
         Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
                 .thenReturn(resultWork);
 
-        Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
-        Assertions.assertEquals(oldWork.getScore(), work.getScore());
 
+        WorkService workServiceSpy = Mockito.spy(this.workService);
+        WorkServiceImpl workServiceImplSpy = (WorkServiceImpl) workServiceSpy;
+        Mockito.doReturn(true).when(workServiceImplSpy).isTeacher();
+
+        Assertions.assertEquals(resultWork, workServiceImplSpy.updateScore(id, score));
+        Assertions.assertEquals(oldWork.getScore(), work.getScore());
     }
 
     @Test

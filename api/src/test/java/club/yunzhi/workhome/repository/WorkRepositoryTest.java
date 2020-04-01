@@ -65,7 +65,7 @@ class WorkRepositoryTest {
         work.setItem(item);
 
         work.setAttachments(workOptional.get().getAttachments());
-        work.setStudent(this.studentRepository.save(student));
+        work.setStudent(this.studentService.save(student));
         this.itemRepository.save(item);
         this.workRepository.save(work);
 

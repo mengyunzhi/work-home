@@ -1,15 +1,11 @@
 package club.yunzhi.workhome.repository.specs;
 
-import club.yunzhi.workhome.controller.ItemController;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.repository.ItemRepository;
-import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
-import club.yunzhi.workhome.service.ItemService;
-import club.yunzhi.workhome.service.ItemServiceImpl;
 import club.yunzhi.workhome.service.StudentService;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
@@ -39,7 +35,7 @@ public class WorkSpecsTest {
     private Work work;
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     @Before
     public void before() {
@@ -55,7 +51,7 @@ public class WorkSpecsTest {
         this.work = new Work();
         this.itemRepository.save(item);
         this.work.setItem(item);
-        this.work.setStudent(this.studentRepository.save(student));
+        this.work.setStudent(this.studentService.save(student));
         this.workRepository.save(this.work);
     }
 
