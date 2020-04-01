@@ -203,4 +203,35 @@ class WorkServiceImplTest extends ServiceTest {
 
     }
 
+    @Test
+    public void findAllSpecs() {
+        /* 参数初始化 */
+        String name = "hello";
+        String sno = "032282";
+        Long itemId = 1L;
+        Pageable pageable = PageRequest.of(0, 2);
+        List<Work> works = Arrays.asList();
+        Page<Work> mockStudentPage = new PageImpl<>(works, pageable, 100L);
+
+        /* 设置模拟返回值 */
+        Mockito.when(this.workRepository
+                .getAll(Mockito.any(Item.class),
+                        Mockito.eq(name),
+                        Mockito.eq(sno),
+                        Mockito.eq(pageable)))
+                .thenReturn(mockStudentPage);
+
+        /* 调用测试方法，获取返回值并断言与预期相同 */
+        Page<Work> returnStudentPage = this.workService.getAll(itemId, name, sno, pageable);
+        Assertions.assertEquals(returnStudentPage, mockStudentPage);
+
+        /* 获取M层调用workRepository的getAll方法时item的参数值，并进行断言 */
+        ArgumentCaptor<Item> itemArgumentCaptor = ArgumentCaptor.forClass(Item.class);
+        Mockito.verify(this.workRepository).getAll(itemArgumentCaptor.capture(), Mockito.eq(name), Mockito.eq(sno),  Mockito.eq(pageable));
+        Assertions.assertEquals(itemArgumentCaptor.getValue().getId(), itemId);
+
+        Mockito.verify(this.workRepository).getAll(itemArgumentCaptor.capture(), Mockito.any(String.class), Mockito.any(String.class),  Mockito.any(Pageable.class));
+        Assertions.assertEquals(itemArgumentCaptor.getValue().getId(), itemId);
+    }
+
 }

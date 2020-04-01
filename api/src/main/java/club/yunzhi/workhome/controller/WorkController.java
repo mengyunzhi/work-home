@@ -80,6 +80,19 @@ public class WorkController {
         return workService.getAll(pageable);
     }
 
+    @GetMapping
+    public Page<Work> findAll(
+            @RequestParam(required = false) Long itemId,
+            @RequestParam(required = false) String studentName,
+            @RequestParam(required = false) String studentSno,
+            @RequestParam Pageable pageable) {
+        return this.workService.getAll(
+                itemId,
+                studentName,
+                studentSno,
+                pageable);
+    }
+
     /**
      * 查看某一学生某一实验作业
      *
