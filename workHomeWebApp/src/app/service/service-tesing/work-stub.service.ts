@@ -15,6 +15,7 @@ export class WorkStubService {
   /* 传入参数缓存 */
   pageParamsCache: { page: number, size: number};
   workIdCache: number;
+  updateScoreCache: { id: number, work: Work};
 
   constructor() {
   }
@@ -31,11 +32,6 @@ export class WorkStubService {
     work.score = 90;
     return of([work]);
   }
-
-  // 之前的getById，没有被调用过
-  /*getById(id: number) {
-    return of(new Work());
-  }*/
 
   getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
     const work = new Work();
@@ -79,5 +75,15 @@ export class WorkStubService {
             id: 1, content: '<p>content</p>', item: new Item({name: 'Item', description: 'TestItem'}),
             score: 100, student: new Student({name: 'Student'}), reviewed: true});
     return of(mockResult);
+  }
+
+  /**
+   * 更新成绩
+   * @param id 作业ID
+   * @param work Work
+   */
+  updateScore(params: { id: number, work: Work }): Observable<Work> {
+    this.updateScoreCache = params;
+    return of(params.work);
   }
 }

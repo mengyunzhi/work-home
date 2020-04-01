@@ -112,6 +112,7 @@ public class WorkServiceImpl implements WorkService {
             throw new AccessDeniedException("无权判定作业");
         }
         work.setScore(score);
+        logger.info(String.valueOf(work.getScore()));
         return this.save(work);
     }
 
@@ -165,7 +166,6 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) {
-        logger.debug("获取文件保存路径的实体");
         Path saveFilePath = getWorkSavePath(uploadDir, itemId);
 
         return attachmentService.saveAttachment(multipartFile, saveFilePath, true);

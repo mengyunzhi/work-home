@@ -59,6 +59,7 @@ export class EditComponent implements OnInit {
 
   getEditItem() {
     this.route.params.subscribe((params: Params) => {
+      console.log(params);
       this.id = +params.id;
       this.itemService.findById(params.id)
         .subscribe((item: Item) => {

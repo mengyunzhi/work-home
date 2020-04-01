@@ -33,13 +33,19 @@ export class WorkService {
    */
   getById(params: { id: number }): Observable<Work> {
     const _params = {id: params.id.toLocaleString()};
-    return this.httpClient.get<Work>(`${this.url}`, {params: _params});
+    return this.httpClient.get<Work>(`${this.url}/${params.id}`, {params: _params});
   }
 
-  /*getById(id: number): Observable<Work> {
-    return of(new Work());
-    // return this.httpClient.get<Work>(this.url + '/' + id);
-  }*/
+  /**
+   * 更新成绩
+   * @param id 作业ID
+   * @param work Work
+   */
+  updateScore(params: { id: number, work: Work }): Observable<Work> {
+    const _params = params;
+    console.log(_params.work);
+    return this.httpClient.put<Work>(`${this.url}/updateScore/${_params.id}`, _params.work);
+  }
 
   /**
    * 更新前台学生作业
