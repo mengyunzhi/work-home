@@ -1,14 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 
 import { ViewComponent } from './view.component';
 import {WorkStubService} from '../../../../service/service-tesing/work-stub.service';
 import {WorkService} from '../../../../service/work.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterTestingModule} from '@angular/router/testing';
+
 import {Work} from '../../../../common/work';
 import {Item} from '../../../../common/item';
 import {Student} from '../../../../common/student';
+import {of} from 'rxjs';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 
 describe('ViewComponent', () => {
@@ -52,7 +55,7 @@ describe('ViewComponent', () => {
     const service  = TestBed.get(WorkService) as WorkService;
     const mockResultWork = new  Work();
     // @ts-ignore
-    spyOn(service, 'getById').and.returnValue(mockResultWork);
+    spyOn(service, 'getById').and.returnValue(of(mockResultWork));
     const id = 1;
     component.load();
     expect(service.getById).toHaveBeenCalled();
