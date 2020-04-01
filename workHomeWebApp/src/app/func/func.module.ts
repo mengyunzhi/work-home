@@ -7,7 +7,6 @@ import { LoadingComponent } from './component/loading/loading.component';
 import { UploaderComponent } from './component/uploader/uploader.component';
 import { NgxUploaderModule } from './directive/ngxUploader/ngx-uploader.module';
 import { SafeUrlPipe } from './pipe/safe-url.pipe';
-
 @NgModule({
   declarations: [EditorComponentComponent, LoadingComponent, UploaderComponent, SafeUrlPipe],
     exports: [
