@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Work} from '../../../../common/work';
 import {WorkService} from '../../../../service/work.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {User} from '../../../../common/user';
+
 
 @Component({
   selector: 'app-view',
@@ -11,10 +11,10 @@ import {User} from '../../../../common/user';
 })
 export class ViewComponent implements OnInit {
   work = new Work();
-  currentUser: User;
   constructor(private workService: WorkService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              ) { }
 
   ngOnInit() {
     this.load();
@@ -25,7 +25,7 @@ export class ViewComponent implements OnInit {
       this.workService.getById({id: _id})
         .subscribe((data) => {
           this.work = data;
-          console.log(this.work);
+          console.log(this.work.content);
         }, () => {
           console.log('error');
         });
