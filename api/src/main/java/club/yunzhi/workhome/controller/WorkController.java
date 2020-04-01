@@ -79,8 +79,16 @@ public class WorkController {
      */
     @GetMapping("getAll")
     @JsonView(GetAllJsonView.class)
-    public Page<Work> getAll(Pageable pageable) {
-        return workService.getAll(pageable);
+    public Page<Work> findAll(
+            @RequestParam(required = false) Long itemId,
+            @RequestParam(required = false) String studentName,
+            @RequestParam(required = false) String studentNo,
+            Pageable pageable) {
+        return this.workService.getAll(
+                itemId,
+                studentName,
+                studentNo,
+                pageable);
     }
 
     /**

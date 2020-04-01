@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Optional;
@@ -113,4 +114,19 @@ public interface WorkService {
      */
     Work updateScore(Long id, int score);
 
+    /**
+     * 综合查询
+     * @param itemId 实验id
+     * @param studentName 学生姓名
+     * @param studentSno 学生学号
+     * @param pageable
+     * @return
+     */
+    Page<Work> getAll(Long itemId, String studentName, String studentSno,  @NotNull Pageable pageable);
+
+    /**
+     * 判断是否为老师
+     * @return 是返回ture， 不是返回false
+     */
+    boolean isTeacher();
 }

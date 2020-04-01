@@ -1,9 +1,6 @@
 package club.yunzhi.workhome.service;
 
-import club.yunzhi.workhome.entity.Attachment;
-import club.yunzhi.workhome.entity.Item;
-import club.yunzhi.workhome.entity.Student;
-import club.yunzhi.workhome.entity.Work;
+import club.yunzhi.workhome.entity.*;
 import club.yunzhi.workhome.exception.AccessDeniedException;
 import club.yunzhi.workhome.exception.ObjectNotFoundException;
 import club.yunzhi.workhome.exception.ValidationException;
@@ -111,9 +108,29 @@ public class WorkServiceImpl implements WorkService {
     public Work updateScore(Long id, int score) {
         Work work = this.workRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
+        if (!this.isTeacher()) {
+            throw new AccessDeniedException("无权判定作业");
+        }
         work.setScore(score);
         logger.info(String.valueOf(work.getScore()));
         return this.save(work);
+    }
+
+    @Override
+    public Page<Work> getAll(Long itemId, String studentName, String studentSno, @NotNull Pageable pageable) {
+        Assert.notNull(pageable, "Pageable不能为null");
+        Item item = new Item();
+        item.setId(itemId);
+        return this.workRepository.getAll(item, studentName, studentSno, pageable);
+    }
+
+    @Override
+    public boolean isTeacher() {
+        User user = this.userService.getCurrentLoginUser();
+        if (user.getRole() == 1) {
+            return false;
+        }
+        return true;
     }
 
     @Override
