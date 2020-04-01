@@ -20,8 +20,8 @@
     <div class="col-md-2 form-text text-right">
       <label>作答：</label>
     </div>
-
-    <textarea> {{work?.content}}</textarea>
+    <div class="col-md-8" [innerHTML]=work?.content>
+    </div>
 
   </div>
   <div class="row mt-5">
