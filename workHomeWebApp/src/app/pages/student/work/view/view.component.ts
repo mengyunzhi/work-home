@@ -25,7 +25,6 @@ export class ViewComponent implements OnInit {
       this.workService.getById({id: _id})
         .subscribe((data) => {
           this.work = data;
-          console.log(this.work.content);
         }, () => {
           console.log('error');
         });

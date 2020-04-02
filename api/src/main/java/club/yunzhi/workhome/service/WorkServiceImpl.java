@@ -112,6 +112,7 @@ public class WorkServiceImpl implements WorkService {
             throw new AccessDeniedException("无权判定作业");
         }
         work.setScore(score);
+        work.setReviewed(true);
         logger.info(String.valueOf(work.getScore()));
         return this.save(work);
     }
