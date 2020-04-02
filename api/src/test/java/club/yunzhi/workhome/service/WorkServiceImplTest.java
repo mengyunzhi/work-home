@@ -194,7 +194,7 @@ class WorkServiceImplTest extends ServiceTest {
 
         Work work = new Work();
         work.setScore(score);
-
+        work.setReviewed(true);
 
         Work resultWork = new Work();
         Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
@@ -203,6 +203,8 @@ class WorkServiceImplTest extends ServiceTest {
         Mockito.doReturn(true).when(workService).isTeacher();
         Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
         Assertions.assertEquals(oldWork.getScore(), work.getScore());
+
+        Assertions.assertEquals(oldWork.getReviewed(),work.getReviewed());
     }
 
     @Test
