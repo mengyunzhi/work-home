@@ -1,15 +1,20 @@
 package club.yunzhi.workhome.service;
 
+import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
+import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.exception.AccessDeniedException;
 import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -59,8 +64,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getAll() {
-        return (List<Student>) studentRepository.findAll();
+    public Page<Student> getAll(@NotNull Pageable pageable) {
+        return (Page<Student>) studentRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Student> getAll(String studentName, String studentSno, @NotNull Pageable pageable) {
+        Assert.notNull(pageable, "Pageable不能为null");
+        return this.studentRepository.getAll(studentName, studentSno, pageable);
     }
 
     @Override
