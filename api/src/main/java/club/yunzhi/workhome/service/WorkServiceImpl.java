@@ -112,6 +112,7 @@ public class WorkServiceImpl implements WorkService {
         Work work = this.workRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
         work.setScore(score);
+        work.setReviewed(true);
         logger.info(String.valueOf(work.getScore()));
         return this.save(work);
     }
