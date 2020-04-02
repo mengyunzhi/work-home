@@ -5,7 +5,7 @@ import {ItemSelectComponent} from './item-select.component';
 import {PartModule} from '../../../../part/part.module';
 import {Item} from '../../../../common/item';
 
-fdescribe('student ItemSelectComponent', () => {
+describe('student ItemSelectComponent', () => {
   let component: ItemSelectComponent;
   let fixture: ComponentFixture<ItemSelectComponent>;
   let httpTestingController: HttpTestingController;

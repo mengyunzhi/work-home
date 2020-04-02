@@ -5,7 +5,7 @@ import {BrowserModule, By} from '@angular/platform-browser';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
-fdescribe('core select SelectComponent', () => {
+describe('core select SelectComponent', () => {
   let component: SelectComponent;
   let fixture: ComponentFixture<SelectComponent>;
   const url = 'http://localhost:8080/test';

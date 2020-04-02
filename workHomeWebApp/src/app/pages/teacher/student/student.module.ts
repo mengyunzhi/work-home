@@ -5,7 +5,7 @@ import { StudentRoutingModule } from './student-routing.module';
 import { StudentIndexComponent } from './student-index/student-index.component';
 import { StudentAddComponent } from './student-add/student-add.component';
 import { StudentEditComponent } from './student-edit/student-edit.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import {ReactiveFormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     StudentRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class StudentModule { }
