@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Student} from '../common/student';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +22,29 @@ export class StudentService {
   }
 
   /**
-   * 获取所有学生
+   * 分页
+   * @param params name:名称,no:学号, page:第几页,size:每页大小
    */
-  public getAll(): Observable<Student[]> {
-    return this.httpClient.get<Student[]>(this.url + '/getAll');
+  page(params: { name?: string, no?: string, page?: number, size?: number }):
+    Observable<{ totalPages: number, content: Array<Student> }> {
+
+    /* 设置默认值 */
+    if (params.page === undefined) {
+      params.page = 0;
+    }
+    if (params.size === undefined) {
+      params.size = 10;
+    }
+
+    /* 初始化查询参数 */
+    const queryParams = new HttpParams()
+      .set('name', params.name ? params.name : '')
+      .set('no', params.no ? params.no : '')
+      .set('page', params.page.toString())
+      .set('size', params.size.toString());
+    console.log(queryParams);
+
+    return this.httpClient.get<{ totalPages: number, content: Array<Student> }>(`${this.url}/getAll`, {params: queryParams});
   }
 
   /**

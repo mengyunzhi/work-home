@@ -13,7 +13,7 @@ import {PartModule} from '../../../../part/part.module';
 import {ItemSelectComponent} from '../item-select/item-select.component';
 
 
-fdescribe('Page -> Teacher -> IndexComponent', () => {
+describe('Page -> Teacher -> IndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 
