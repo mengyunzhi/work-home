@@ -33,9 +33,9 @@ public class YunzhiAuthService implements UserDetailsService {
 
         if (user == null) {
             logger.error("用户名不存在");
-            throw new UsernameNotFoundException("用户名不存在");
+//          throw new UsernameNotFoundException("用户名不存在");
+            return null;
         }
-
         logger.debug("初始化授权列表");
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
