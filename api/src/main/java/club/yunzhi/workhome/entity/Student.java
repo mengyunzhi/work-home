@@ -21,7 +21,8 @@ public class Student extends AbstractEntity {
 	@JoinColumn(nullable =  false)
 	@JsonView(UserJsonView.class)
 	private User user;
-
+    private Number totalScore;
+    private Number averageScore;
 	public Student() {
 	}
 
@@ -48,6 +49,14 @@ public class Student extends AbstractEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public Number getAverageScore() { return averageScore; }
+
+	public void setAverageScore(Number averageScore){this.averageScore = averageScore;}
+
+	public Number getTotalScore() { return totalScore; }
+
+	public void setTotalScore(Number totalScore) { this.totalScore = totalScore; }
 
 	public interface  UserJsonView{}
 }
