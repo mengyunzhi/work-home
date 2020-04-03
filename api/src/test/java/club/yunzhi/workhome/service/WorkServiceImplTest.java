@@ -5,6 +5,7 @@ import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.repository.ItemRepository;
+import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Assertions;
@@ -41,6 +42,8 @@ class WorkServiceImplTest extends ServiceTest {
     ItemService itemService;
     WorkServiceImpl workService;
     AttachmentService attachmentService;
+    StudentService studentService;
+    StudentRepository studentRepository;
     @Autowired
     private ResourceLoader loader;
 
@@ -51,8 +54,10 @@ class WorkServiceImplTest extends ServiceTest {
         this.workRepository = Mockito.mock(WorkRepository.class);
         this.userService = Mockito.mock(UserService.class);
         this.itemRepository = Mockito.mock(ItemRepository.class);
+        this.studentService = Mockito.mock(StudentService.class);
+        this.studentRepository = Mockito.mock(StudentRepository.class);
         this.workService = Mockito.spy(new WorkServiceImpl(this.workRepository, this.studentService,
-                this.userService, this.itemRepository, this.attachmentService));
+                this.userService, this.itemRepository, this.attachmentService, this.studentRepository));
     }
 
     @Test
@@ -180,17 +185,33 @@ class WorkServiceImplTest extends ServiceTest {
     @Test
     public void updateScore() {
         Long id = this.random.nextLong();
+
         Work oldWork = new Work();
+        oldWork.setScore(0);
         oldWork.setStudent(this.currentStudent);
         oldWork.setItem(Mockito.spy(new Item()));
+
+        Work testWork = new Work();
+        testWork.setScore(0);
+        testWork.setReviewed(true);
+        testWork.setStudent(this.currentStudent);
+        testWork.setItem(Mockito.spy(new Item()));
+
         int score = 100;
+        List<Work> works= Arrays.asList(oldWork, testWork);
 
-        Mockito.when(this.workRepository.findById(Mockito.eq(id)))
-                .thenReturn(Optional.of(oldWork));
-
+        Mockito.doReturn(Optional.of(oldWork))
+                .when(this.workRepository)
+                .findById(Mockito.eq(id));
+        Mockito.doReturn(works)
+                .when(this.workRepository)
+                .findAllByStudent(oldWork.getStudent());
         Mockito.doReturn(true)
                 .when(oldWork.getItem())
                 .getActive();
+        Mockito.doReturn(this.currentStudent)
+                .when(this.studentService)
+                .findById(oldWork.getStudent().getId());
 
         Work work = new Work();
         work.setScore(score);
@@ -205,6 +226,8 @@ class WorkServiceImplTest extends ServiceTest {
         Assertions.assertEquals(oldWork.getScore(), work.getScore());
 
         Assertions.assertEquals(oldWork.getReviewed(),work.getReviewed());
+        Assertions.assertEquals(oldWork.getStudent().getTotalScore(), 100);
+        Assertions.assertEquals(oldWork.getStudent().getAverageScore(), 50);
     }
 
     @Test
