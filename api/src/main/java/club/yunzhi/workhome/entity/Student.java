@@ -21,8 +21,8 @@ public class Student extends AbstractEntity {
 	@JoinColumn(nullable =  false)
 	@JsonView(UserJsonView.class)
 	private User user;
-    private int totalScore;
-    private int averageScore;
+    private Integer totalScore;
+    private Integer averageScore;
     public Student() {
 	}
 
