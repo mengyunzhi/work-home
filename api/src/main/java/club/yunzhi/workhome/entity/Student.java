@@ -8,55 +8,68 @@ import javax.persistence.*;
 
 /**
  * 学生
+ *
  * @author yunzhi
  */
 @Entity
 public class Student extends AbstractEntity {
 
-	private String name;
-	@Column(nullable =  false)
-	private String no;
+    private String name;
+    @Column(nullable = false)
+    private String no;
 
-	@OneToOne
-	@JoinColumn(nullable =  false)
-	@JsonView(UserJsonView.class)
-	private User user;
-    private int totalScore;
-    private int averageScore;
+    @OneToOne
+    @JoinColumn(nullable = false)
+    @JsonView(UserJsonView.class)
+    private User user;
+
+    private Integer totalScore;
+
+    private Integer averageScore;
+
     public Student() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+	public Integer getTotalScore() {
+		return totalScore;
 	}
 
-	public String getName() {
-		return name;
+	public void setTotalScore(Integer totalScore) {
+		this.totalScore = totalScore;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public Integer getAverageScore() {
+		return averageScore;
 	}
 
-	public String getNo() {
-		return no;
+	public void setAverageScore(Integer averageScore) {
+		this.averageScore = averageScore;
 	}
 
-	public void setNo(String no) {
-		this.no = no;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public int getAverageScore() { return averageScore; }
-
-	public void setAverageScore(int averageScore){this.averageScore = averageScore;}
-
-	public int getTotalScore() { return totalScore; }
-
-	public void setTotalScore(int totalScore) { this.totalScore = totalScore; }
-
-	public interface  UserJsonView{}
+	public interface UserJsonView {
+    }
 }
