@@ -30,9 +30,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
 public class StudentControllerTest extends ControllerTest {
     private static Logger logger = LoggerFactory.getLogger(StudentControllerTest.class);
 

@@ -63,6 +63,7 @@ export class StudentIndexComponent implements OnInit {
 
   delete(student: Student) {
     // 确认框
+    console.log(student);
     this.appComponent.confirm(() => {
       this.studentService.delete(student.id).subscribe(() => {
         this.pageStudent.content = this.pageStudent.content.filter(ob => ob !== student);
