@@ -25,7 +25,7 @@ export class StudentIndexComponent implements OnInit {
   /* 查询参数 */
   params = {
     page: 0,
-    size: 2,
+    size: 5,
     name: new FormControl(),
     no: new FormControl()
   };
@@ -37,60 +37,6 @@ export class StudentIndexComponent implements OnInit {
               private userService: UserService,
               private appComponent: AppComponent,
               private router: Router) {
-  }
-
-  /**
-   * 生成分页数据
-   * @param currentPage 当前页
-   * @param totalPages 总页数
-   */
-  makePagesByTotalPages(currentPage: number, totalPages: number): Array<number> {
-    if (totalPages > 0) {
-      /* 总页数小于5 */
-      if (totalPages <= 5) {
-        return this.makePages(0, totalPages - 1);
-      }
-
-      /* 首2页 */
-      if (currentPage < 2) {
-        return this.makePages(0, 4);
-      }
-
-      /* 尾2页 */
-      if (currentPage > totalPages - 3) {
-        return this.makePages(totalPages - 5, totalPages - 1);
-      }
-
-      /* 总页数大于5，且为中间页码*/
-      return this.makePages(currentPage - 2, currentPage + 2);
-    }
-
-    return new Array();
-  }
-
-  /**
-   * 生成页码
-   * @param begin 开始页码
-   * @param end 结束页码
-   */
-  makePages(begin: number, end: number): Array<number> {
-    const result = new Array<number>();
-    for (; begin <= end; begin++) {
-      result.push(begin);
-    }
-    return result;
-  }
-
-  /**
-   * 点击分页按钮
-   * @param page 要请求的页码
-   */
-  onPage(page: number) {
-    if (page < 0 || page >= this.pageStudent.totalPages) {
-      return;
-    }
-    this.params.page = page;
-    this.loadData();
   }
 
   /**
@@ -107,7 +53,7 @@ export class StudentIndexComponent implements OnInit {
     this.studentService.page(queryParams)
       .subscribe((response: { totalPages: number, content: Array<Student> }) => {
         this.pageStudent = response;
-        this.pages = this.makePagesByTotalPages(this.params.page, response.totalPages);
+        // this.pages = this.makePagesByTotalPages(this.params.page, response.totalPages);
       });
   }
 
@@ -117,6 +63,7 @@ export class StudentIndexComponent implements OnInit {
 
   delete(student: Student) {
     // 确认框
+    console.log(student);
     this.appComponent.confirm(() => {
       this.studentService.delete(student.id).subscribe(() => {
         this.pageStudent.content = this.pageStudent.content.filter(ob => ob !== student);
@@ -146,5 +93,10 @@ export class StudentIndexComponent implements OnInit {
 
   onQuery() {
 
+  }
+
+  onPageSelected(page: number) {
+    this.params.page = page;
+    this.loadData();
   }
 }

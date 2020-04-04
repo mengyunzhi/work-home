@@ -6,7 +6,6 @@ import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.service.WorkService;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
-import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -43,14 +42,8 @@ import java.util.Random;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
 public class WorkControllerTest extends ControllerTest {
     private static Logger logger = LoggerFactory.getLogger(WorkControllerTest.class);
-
-    @Autowired
-    private MockMvc mockMvc;
 
     private String url = "/work";
     @MockBean

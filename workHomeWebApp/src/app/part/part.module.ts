@@ -8,14 +8,16 @@ import {NavComponent} from './nav/nav.component';
 import {HttpClientModule} from '@angular/common/http';
 import { SelectComponent } from './select/select.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { PageComponent } from './page/page.component';
 
 @NgModule({
-  declarations: [MenuComponent, HeaderComponent, LayoutComponent, NavComponent, SelectComponent],
+  declarations: [MenuComponent, HeaderComponent, LayoutComponent, NavComponent, SelectComponent, PageComponent],
   exports: [
     MenuComponent,
     HeaderComponent,
     LayoutComponent,
-    SelectComponent
+    SelectComponent,
+    PageComponent
   ],
   imports: [
     CommonModule,
