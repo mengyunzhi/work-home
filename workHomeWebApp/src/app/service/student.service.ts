@@ -48,6 +48,12 @@ export class StudentService {
   }
 
   /**
+   * 获取当前登录的学生
+   */
+  public getCurrentStudent(): Observable<Student> {
+    return this.httpClient.get<Student>(`${this.url}/getCurrentStudent`);
+  }
+  /**
    * 根据id获取学生
    * @param id  学生id
    */

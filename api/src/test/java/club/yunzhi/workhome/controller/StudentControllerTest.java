@@ -5,8 +5,10 @@ import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.service.StudentService;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
-import org.junit.Test;
+import org.json.JSONObject;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
@@ -23,12 +25,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class StudentControllerTest extends ControllerTest {
     private static Logger logger = LoggerFactory.getLogger(StudentControllerTest.class);
@@ -97,5 +102,11 @@ public class StudentControllerTest extends ControllerTest {
             Assertions.assertEquals(userHashMap.get("username"), "test user name");
         }
 
+    }
+    @Test
+    public void getCurrentStudent() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get( "/Student/getCurrentStudent");
+        this.mockMvc.perform(getRequest)
+                .andExpect(status().isOk());
     }
 }

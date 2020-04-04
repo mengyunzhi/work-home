@@ -4,6 +4,7 @@ import { StudentService } from './student.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {HttpRequest} from '@angular/common/http';
 import {Student} from '../common/student';
+import {of} from 'rxjs';
 
 describe('StudentService', () => {
   let service: StudentService;
@@ -61,5 +62,21 @@ describe('StudentService', () => {
     expect(req.request.params.get('size')).toEqual('20');
 
     req.flush({});
+  });
+  it('getCurrentStudent', () => {
+    let resultStudent;
+    let called = false;
+    service.getCurrentStudent()
+      .subscribe(result => {
+        resultStudent = result;
+        called = true;
+      });
+    const httpTestingController: HttpTestingController = TestBed.get(HttpTestingController);
+    const req = httpTestingController.expectOne(`Student/getCurrentStudent`);
+    // 断言请求的参数及方法符合预期
+    expect(req.request.method).toEqual('GET');
+    expect(called).toBeFalsy();
+    req.flush(of(resultStudent));
+    expect(called).toBeTruthy();
   });
 });

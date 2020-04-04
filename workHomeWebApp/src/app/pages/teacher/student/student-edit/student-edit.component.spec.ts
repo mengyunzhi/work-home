@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ServiceTestingModule } from '../../../../service/service-tesing/service-testing.module';
 import { AppTestingModule } from '../../../../app-testing/app-testing.module';
+import {DebugElement} from '@angular/core';
 
 describe('StudentEditComponent', () => {
   let component: StudentEditComponent;
@@ -32,5 +33,4 @@ describe('StudentEditComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

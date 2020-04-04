@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Work} from '../../../../common/work';
-import {Item} from '../../../../common/item';
 import {WorkService} from '../../../../service/work.service';
-import {ItemService} from '../../../../service/item.service';
-import {User} from '../../../../common/user';
-import {UserService} from '../../../../service/user.service';
+import {Student} from '../../../../common/student';
+import {StudentService} from '../../../../service/student.service';
 
 @Component({
   selector: 'app-index',
@@ -13,24 +11,22 @@ import {UserService} from '../../../../service/user.service';
 })
 export class IndexComponent implements OnInit {
   works = new Array<Work>();
-  currentItems = new Array<Item>();
   /**
    * 当前登录用户
    */
-  currentUser: User;
+  currentStudent: Student;
   /**
    * 已批阅作业数目
    */
   reviewedWork: number;
+  id: number;
   constructor(private workService: WorkService,
-              private itemService: ItemService,
-              private userService: UserService) {}
+              private studentService: StudentService) {}
 
   ngOnInit() {
-    this.currentUser = this.userService.getCurrentUser();
-    this.itemService.findAllActiveItems()
+    this.studentService.getCurrentStudent()
       .subscribe(data => {
-        this.currentItems = data;
+        this.currentStudent  = data;
       });
     this.workService.getAllOfCurrentStudent()
       .subscribe(data => {
