@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -44,12 +46,12 @@ class WorkServiceImplTest extends ServiceTest {
     AttachmentService attachmentService;
     StudentService studentService;
     StudentRepository studentRepository;
-    @Autowired
-    private ResourceLoader loader;
+    ResourceLoader loader;
 
     @BeforeEach
     public void beforeEach() {
         super.beforeEach();
+        this.loader = Mockito.mock(ResourceLoader.class);
         this.itemService = Mockito.mock(ItemService.class);
         this.workRepository = Mockito.mock(WorkRepository.class);
         this.userService = Mockito.mock(UserService.class);
@@ -64,6 +66,7 @@ class WorkServiceImplTest extends ServiceTest {
     void getByItemIdOfCurrentStudent() {
         Long itemId = this.random.nextLong();
         Optional<Work> workOptional = Optional.of(new Work());
+        Mockito.when(this.studentService.getCurrentStudent()).thenReturn(this.currentStudent);
         Mockito.doReturn(workOptional)
                 .when(this.workService)
                 .getByItemIdAndStudentId(Mockito.eq(itemId),
@@ -92,7 +95,7 @@ class WorkServiceImplTest extends ServiceTest {
         Item item = new Item();
         Mockito.when(this.itemRepository.findById(Mockito.eq(itemId)))
                 .thenReturn(Optional.of(item));
-
+        Mockito.when(this.studentService.getCurrentStudent()).thenReturn(this.currentStudent);
         Work work = new Work();
         Mockito.doReturn(work).when(this.workService)
                 .save(Mockito.any(Work.class));
@@ -123,6 +126,8 @@ class WorkServiceImplTest extends ServiceTest {
         Mockito.when(this.workRepository.findById(Mockito.eq(id)))
                 .thenReturn(Optional.of(oldWork));
 
+        Mockito.when(this.studentService.getCurrentStudent()).thenReturn(currentStudent);
+
         Mockito.doReturn(true)
                 .when(oldWork.getItem())
                 .getActive();
@@ -135,7 +140,10 @@ class WorkServiceImplTest extends ServiceTest {
         Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
                 .thenReturn(resultWork);
 
+
+
         Assertions.assertEquals(resultWork, this.workService.updateOfCurrentStudent(id, work));
+
         Assertions.assertEquals(oldWork.getContent(), work.getContent());
         Assertions.assertEquals(oldWork.getAttachments(), work.getAttachments());
     }
@@ -146,12 +154,10 @@ class WorkServiceImplTest extends ServiceTest {
         final String NAME = "attachment";
         final String FILE_NAME = "example.jpeg";
         Attachment attachment = AttachmentService.getOneAttachment();
-
-        logger.debug("获取资源");
-        Resource resource = loader.getResource(ResourceUtils.CLASSPATH_URL_PREFIX + FILE_NAME);
-
+        // 创建mock资源
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("test", "hello".getBytes());
         logger.debug("创建模拟文件");
-        MultipartFile multipartFile = new MockMultipartFile(NAME, FILE_NAME, "image/jpeg", resource.getInputStream());
+        MultipartFile multipartFile = new MockMultipartFile(NAME, FILE_NAME, "image/jpeg", mockMultipartFile.getInputStream());
         Mockito.doReturn(attachment).when(workService).uploadWork(multipartFile, null, null);
 
         Assertions.assertEquals(attachment, this.workService.uploadWork(multipartFile, null, null));

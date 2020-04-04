@@ -1,62 +1,72 @@
 package club.yunzhi.workhome.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 
 /**
  * 学生
+ *
  * @author yunzhi
  */
 @Entity
 public class Student extends AbstractEntity {
+    private String name;
+    @Column(nullable = false)
+    private String no;
 
-	private String name;
-	@Column(nullable =  false)
-	private String no;
+    @OneToOne
+    @JoinColumn(nullable = false)
+    @JsonView(UserJsonView.class)
+    private User user;
 
-	@OneToOne
-	@JoinColumn(nullable =  false)
-	@JsonView(UserJsonView.class)
-	private User user;
-    private int totalScore;
-    private int averageScore;
+    private Integer totalScore;
+
+    private Integer averageScore;
+
     public Student() {
-	}
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getNo() {
-		return no;
-	}
+    public String getNo() {
+        return no;
+    }
 
-	public void setNo(String no) {
-		this.no = no;
-	}
+    public void setNo(String no) {
+        this.no = no;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public int getAverageScore() { return averageScore; }
+    public Integer getTotalScore() {
+        return totalScore;
+    }
 
-	public void setAverageScore(int averageScore){this.averageScore = averageScore;}
+    public void setTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
+    }
 
-	public int getTotalScore() { return totalScore; }
+    public Integer getAverageScore() {
+        return averageScore;
+    }
 
-	public void setTotalScore(int totalScore) { this.totalScore = totalScore; }
+    public void setAverageScore(Integer averageScore) {
+        this.averageScore = averageScore;
+    }
 
-	public interface  UserJsonView{}
+    public interface UserJsonView {
+    }
 }
