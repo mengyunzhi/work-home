@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.Random;
 
-@Transactional
-@SpringBootTest
 public abstract class ServiceTest {
     protected Random random = new Random();
     protected StudentService studentService;
