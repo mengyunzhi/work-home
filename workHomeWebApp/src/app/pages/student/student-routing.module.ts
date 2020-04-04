@@ -9,7 +9,15 @@ const routes: Routes = [
     data: {
       title: '交作业模块'
     }
-  }];
+  },
+  {
+    path: 'score',
+    loadChildren: () => import('./score/score.module').then(m => m.ScoreModule),
+    data: {
+      title: '查看成绩模块'
+    }
+  }
+  ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
