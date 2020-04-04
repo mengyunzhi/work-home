@@ -5,12 +5,14 @@ import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.repository.ItemRepository;
+import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -41,24 +44,29 @@ class WorkServiceImplTest extends ServiceTest {
     ItemService itemService;
     WorkServiceImpl workService;
     AttachmentService attachmentService;
-    @Autowired
-    private ResourceLoader loader;
+    StudentService studentService;
+    StudentRepository studentRepository;
+    ResourceLoader loader;
 
     @BeforeEach
     public void beforeEach() {
         super.beforeEach();
+        this.loader = Mockito.mock(ResourceLoader.class);
         this.itemService = Mockito.mock(ItemService.class);
         this.workRepository = Mockito.mock(WorkRepository.class);
         this.userService = Mockito.mock(UserService.class);
         this.itemRepository = Mockito.mock(ItemRepository.class);
+        this.studentService = Mockito.mock(StudentService.class);
+        this.studentRepository = Mockito.mock(StudentRepository.class);
         this.workService = Mockito.spy(new WorkServiceImpl(this.workRepository, this.studentService,
-                this.userService, this.itemRepository, this.attachmentService));
+                this.userService, this.itemRepository, this.attachmentService, this.studentRepository));
     }
 
     @Test
     void getByItemIdOfCurrentStudent() {
         Long itemId = this.random.nextLong();
         Optional<Work> workOptional = Optional.of(new Work());
+        Mockito.when(this.studentService.getCurrentStudent()).thenReturn(this.currentStudent);
         Mockito.doReturn(workOptional)
                 .when(this.workService)
                 .getByItemIdAndStudentId(Mockito.eq(itemId),
@@ -87,7 +95,7 @@ class WorkServiceImplTest extends ServiceTest {
         Item item = new Item();
         Mockito.when(this.itemRepository.findById(Mockito.eq(itemId)))
                 .thenReturn(Optional.of(item));
-
+        Mockito.when(this.studentService.getCurrentStudent()).thenReturn(this.currentStudent);
         Work work = new Work();
         Mockito.doReturn(work).when(this.workService)
                 .save(Mockito.any(Work.class));
@@ -118,6 +126,8 @@ class WorkServiceImplTest extends ServiceTest {
         Mockito.when(this.workRepository.findById(Mockito.eq(id)))
                 .thenReturn(Optional.of(oldWork));
 
+        Mockito.when(this.studentService.getCurrentStudent()).thenReturn(currentStudent);
+
         Mockito.doReturn(true)
                 .when(oldWork.getItem())
                 .getActive();
@@ -130,7 +140,10 @@ class WorkServiceImplTest extends ServiceTest {
         Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
                 .thenReturn(resultWork);
 
+
+
         Assertions.assertEquals(resultWork, this.workService.updateOfCurrentStudent(id, work));
+
         Assertions.assertEquals(oldWork.getContent(), work.getContent());
         Assertions.assertEquals(oldWork.getAttachments(), work.getAttachments());
     }
@@ -141,12 +154,10 @@ class WorkServiceImplTest extends ServiceTest {
         final String NAME = "attachment";
         final String FILE_NAME = "example.jpeg";
         Attachment attachment = AttachmentService.getOneAttachment();
-
-        logger.debug("获取资源");
-        Resource resource = loader.getResource(ResourceUtils.CLASSPATH_URL_PREFIX + FILE_NAME);
-
+        // 创建mock资源
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("test", "hello".getBytes());
         logger.debug("创建模拟文件");
-        MultipartFile multipartFile = new MockMultipartFile(NAME, FILE_NAME, "image/jpeg", resource.getInputStream());
+        MultipartFile multipartFile = new MockMultipartFile(NAME, FILE_NAME, "image/jpeg", mockMultipartFile.getInputStream());
         Mockito.doReturn(attachment).when(workService).uploadWork(multipartFile, null, null);
 
         Assertions.assertEquals(attachment, this.workService.uploadWork(multipartFile, null, null));
@@ -180,17 +191,33 @@ class WorkServiceImplTest extends ServiceTest {
     @Test
     public void updateScore() {
         Long id = this.random.nextLong();
+
         Work oldWork = new Work();
+        oldWork.setScore(0);
         oldWork.setStudent(this.currentStudent);
         oldWork.setItem(Mockito.spy(new Item()));
+
+        Work testWork = new Work();
+        testWork.setScore(0);
+        testWork.setReviewed(true);
+        testWork.setStudent(this.currentStudent);
+        testWork.setItem(Mockito.spy(new Item()));
+
         int score = 100;
+        List<Work> works= Arrays.asList(oldWork, testWork);
 
-        Mockito.when(this.workRepository.findById(Mockito.eq(id)))
-                .thenReturn(Optional.of(oldWork));
-
+        Mockito.doReturn(Optional.of(oldWork))
+                .when(this.workRepository)
+                .findById(Mockito.eq(id));
+        Mockito.doReturn(works)
+                .when(this.workRepository)
+                .findAllByStudent(oldWork.getStudent());
         Mockito.doReturn(true)
                 .when(oldWork.getItem())
                 .getActive();
+        Mockito.doReturn(this.currentStudent)
+                .when(this.studentService)
+                .findById(oldWork.getStudent().getId());
 
         Work work = new Work();
         work.setScore(score);
@@ -205,6 +232,8 @@ class WorkServiceImplTest extends ServiceTest {
         Assertions.assertEquals(oldWork.getScore(), work.getScore());
 
         Assertions.assertEquals(oldWork.getReviewed(),work.getReviewed());
+        Assertions.assertEquals(oldWork.getStudent().getTotalScore(), 100);
+        Assertions.assertEquals(oldWork.getStudent().getAverageScore(), 50);
     }
 
     @Test
