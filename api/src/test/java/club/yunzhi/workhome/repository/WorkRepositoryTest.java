@@ -1,6 +1,5 @@
 package club.yunzhi.workhome.repository;
 
-import club.yunzhi.workhome.controller.ItemController;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;

@@ -5,9 +5,11 @@ import club.yunzhi.workhome.exception.AccessDeniedException;
 import club.yunzhi.workhome.exception.ObjectNotFoundException;
 import club.yunzhi.workhome.exception.ValidationException;
 import club.yunzhi.workhome.repository.ItemRepository;
+import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,13 +41,15 @@ public class WorkServiceImpl implements WorkService {
     final UserService userService;
     final ItemRepository itemRepository;
     final AttachmentService attachmentService;
+    final StudentRepository studentRepository;
 
-    public WorkServiceImpl(WorkRepository workRepository, StudentService studentService, UserService userService, ItemRepository itemRepository, AttachmentService attachmentService) {
+    public WorkServiceImpl(WorkRepository workRepository, StudentService studentService, UserService userService, ItemRepository itemRepository, AttachmentService attachmentService, StudentRepository studentRepository) {
         this.workRepository = workRepository;
         this.studentService = studentService;
         this.userService = userService;
         this.itemRepository = itemRepository;
         this.attachmentService = attachmentService;
+        this.studentRepository = studentRepository;
     }
 
     @Override
@@ -114,6 +118,25 @@ public class WorkServiceImpl implements WorkService {
         work.setScore(score);
         work.setReviewed(true);
         logger.info(String.valueOf(work.getScore()));
+
+        //取出此学生的所有作业
+        List<Work> currentStudentWorks = this.workRepository.findAllByStudent(work.getStudent());
+        //取出此学生
+        Student currentStudent = this.studentService.findById(work.getStudent().getId());
+        currentStudent.setTotalScore(0);
+        int viewed = 0;
+
+        for (Work awork : currentStudentWorks) {
+            if (awork.getReviewed() == true) {
+                viewed++;
+                //计算总成绩
+                currentStudent.setTotalScore(currentStudent.getTotalScore()+awork.getScore());
+                //计算平均成绩
+                currentStudent.setAverageScore(currentStudent.getTotalScore()/viewed);
+            }
+        }
+
+        studentRepository.save(currentStudent);
         return this.save(work);
     }
 
