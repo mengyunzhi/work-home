@@ -1,8 +1,6 @@
 package club.yunzhi.workhome.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 
@@ -13,7 +11,6 @@ import javax.persistence.*;
  */
 @Entity
 public class Student extends AbstractEntity {
-
     private String name;
     @Column(nullable = false)
     private String no;
@@ -54,22 +51,22 @@ public class Student extends AbstractEntity {
         this.user = user;
     }
 
-	public Integer getTotalScore() {
-		return totalScore;
-	}
+    public Integer getTotalScore() {
+        return totalScore;
+    }
 
-	public void setTotalScore(Integer totalScore) {
-		this.totalScore = totalScore;
-	}
+    public void setTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
+    }
 
-	public Integer getAverageScore() {
-		return averageScore;
-	}
+    public Integer getAverageScore() {
+        return averageScore;
+    }
 
-	public void setAverageScore(Integer averageScore) {
-		this.averageScore = averageScore;
-	}
+    public void setAverageScore(Integer averageScore) {
+        this.averageScore = averageScore;
+    }
 
-	public interface UserJsonView {
+    public interface UserJsonView {
     }
 }
