@@ -61,6 +61,18 @@ public class StudentController {
                 pageable);
     }
 
+
+    /**
+     *获取当前登录的学生
+     * @return 当前登录的Student
+     */
+    @GetMapping("getCurrentStudent")
+    @JsonView(studentJsonView.class)
+    public Student getCurrentStudent(){
+        return  this.studentService.getCurrentStudent();
+    }
+
+
     /**
      * 通过id获取学生
      * @param id

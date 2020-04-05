@@ -29,4 +29,8 @@ export class StudentStubService {
       student.id = id;
       return of(student);
   }
+  public getCurrentStudent(): Observable<Student> {
+    const student = new Student();
+    return of(student);
+  }
 }
