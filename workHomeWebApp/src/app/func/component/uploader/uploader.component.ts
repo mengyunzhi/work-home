@@ -57,7 +57,6 @@ export class UploaderComponent implements OnInit {
 
   // 上传过程,根据文件上传的不同状态调整
   onUploadOutput(output: UploadOutput): void {
-    console.log(output.file);
     // 是否设置目录,目录是否符合要求
     if (this.uploadDir && !checkDir(this.uploadDir)) {
       this.uploadRejected.emit('上传目录格式错误');
