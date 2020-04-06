@@ -27,6 +27,12 @@ export class IndexComponent implements OnInit {
     this.studentService.getCurrentStudent()
       .subscribe(data => {
         this.currentStudent  = data;
+        if (this.currentStudent.totalScore == null) {
+          this.currentStudent.totalScore = 0;
+        }
+        if (this.currentStudent.averageScore == null) {
+          this.currentStudent.averageScore = 0;
+        }
       });
     this.workService.getAllOfCurrentStudent()
       .subscribe(data => {
