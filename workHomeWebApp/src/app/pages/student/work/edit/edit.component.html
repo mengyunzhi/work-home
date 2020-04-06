@@ -45,7 +45,7 @@
       <label for="content">其它有必要的附件：</label>
     </div>
     <div class="col-md-8">
-      <app-uploader url="/api/work/uploadWork" description="拖动文件到此处或点击浏览(最大上传大小为20M)"
+      <app-uploader url="/api/work/uploadWork"
                     [option1Value]="getWorkDir()" [uploadDirSet]="true"
                     (uploadRejected)="uploadRejected($event)"
                     (uploadedFile)="attachmentUploaded($event)" [buttonText]="'选择文件'"></app-uploader>
