@@ -180,4 +180,63 @@ public class AttachmentServiceImpl implements AttachmentService {
         return attachment;
     }
 
+    @Override
+    public Attachment saveAttachmentCanDuplicate(MultipartFile multipartFile, Path saveFilePath, Boolean useOriginNameSave) {
+        logger.debug("新建附件对象");
+        Attachment attachment = new Attachment();
+        logger.debug("获取文件名");
+        String fileName = multipartFile.getOriginalFilename();
+
+        logger.debug("从文件名中截取拓展名");
+        // 从"."最后一次出现的位置的下一位开始截取，获取扩展名
+        assert fileName != null;
+        String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+        try {
+            logger.debug("对文件进行sha1,md5加密");
+            String sha1ToMultipartFile = CommonService.encrypt(multipartFile, "SHA-1");
+            String md5ToMultipartFile = CommonService.encrypt(multipartFile, "MD5");
+
+            logger.debug("设置一般信息");
+            attachment.setOriginName(fileName);
+            attachment.setMIME(multipartFile.getContentType());
+            attachment.setSize(String.valueOf(multipartFile.getSize()));
+            attachment.setExt(ext);
+            attachment.setSha1(sha1ToMultipartFile);
+            attachment.setMd5(md5ToMultipartFile);
+
+            logger.debug("设置保存文件名");
+            String saveName = null;
+            if (useOriginNameSave) {
+                saveName = fileName;
+            } else {
+                saveName = CommonService.md5(md5ToMultipartFile + System.currentTimeMillis()) + "." + ext;
+            }
+
+            logger.debug("判断上传的文件是否为空");
+            if (multipartFile.isEmpty()) {
+                throw new RuntimeException("上传的附件不能为空" + fileName);
+            }
+
+            logger.debug("如果目录不存在，则创建目录。如果目录存在，则不创建");
+            if (!Files.exists(saveFilePath)) {
+                Files.createDirectories(saveFilePath);
+                new File(saveFilePath.resolve("index.html").toString()).createNewFile();
+            }
+
+            logger.debug("将文件移动至储存文件的路径下");
+            Files.copy(multipartFile.getInputStream(), saveFilePath.resolve(saveName),
+                    StandardCopyOption.REPLACE_EXISTING);
+
+            logger.debug("将附件存入到数据库中");
+            attachment.setSaveName(saveName);
+            String savePath = saveFilePath.toString();
+            attachment.setSavePath(savePath);
+
+            this.attachmentRepository.save(attachment);
+        } catch (Exception e) {
+            logger.error("上传附件出现异常");
+            e.printStackTrace();
+        }
+        return attachment;
+    }
 }

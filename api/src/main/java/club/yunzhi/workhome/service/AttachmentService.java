@@ -62,4 +62,15 @@ public interface AttachmentService {
      * @return 保存的附件实体
      */
     Attachment saveAttachment(MultipartFile multipartFile, Path saveFilePath, Boolean useOriginNameSave);
+
+    /**
+     * 保存上传的文件
+     * 课上传重复文件
+     *
+     * @param multipartFile     上传的文件
+     * @param saveFilePath      文件保存路径
+     * @param useOriginNameSave 是否使用文件原名存储
+     * @return 保存的附件实体
+     */
+    Attachment saveAttachmentCanDuplicate(MultipartFile multipartFile, Path saveFilePath, Boolean useOriginNameSave);
 }

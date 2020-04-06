@@ -95,20 +95,17 @@ export class MenuComponent implements OnInit, OnDestroy {
    * @param menu 菜单
    */
   active(menu: Menu): boolean {
-    // 截取/的位置
-    const start = this.router.url.indexOf('/');
-    const end = this.router.url.indexOf('/', start + 1);
 
     // 定义主路由
     let mainRoute: string;
 
     // 根据是否有第2个/选择截取方式
-    if (end !== -1) {
-      mainRoute = this.router.url.substring(start + 1);
-      // console.log('1' + mainRoute);
+    // 从urlSegment[1]开始是因为urlSegment[0] === ""
+    const urlSegment = this.router.url.split('/');
+    if (urlSegment[1] === 'teacher' || urlSegment[1] === 'student') {
+      mainRoute = urlSegment[1] + '/' + urlSegment[2];
     } else {
-      mainRoute = this.router.url.substring(start + 1, this.router.url.length);
-      // console.log('2' + mainRoute);
+      mainRoute = urlSegment[1];
     }
 
     // 判断当前路由是否激活
