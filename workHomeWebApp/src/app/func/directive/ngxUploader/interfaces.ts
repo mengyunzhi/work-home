@@ -53,7 +53,7 @@ export interface UploadFile {
 
 export interface UploadOutput {
   type: 'addedToQueue' | 'allAddedToQueue' | 'uploading' | 'done' | 'start' | 'cancelled' | 'dragOver'
-      | 'dragOut' | 'drop' | 'removed' | 'removedAll' | 'rejected';
+      | 'dragOut' | 'drop' | 'removed' | 'removedAll' | 'rejected' | 'error';
   file?: UploadFile;
   nativeFile?: File;
 }

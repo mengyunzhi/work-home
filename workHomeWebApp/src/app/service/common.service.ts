@@ -79,11 +79,18 @@ export class CommonService {
     });
   }
 
-  public getAppOnReadyItem(): AppOnReadyItem {
+  public getAppOnReadyItem(isReady = false): AppOnReadyItem {
+    // 实初化
     const appOnReadyItem = new AppOnReadyItem((readyState) => {
       this.computeAppIsReady(readyState);
     });
+    appOnReadyItem.ready = isReady;
     this.appOnReadyItems.push(appOnReadyItem);
+
+    // 当前项为：未就绪，则重新计算
+    if (!isReady) {
+      this.computeAppIsReady(isReady);
+    }
     return appOnReadyItem;
   }
 

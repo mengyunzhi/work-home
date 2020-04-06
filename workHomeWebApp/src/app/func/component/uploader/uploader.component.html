@@ -17,12 +17,14 @@
              [uploadInput]="uploadInput">
 
           <div class="form-group" *ngIf="uploadDirSet">
-            <p class="title">上传目录设置注意:</p>
-            <p>1.不设置则为默认目录,<b>index</b>应位于默认目录</p>
-            <p>2.格式为<b>/test1/test2/……</b></p>
-            <p>1.目录名可为：<b>数字、字母、下划线</b></p>
             <label for="dir" class="title col-form-label">上传目录:</label>
             <input type="text" id="dir" class="form-control" [(ngModel)]="uploadDir">
+            <p class="title">上传目录设置注意:</p>
+            <p>1.不设置则为根目录,<b>index.html</b>应位于根目录</p>
+            <p>2.辅助文件可上传至子目录：如图片放置到image目录，则格式为<b>/image或image</b></p>
+            <p>3.合法的目录名参考C语言合法变量名，建议只使用小写字母（不包括空格）</p>
+            <p>4.<b>禁止</b>直接上传文件夹</p>
+            <p>5.如不了解如何设置上传目录，请保留为空</p>
           </div>
           <p>
             <label class="upload-button">
