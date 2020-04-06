@@ -52,7 +52,7 @@ export class StudentEditComponent implements OnInit {
     this.studentService.update(this.id, this.studentForm.value)
       .subscribe(() => {
         this.appComponent.success(() => {
-          this.router.navigateByUrl('/student');
+          this.router.navigateByUrl('/teacher/student');
         }, '学生信息更新成功');
       }, (res: HttpErrorResponse) => {
         this.appComponent.error(() => {
