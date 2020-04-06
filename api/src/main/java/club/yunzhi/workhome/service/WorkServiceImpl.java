@@ -192,7 +192,7 @@ public class WorkServiceImpl implements WorkService {
     public Attachment uploadWork(MultipartFile multipartFile, String itemId, String uploadDir) {
         Path saveFilePath = getWorkSavePath(uploadDir, itemId);
 
-        return attachmentService.saveAttachment(multipartFile, saveFilePath, true);
+        return attachmentService.saveAttachmentCanDuplicate(multipartFile, saveFilePath, true);
     }
 
     /**
