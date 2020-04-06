@@ -104,9 +104,11 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     // 根据是否有第2个/选择截取方式
     if (end !== -1) {
-      mainRoute = this.router.url.substring(start + 1, end);
+      mainRoute = this.router.url.substring(start + 1);
+      // console.log('1' + mainRoute);
     } else {
       mainRoute = this.router.url.substring(start + 1, this.router.url.length);
+      // console.log('2' + mainRoute);
     }
 
     // 判断当前路由是否激活
