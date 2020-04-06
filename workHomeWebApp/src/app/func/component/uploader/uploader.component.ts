@@ -50,7 +50,6 @@ export class UploaderComponent implements OnInit {
     this.closeUploader = new EventEmitter<boolean>();
     this.uploadRejected = new EventEmitter<string>();
     this.styleClasses = 'btn btn-sm btn-outline-primary';
-
   }
 
   ngOnInit(): void {
@@ -58,6 +57,7 @@ export class UploaderComponent implements OnInit {
 
   // 上传过程,根据文件上传的不同状态调整
   onUploadOutput(output: UploadOutput): void {
+    console.log(output.file);
     // 是否设置目录,目录是否符合要求
     if (this.uploadDir && !checkDir(this.uploadDir)) {
       this.uploadRejected.emit('上传目录格式错误');
@@ -87,8 +87,9 @@ export class UploaderComponent implements OnInit {
     } else if (output.type === 'drop') {
       this.dragOver = false;
     } else if (output.type === 'rejected' && typeof output.file !== 'undefined') {
-      console.log(output.file.name + ' rejected');
       this.uploadRejected.emit('文件上传失败,可能是上传的文件过大或上传的文件数量过多');
+    } else if (output.type === 'error' && typeof output.file !== 'undefined') {
+      this.uploadRejected.emit('文件上传失败,请检查操作是否规范');
     } else if (output.type === 'done') {
       this.uploadedFile.emit(output.file.response);
     }

@@ -221,6 +221,8 @@ export class NgUploaderService {
 
       // 上传时发生错误
       xhr.upload.addEventListener('error', (e: Event) => {
+        this.serviceEvents.emit({type: 'error', file: null});
+
         observer.error(e);
         observer.complete();
       });
