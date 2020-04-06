@@ -66,7 +66,7 @@ export class EditComponent implements OnInit {
    * @param attachment 附件
    */
   attachmentUploaded(attachment: Attachment) {
-    if (!this.containAttachment(attachment, this.work.attachments)) {
+    if (attachment && !this.containAttachment(attachment, this.work.attachments)) {
       this.work.attachments.push(attachment);
     }
   }
@@ -81,7 +81,8 @@ export class EditComponent implements OnInit {
           this.router.navigateByUrl('/student/work');
         }, '', '保存成功!');
       }, () => {
-        this.appComponent.error(() => {}, '', '保存失败');
+        this.appComponent.error(() => {
+        }, '', '保存失败');
       });
   }
 
