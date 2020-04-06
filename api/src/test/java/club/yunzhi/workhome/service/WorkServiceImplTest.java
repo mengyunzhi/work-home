@@ -4,6 +4,7 @@ import club.yunzhi.workhome.entity.Attachment;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.entity.Work;
+import club.yunzhi.workhome.repository.AttachmentRepository;
 import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
@@ -46,6 +47,7 @@ class WorkServiceImplTest extends ServiceTest {
     AttachmentService attachmentService;
     StudentService studentService;
     StudentRepository studentRepository;
+    AttachmentRepository attachmentRepository;
     ResourceLoader loader;
 
     @BeforeEach
@@ -58,8 +60,9 @@ class WorkServiceImplTest extends ServiceTest {
         this.itemRepository = Mockito.mock(ItemRepository.class);
         this.studentService = Mockito.mock(StudentService.class);
         this.studentRepository = Mockito.mock(StudentRepository.class);
+        this.attachmentRepository = Mockito.mock(AttachmentRepository.class);
         this.workService = Mockito.spy(new WorkServiceImpl(this.workRepository, this.studentService,
-                this.userService, this.itemRepository, this.attachmentService, this.studentRepository));
+                this.userService, this.itemRepository, this.attachmentService, this.studentRepository, this.attachmentRepository));
     }
 
     @Test

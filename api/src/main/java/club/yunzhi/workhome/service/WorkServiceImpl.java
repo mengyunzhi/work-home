@@ -4,6 +4,7 @@ import club.yunzhi.workhome.entity.*;
 import club.yunzhi.workhome.exception.AccessDeniedException;
 import club.yunzhi.workhome.exception.ObjectNotFoundException;
 import club.yunzhi.workhome.exception.ValidationException;
+import club.yunzhi.workhome.repository.AttachmentRepository;
 import club.yunzhi.workhome.repository.ItemRepository;
 import club.yunzhi.workhome.repository.StudentRepository;
 import club.yunzhi.workhome.repository.WorkRepository;
@@ -42,14 +43,16 @@ public class WorkServiceImpl implements WorkService {
     final ItemRepository itemRepository;
     final AttachmentService attachmentService;
     final StudentRepository studentRepository;
+    final AttachmentRepository attachmentRepository;
 
-    public WorkServiceImpl(WorkRepository workRepository, StudentService studentService, UserService userService, ItemRepository itemRepository, AttachmentService attachmentService, StudentRepository studentRepository) {
+    public WorkServiceImpl(WorkRepository workRepository, StudentService studentService, UserService userService, ItemRepository itemRepository, AttachmentService attachmentService, StudentRepository studentRepository, AttachmentRepository attachmentRepository) {
         this.workRepository = workRepository;
         this.studentService = studentService;
         this.userService = userService;
         this.itemRepository = itemRepository;
         this.attachmentService = attachmentService;
         this.studentRepository = studentRepository;
+        this.attachmentRepository = attachmentRepository;
     }
 
     @Override
@@ -93,7 +96,7 @@ public class WorkServiceImpl implements WorkService {
 
         logger.debug("删除关联关系");
         attachments.removeIf(attachment -> attachment.getId().equals(attachmentId));
-
+        attachmentRepository.deleteById(attachmentId);
         work.setAttachments(attachments);
         this.save(work);
     }
