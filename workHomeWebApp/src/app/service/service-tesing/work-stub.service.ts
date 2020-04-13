@@ -60,9 +60,9 @@ export class WorkStubService {
     const mockResult = new Page<Work>(
       {content: new Array<Work>(
         new Work({
-          id: 1, content: '123', item: new Item({name: 'Item'}), score: 100, student: new Student({name: 'Student'}), reviewed: true}),
+          id: 1, content: '123', item: new Item({name: 'Item'}), score: 100, student: new Student({name: 'Student', no: '123'}), reviewed: true}),
         new Work({
-          id: 2, content: '456', item: new Item({name: 'Item'}), score: 100, student: new Student({name: 'Student'}), reviewed: true})
+          id: 2, content: '456', item: new Item({name: 'Item'}), score: 100, student: new Student({name: 'Student', no: '456'}), reviewed: true})
         ), number: 1, size: 2, totalPages: 5}
     );
     return of(mockResult);
