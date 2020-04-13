@@ -63,6 +63,10 @@ export class EditComponent implements OnInit {
     this.work.score = 60;
     this.submit({id: this.work.id, work: this.work});
   }
+  scoreZero() {
+    this.work.score = 0;
+    this.submit({id: this.work.id, work: this.work});
+  }
 
   submit(params: {id: number, work: Work}) {
     this.work.reviewed = true;
