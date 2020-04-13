@@ -25,7 +25,8 @@
     <td>{{work.item.name}}</td>
     <td>{{work.item.beginTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
     <td>{{work.item.endTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
-    <td>{{work.reviewed}}</td>
+    <td><span *ngIf="work.reviewed">是</span>
+        <span *ngIf="!work.reviewed">否</span></td>
     <td>
       <span *ngIf="work.reviewed">{{work.score}}</span>
       <span *ngIf="!work.reviewed">-</span>

@@ -68,7 +68,7 @@ describe('Page -> Teacher -> IndexComponent', () => {
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('Student');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('123');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('Item');
-    expect(table.rows.item(row).cells.item(col++).innerText).toBe('true');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('是');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('100');
 
   });
