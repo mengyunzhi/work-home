@@ -158,13 +158,13 @@ export class IndexComponent implements OnInit {
       }
       case 2: {
         _workPage.content.forEach((work) => {
-          if (work.reviewed) {result.push(work);}
+          if (work.reviewed) {result.push(work); }
         });
         break;
       }
       case 3: {
         _workPage.content.forEach((work) => {
-          if (!work.reviewed) {result.push(work);}
+          if (!work.reviewed) {result.push(work); }
         });
         break;
       }

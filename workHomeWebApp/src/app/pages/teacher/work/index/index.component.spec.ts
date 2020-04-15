@@ -46,7 +46,7 @@ describe('Page -> Teacher -> IndexComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('组件初始化发起请求测试', () => {
+  it('组件初始化发起请求测试,未选中是否评阅', () => {
     /* 获取请求参数 */
     const workService: WorkStubService = TestBed.get(WorkService);
     const queryParam = workService.pageParamsCache;
@@ -373,10 +373,10 @@ describe('Page -> Teacher -> IndexComponent', () => {
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('Student');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('123');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('Item');
-    expect(table.rows.item(row).cells.item(col++).innerText).toBe('true');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('是');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('100');
   });
-  fit('测试未评阅', () => {
+  it('测试未评阅', () => {
     component.onCheckBoxChange(event, 3);
     fixture.detectChanges();
     /* 获取table元素 */
@@ -388,11 +388,11 @@ describe('Page -> Teacher -> IndexComponent', () => {
     let col = 0;
     expect(table.rows.length).toBe(2);
     expect(table.rows.item(row).cells.length).toBe(7);
-    expect(table.rows.item(row).cells.item(col++).innerText).toBe('2');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('1');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('Student');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('456');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('Item');
-    expect(table.rows.item(row).cells.item(col++).innerText).toBe('false');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('-');
     expect(table.rows.item(row).cells.item(col++).innerText).toBe('100');
   });
 });
