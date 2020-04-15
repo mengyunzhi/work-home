@@ -9,6 +9,19 @@
     <button type="submit">查询</button>
   </form>
 
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio" [checked]="reviewed" (change)="onCheckBoxChange($event, -1)" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+    <label class="custom-control-label" for="customRadioInline1">全部</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio"[checked]="reviewed" (change)="onCheckBoxChange($event, 0)" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+    <label class="custom-control-label" for="customRadioInline2">已评阅</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input type="radio"[checked]="reviewed" (change)="onCheckBoxChange($event, 2)" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
+    <label class="custom-control-label" for="customRadioInline3">未评阅</label>
+  </div>
+
 <table class="table table-striped table-bordered mt-3">
   <thead class="thead-light">
   <tr>
@@ -63,3 +76,4 @@
     </nav>
   </div>
 </div>
+</form>

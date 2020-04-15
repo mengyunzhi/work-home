@@ -34,6 +34,7 @@ export class IndexComponent implements OnInit {
               private workService: WorkService,
               private routerModule: RouterModule) {
   }
+  reviewed: string;
 
   ngOnInit() {
     this.params.page = 0;
@@ -133,4 +134,24 @@ export class IndexComponent implements OnInit {
     this.params.item = item;
   }
 
+  /**
+   * 单选框被用户点击时
+   * @param $event 弹射值
+   * @param student 当前学生
+   */
+  onCheckBoxChange($event: Event, reviewed: number) {
+    const checkbox = $event.target as HTMLInputElement;
+    student.isChecked = checkbox.checked;
+    if (checkbox.checked) {
+      let checkedAll = true;
+      this.pageStudent.content.forEach((value) => {
+        if (!value.isChecked) {
+          checkedAll = false;
+        }
+      });
+      this.isCheckedAll = checkedAll;
+    } else {
+      this.isCheckedAll = false;
+    }
+  }
 }
