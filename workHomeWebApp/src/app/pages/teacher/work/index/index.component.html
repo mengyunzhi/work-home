@@ -28,7 +28,7 @@
     <td>{{ work.student.name}}</td>
     <td>{{ work.student.no}}</td>
     <td>{{ work.item.name}}</td>
-    <td>{{ work.reviewed | tf}}</td>
+    <td>{{ work.reviewed | trueFalse}}</td>
     <td>{{ work.score}}</td>
     <td><a routerLink="./edit/{{work.id}}" class="btn btn-sm btn-info">评阅</a></td>
   </tr>
