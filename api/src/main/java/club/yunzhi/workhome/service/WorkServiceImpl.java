@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -20,6 +21,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,6 +139,14 @@ public class WorkServiceImpl implements WorkService {
         }
 
         studentRepository.save(currentStudent);
+        Iterable<Work> works = workRepository.findAll();
+        for (Iterator iter = works.iterator(); iter.hasNext();) {
+            Work nextWork = (Work)iter.next();
+            if (nextWork.getReviewed() == false) {
+                return nextWork;
+            }
+        }
+
         return this.save(work);
     }
 

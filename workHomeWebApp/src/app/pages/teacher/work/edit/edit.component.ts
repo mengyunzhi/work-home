@@ -25,8 +25,10 @@ export class EditComponent implements OnInit {
   params = {
     workId: 0
   };
-  constructor(private workService: WorkService,
-              private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router,
+              private workService: WorkService,
+              private activatedRoute: ActivatedRoute,
+              private appComponent: AppComponent) {
   }
 
   ngOnInit() {
@@ -69,11 +71,19 @@ export class EditComponent implements OnInit {
     this.workService.updateScore({id: params.id, work: params.work})
       .subscribe(
         (data) => {
-          console.log(data);
           this.work = data;
-          this.linkToIndex.nativeElement.click();
+          if (this.work.id === params.id) {
+            this.appComponent.success(() => {
+            }, '作业已全部批改完成,老师辛苦了');
+            this.linkToIndex.nativeElement.click();
+          } else {
+            this.router.navigateByUrl('/work/' + this.work.id);
+          }
         }
       );
   }
 
+  close() {
+    this.linkToIndex.nativeElement.click();
+  }
 }

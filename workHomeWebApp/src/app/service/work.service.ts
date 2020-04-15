@@ -47,7 +47,6 @@ export class WorkService {
    */
   updateScore(params: { id: number, work: Work }): Observable<Work> {
     const _params = params;
-    console.log(_params.work);
     return this.httpClient.put<Work>(`${this.url}/updateScore/${_params.id}`, _params.work);
   }
 
