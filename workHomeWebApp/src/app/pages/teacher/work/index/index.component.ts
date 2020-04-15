@@ -136,7 +136,7 @@ export class IndexComponent implements OnInit {
   /**
    * 单选框被用户点击时
    * @param $event 弹射值
-   * @param student 当前学生
+   * @param reviewed 评阅状态码1默认2已评阅3未评阅
    */
   onCheckBoxChange($event: Event, reviewed: number) {
     this.reviewed = reviewed;
