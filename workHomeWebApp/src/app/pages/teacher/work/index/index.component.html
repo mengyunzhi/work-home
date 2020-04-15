@@ -7,45 +7,44 @@
       <app-item-select [item]="params.item" (selected)="onSelectKlass($event)"></app-item-select>
     </label>
     <button type="submit">查询</button>
+    &nbsp;
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" [checked]="1" (change)="onCheckBoxChange($event, 1)" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+      <label class="custom-control-label" for="customRadioInline1">全部</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" (change)="onCheckBoxChange($event, 2)" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+      <label class="custom-control-label" for="customRadioInline2">已评阅</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" (change)="onCheckBoxChange($event, 3)" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
+      <label class="custom-control-label" for="customRadioInline3">未评阅</label>
+    </div>
   </form>
-
-  <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio" [checked]="reviewed" (change)="onCheckBoxChange($event, -1)" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-    <label class="custom-control-label" for="customRadioInline1">全部</label>
-  </div>
-  <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio"[checked]="reviewed" (change)="onCheckBoxChange($event, 0)" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-    <label class="custom-control-label" for="customRadioInline2">已评阅</label>
-  </div>
-  <div class="custom-control custom-radio custom-control-inline">
-    <input type="radio"[checked]="reviewed" (change)="onCheckBoxChange($event, 2)" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
-    <label class="custom-control-label" for="customRadioInline3">未评阅</label>
-  </div>
 
 <table class="table table-striped table-bordered mt-3">
   <thead class="thead-light">
-  <tr>
-    <th scope="col">序号</th>
-    <th scope="col">学生姓名</th>
-    <th scope="col">学号</th>
-    <th scope="col">实验名称</th>
+    <tr>
+      <th scope="col">序号</th>
+      <th scope="col">学生姓名</th>
+      <th scope="col">学号</th>
+      <th scope="col">实验名称</th>
 
-    <th scope="col">是否评阅</th>
-    <th scope="col">得分</th>
-    <th scope="col">操作</th>
-  </tr>
+      <th scope="col">是否评阅</th>
+      <th scope="col">得分</th>
+      <th scope="col">操作</th>
+    </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let work of workPage?.content.content; index as i">
-    <td>{{i + 1 }}</td>
-    <td>{{ work.student.name}}</td>
-    <td>{{ work.student.no}}</td>
-    <td>{{ work.item.name}}</td>
-    <td>{{ work.reviewed}}</td>
-    <td>{{ work.score}}</td>
-    <td><a routerLink="./edit/{{work.id}}" class="btn btn-sm btn-info">评阅</a></td>
-  </tr>
-
+    <tr *ngFor="let work of workPage?.content.content; index as i">
+      <td>{{i + 1 }}</td>
+      <td>{{ work.student.name}}</td>
+      <td>{{ work.student.no}}</td>
+      <td>{{ work.item.name}}</td>
+      <td>{{ work.reviewed}}</td>
+      <td>{{ work.score}}</td>
+      <td><a routerLink="./edit/{{work.id}}" class="btn btn-sm btn-info">评阅</a></td>
+    </tr>
   </tbody>
 </table>
 

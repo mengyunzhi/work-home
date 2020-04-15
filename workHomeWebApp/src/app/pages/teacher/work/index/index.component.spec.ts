@@ -354,5 +354,44 @@ describe('Page -> Teacher -> IndexComponent', () => {
     component.onQuery();
     expect(component.load).toHaveBeenCalled();
   });
+
+  it('测试已评阅', () => {
+    component.onCheckBoxChange(event, 2);
+    fixture.detectChanges();
+    /* 获取table元素 */
+    const tableElement = fixture.debugElement.query(By.css('table'));
+    const table: HTMLTableElement = tableElement.nativeElement;
+
+    /* 断言总行数及第一行的内容绑定符合预期 */
+    const row = 1;
+    let col = 0;
+    expect(table.rows.length).toBe(2);
+    expect(table.rows.item(row).cells.length).toBe(7);
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('1');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('Student');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('123');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('Item');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('true');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('100');
+  });
+  fit('测试未评阅', () => {
+    component.onCheckBoxChange(event, 3);
+    fixture.detectChanges();
+    /* 获取table元素 */
+    const tableElement = fixture.debugElement.query(By.css('table'));
+    const table: HTMLTableElement = tableElement.nativeElement;
+
+    /* 断言总行数及第一行的内容绑定符合预期 */
+    const row = 1;
+    let col = 0;
+    expect(table.rows.length).toBe(2);
+    expect(table.rows.item(row).cells.length).toBe(7);
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('2');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('Student');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('456');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('Item');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('false');
+    expect(table.rows.item(row).cells.item(col++).innerText).toBe('100');
+  });
 });
 

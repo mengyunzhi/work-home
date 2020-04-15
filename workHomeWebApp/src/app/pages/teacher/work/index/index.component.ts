@@ -31,10 +31,9 @@ export class IndexComponent implements OnInit {
   };
   workForm: FormGroup;
   constructor(private builder: FormBuilder,
-              private workService: WorkService,
-              private routerModule: RouterModule) {
+              private workService: WorkService) {
   }
-  reviewed: string;
+  reviewed = 1;
 
   ngOnInit() {
     this.params.page = 0;
@@ -60,7 +59,7 @@ export class IndexComponent implements OnInit {
     };
     this.workService.getAll(queryParams)
       .subscribe((data: Page<Work>) => {
-        this.workPage.content = data;
+        this.workPage.content.content = this.setReviewed(data);
         this.workPage.totalPages = data.totalPages;
         this.pages = this.makePagesByTotalPages(this.params.page, data.totalPages);
       }, () => {
@@ -140,18 +139,36 @@ export class IndexComponent implements OnInit {
    * @param student 当前学生
    */
   onCheckBoxChange($event: Event, reviewed: number) {
-    const checkbox = $event.target as HTMLInputElement;
-    student.isChecked = checkbox.checked;
-    if (checkbox.checked) {
-      let checkedAll = true;
-      this.pageStudent.content.forEach((value) => {
-        if (!value.isChecked) {
-          checkedAll = false;
-        }
-      });
-      this.isCheckedAll = checkedAll;
-    } else {
-      this.isCheckedAll = false;
+    this.reviewed = reviewed;
+    console.log(this.reviewed);
+    this.load();
+  }
+
+  /**
+   * 根据是否查阅，调整作业内容
+   * @param _workPage 所有作业
+   * @return result 调整后的作业
+   */
+  setReviewed(_workPage: Page<Work>) {
+    let result = new Array<Work>();
+    switch (this.reviewed) {
+      case 1: {
+        result = _workPage.content;
+        break;
+      }
+      case 2: {
+        _workPage.content.forEach((work) => {
+          if (work.reviewed) {result.push(work);}
+        });
+        break;
+      }
+      case 3: {
+        _workPage.content.forEach((work) => {
+          if (!work.reviewed) {result.push(work);}
+        });
+        break;
+      }
     }
+    return result;
   }
 }
