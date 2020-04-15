@@ -14,9 +14,9 @@
   <tr>
     <th scope="col">序号</th>
     <th scope="col">学生姓名</th>
+    <th scope="col">学号</th>
     <th scope="col">实验名称</th>
-    <th scope="col">开始时间</th>
-    <th scope="col">结束时间</th>
+
     <th scope="col">是否评阅</th>
     <th scope="col">得分</th>
     <th scope="col">操作</th>
@@ -26,12 +26,11 @@
   <tr *ngFor="let work of workPage?.content.content; index as i">
     <td>{{i + 1 }}</td>
     <td>{{ work.student.name}}</td>
+    <td>{{ work.student.no}}</td>
     <td>{{ work.item.name}}</td>
-    <td>{{ work.item.beginTime | date:"yyyy-MM-dd" }}</td>
-    <td>{{ work.item.endTime | date:"yyyy-MM-dd" }}</td>
     <td>{{ work.reviewed}}</td>
     <td>{{ work.score}}</td>
-    <td><a routerLink="./edit/{{work.id}}" class="btn btn-sm btn-info">编辑</a></td>
+    <td><a routerLink="./edit/{{work.id}}" class="btn btn-sm btn-info">评阅</a></td>
   </tr>
 
   </tbody>
