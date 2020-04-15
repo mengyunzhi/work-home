@@ -81,8 +81,13 @@ describe('Page -> Teacher -> EditComponent', () => {
   });
 
   it('BadButtonTest', () => {
-    FormTest.clickButton(fixture, 'button.btn.btn-dark.btn-sm');
+    FormTest.clickButton(fixture, 'button.btn.btn-secondary.btn-sm');
     expect(component.work.score).toBe(60);
+  });
+
+  it('BadButtonTest', () => {
+    FormTest.clickButton(fixture, 'button.btn.btn-dark.btn-sm');
+    expect(component.work.score).toBe(0);
   });
 
   it('向M层传入更新的学生ID及更新的学生信息', () => {

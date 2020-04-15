@@ -15,6 +15,14 @@
       {{work?.item?.description}}
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>作业分数：</label>
+    </div>
+    <div class="col-md-8">
+      {{work?.score}}
+    </div>
+  </div>
   <hr>
   <div class="row mt-4">
     <div class="col-md-2 form-text text-right">
@@ -22,34 +30,8 @@
     </div>
 
     <div class="col-md-8" [innerHTML]= "work?.content">
+    </div>
 
-    </div>
-  <div class="row mt-5" *ngIf="work.reviewed">
-    <div class="col-md-8 form-text text-right">
-      <label>作业等级：</label>
-    </div>
-    <div class="col-md-8 offset-md-2">
-      <button *ngIf="work.score == 95" type="button" class="btn btn-info btn-sm">
-        <i class="fa fa-check-circle"></i>
-        &nbsp;优
-      </button>
-      &nbsp;
-      <button *ngIf="work.score == 90" type="button" class="btn btn-warning btn-sm">
-        <i class="fa fa-check-circle"></i>
-        &nbsp;良
-      </button>
-      &nbsp;
-      <button *ngIf="work.score == 80" type="button" class="btn btn-danger btn-sm">
-        <i class="fa fa-check-circle"></i>
-        &nbsp;中
-      </button>
-      &nbsp;
-      <button *ngIf="work.score == 60" type="button" class="btn btn-dark btn-sm">
-        <i class="fa fa-check-circle"></i>
-        &nbsp;差
-      </button>
-    </div>
-  </div>
 </div>
 <br>
 
