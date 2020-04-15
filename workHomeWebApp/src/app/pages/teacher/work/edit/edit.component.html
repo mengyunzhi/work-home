@@ -15,15 +15,20 @@
       {{work?.item?.description}}
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-2 form-text text-right">
+      <label>当前分数：</label>
+    </div>
+    <div class="col-md-8">{{work?.score}}</div>
+  </div>
   <hr>
   <div class="row mt-4">
     <div class="col-md-2 form-text text-right">
       <label>作答：</label>
     </div>
-    <div class="col-md-8" [innerHTML]=work?.content>
-    </div>
-
+    <div class="col-md-8" [innerHTML]=work?.content></div>
   </div>
+
   <div class="row mt-5">
     <div class="col-md-8 offset-md-2">
       <button type="button" (click)="scoreBest()" class="btn btn-info btn-sm">
@@ -41,9 +46,14 @@
         &nbsp;中
       </button>
       &nbsp;
-      <button type="button" (click)="scoreBad()" class="btn btn-dark btn-sm">
+      <button type="button" (click)="scoreBad()" class="btn btn-secondary btn-sm">
         <i class="far fa-save"></i>
         &nbsp;差
+      </button>
+      &nbsp;
+      <button type="button" (click)="scoreZero()" class="btn btn-dark btn-sm">
+        <i class="far fa-save"></i>
+        &nbsp;零
       </button>
 
       <div class="float-right">
