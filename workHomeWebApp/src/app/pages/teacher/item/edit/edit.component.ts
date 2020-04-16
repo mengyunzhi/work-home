@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AppComponent } from '../../../../app.component';
@@ -15,6 +15,8 @@ import { DatePipe } from '@angular/common';
 export class EditComponent implements OnInit {
 
   itemForm: FormGroup;
+
+  linkToIndex: ElementRef;
 
   /**
    * 要编辑的实验项目Id
@@ -75,7 +77,7 @@ export class EditComponent implements OnInit {
     this.itemService.update(this.id, this.itemForm.value)
       .subscribe(() => {
         this.appComponent.success(() => {
-          this.router.navigateByUrl('/item');
+          this.router.navigateByUrl('/teacher/item');
         }, '实验项目更新成功');
       }, (res: HttpErrorResponse) => {
         this.appComponent.error(() => {
