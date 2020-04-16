@@ -60,7 +60,6 @@ describe('StudentIndexComponent', () => {
   });
   it('测试依赖注入', () => {
     const service = TestBed.get(UserService);
-    console.log(service);
   });
   it('点击重置密码按钮', () => {
    spyOn(component, 'resetPassword');

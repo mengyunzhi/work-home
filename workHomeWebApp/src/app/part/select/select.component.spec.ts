@@ -32,7 +32,6 @@ describe('core select SelectComponent', () => {
     const htmlOptionElements: HTMLCollectionOf<HTMLOptionElement> = htmlSelectElement.options;
     for (let i = 0; i < objects.length; i++) {
       const htmlOptionElement: HTMLOptionElement = htmlOptionElements.item(i);
-      console.log(htmlOptionElement.text);
       expect(htmlOptionElement.text).toEqual(objects[i].name);
     }
   };
@@ -75,7 +74,6 @@ describe('core select SelectComponent', () => {
     expectInit();
 
     component.selected.subscribe((object: Select) => {
-      console.log('data emit', object);
       expect(object.name).toEqual(objects[0].name);
     });
 
