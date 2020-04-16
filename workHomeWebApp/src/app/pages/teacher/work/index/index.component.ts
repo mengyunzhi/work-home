@@ -31,9 +31,9 @@ export class IndexComponent implements OnInit {
   };
   workForm: FormGroup;
   constructor(private builder: FormBuilder,
-              private workService: WorkService,
-              private routerModule: RouterModule) {
+              private workService: WorkService) {
   }
+  reviewed = 1;
 
   ngOnInit() {
     this.params.page = 0;
@@ -59,7 +59,7 @@ export class IndexComponent implements OnInit {
     };
     this.workService.getAll(queryParams)
       .subscribe((data: Page<Work>) => {
-        this.workPage.content = data;
+        this.workPage.content.content = this.setReviewed(data);
         this.workPage.totalPages = data.totalPages;
         this.pages = this.makePagesByTotalPages(this.params.page, data.totalPages);
       }, () => {
@@ -133,4 +133,42 @@ export class IndexComponent implements OnInit {
     this.params.item = item;
   }
 
+  /**
+   * 单选框被用户点击时
+   * @param $event 弹射值
+   * @param reviewed 评阅状态码1默认2已评阅3未评阅
+   */
+  onCheckBoxChange($event: Event, reviewed: number) {
+    this.reviewed = reviewed;
+    console.log(this.reviewed);
+    this.load();
+  }
+
+  /**
+   * 根据是否查阅，调整作业内容
+   * @param _workPage 所有作业
+   * @return result 调整后的作业
+   */
+  setReviewed(_workPage: Page<Work>) {
+    let result = new Array<Work>();
+    switch (this.reviewed) {
+      case 1: {
+        result = _workPage.content;
+        break;
+      }
+      case 2: {
+        _workPage.content.forEach((work) => {
+          if (work.reviewed) {result.push(work); }
+        });
+        break;
+      }
+      case 3: {
+        _workPage.content.forEach((work) => {
+          if (!work.reviewed) {result.push(work); }
+        });
+        break;
+      }
+    }
+    return result;
+  }
 }
