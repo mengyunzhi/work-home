@@ -47,7 +47,6 @@ export class WorkService {
    */
   updateScore(params: { id: number, work: Work }): Observable<Work> {
     const _params = params;
-    console.log(_params.work);
     return this.httpClient.put<Work>(`${this.url}/updateScore/${_params.id}`, _params.work);
   }
 
@@ -69,5 +68,9 @@ export class WorkService {
   getByItemIdOfCurrentStudent(itemId: number): Observable<Work> {
     const params: { [key: string]: any } = {itemId};
     return this.httpClient.get<Work>(this.url + '/getByItemIdOfCurrentStudent', {params});
+  }
+
+  getNextNotReviewedWork(): Observable<Work> {
+    return this.httpClient.get<Work>(this.url + '/getNextNotReviewedWork');
   }
 }

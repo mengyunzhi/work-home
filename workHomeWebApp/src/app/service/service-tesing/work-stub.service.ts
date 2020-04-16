@@ -61,10 +61,10 @@ export class WorkStubService {
       {content: new Array<Work>(
         new Work({
           id: 1, content: '123', item: new Item({name: 'Item'}), score: 100,
-          student: new Student({name: 'Student', no: '123'}), reviewed: true}),
+          student: new Student({name: 'Student', no: '123'}), reviewed: true }),
         new Work({
           id: 2, content: '456', item: new Item({name: 'Item'}), score: 100,
-          student: new Student({name: 'Student', no: '456'}), reviewed: true})
+          student: new Student({name: 'Student', no: '456'}), reviewed: false })
         ), number: 1, size: 2, totalPages: 5}
     );
     return of(mockResult);
@@ -87,5 +87,9 @@ export class WorkStubService {
   updateScore(params: { id: number, work: Work }): Observable<Work> {
     this.updateScoreCache = params;
     return of(params.work);
+  }
+
+  getNextNotReviewedWork(): Observable<Work> {
+    return of(null);
   }
 }
