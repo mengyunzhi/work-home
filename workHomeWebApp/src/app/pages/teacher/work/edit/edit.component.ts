@@ -1,14 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Work} from '../../../../common/work';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonService} from '../../../../service/common.service';
 import {WorkService} from '../../../../service/work.service';
-import {AttachmentService} from '../../../../service/attachment.service';
 import {AppComponent} from '../../../../app.component';
-import {isDefined} from '../../../../utils';
-import {Attachment} from '../../../../common/attachment';
-import {config} from '../../../../conf/app.config';
-import {Page} from '../../../../base/page';
 
 @Component({
   selector: 'app-edit',
@@ -32,6 +26,7 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.activatedRoute.params.subscribe((param: { id: number }) => {
       this.params.workId = param.id;
     });
@@ -74,17 +69,22 @@ export class EditComponent implements OnInit {
     this.work.reviewed = true;
     this.workService.updateScore({id: params.id, work: params.work})
       .subscribe(
-        (data) => {
-          this.work = data;
-          if (this.work.id === params.id) {
-            this.appComponent.success(() => {
-            }, '作业已全部批改完成,老师辛苦了');
-            this.linkToIndex.nativeElement.click();
-          } else {
-            this.router.navigateByUrl('/work/' + this.work.id);
-          }
+        () => {
+          this.workService.getNextNotReviewedWork()
+            .subscribe(
+              (data) => {
+                if (data === null) {
+                  this.appComponent.success(() => {
+                  }, '作业已全部批改完成,老师辛苦了');
+                  this.linkToIndex.nativeElement.click();
+                } else {
+                  this.work = data;
+                }
+              }
+            );
         }
       );
+
   }
 
   close() {

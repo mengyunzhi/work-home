@@ -69,4 +69,8 @@ export class WorkService {
     const params: { [key: string]: any } = {itemId};
     return this.httpClient.get<Work>(this.url + '/getByItemIdOfCurrentStudent', {params});
   }
+
+  getNextNotReviewedWork() {
+    return this.httpClient.get<Work>(this.url + '/getNextNotReviewedWork');
+  }
 }
