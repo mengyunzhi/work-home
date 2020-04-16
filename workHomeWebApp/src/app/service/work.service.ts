@@ -70,7 +70,7 @@ export class WorkService {
     return this.httpClient.get<Work>(this.url + '/getByItemIdOfCurrentStudent', {params});
   }
 
-  getNextNotReviewedWork() {
+  getNextNotReviewedWork(): Observable<Work> {
     return this.httpClient.get<Work>(this.url + '/getNextNotReviewedWork');
   }
 }

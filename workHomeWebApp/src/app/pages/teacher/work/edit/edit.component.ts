@@ -71,17 +71,15 @@ export class EditComponent implements OnInit {
       .subscribe(
         () => {
           this.workService.getNextNotReviewedWork()
-            .subscribe(
-              (data) => {
-                if (data === null) {
-                  this.appComponent.success(() => {
-                  }, '作业已全部批改完成,老师辛苦了');
-                  this.linkToIndex.nativeElement.click();
-                } else {
-                  this.work = data;
-                }
+            .subscribe(data => {
+              if (data === null) {
+                this.appComponent.success(() => {
+                }, '作业已全部批改完成,老师辛苦了');
+                this.linkToIndex.nativeElement.click();
+              } else {
+                this.work = data;
               }
-            );
+            });
         }
       );
 

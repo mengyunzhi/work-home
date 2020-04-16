@@ -107,8 +107,6 @@ describe('Page -> Teacher -> EditComponent', () => {
     // 断言间谍调用成功，间谍接收参数符合预期
     expect(workService.updateScoreCache).toEqual({id: work1.id, work: work1});
 
-    // 断言接收返回值符合预期
-    expect(component.work).toEqual(work1);
   });
 
 });
