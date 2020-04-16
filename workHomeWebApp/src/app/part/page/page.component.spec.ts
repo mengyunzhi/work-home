@@ -37,7 +37,6 @@ describe('PageComponent', () => {
     const debugElement = fixture.debugElement.query(By.css('#pageInfo'));
     const pageInfoDiv: HTMLDivElement = debugElement.nativeElement;
     const text = pageInfoDiv.textContent;
-    console.log(text);
 
     /* 断言绑定了C层的分页值 */
     expect(text).toContain(`第${component.page + 1}/${component.totalPages}页`);
@@ -48,7 +47,6 @@ describe('PageComponent', () => {
     /* 获取首页按钮 */
     const debugElement = fixture.debugElement.query(By.css('ul.pagination > li:first-child'));
     const htmlliElement: HTMLLIElement = debugElement.nativeElement;
-    console.log(htmlliElement);
 
     /* 当前页为首页，则添加禁用样式 */
     component.page = 0;
@@ -65,7 +63,6 @@ describe('PageComponent', () => {
     /* 获取首页按钮 */
     const debugElement = fixture.debugElement.query(By.css('ul.pagination > li:nth-child(2)'));
     const htmlliElement: HTMLLIElement = debugElement.nativeElement;
-    console.log(htmlliElement);
 
     /* 当前页为首页，则添加禁用样式 */
     component.page = 0;
@@ -151,7 +148,6 @@ describe('PageComponent', () => {
     const ulElement: HTMLUListElement = viewPageBefore();
 
     /* 断言分页个数 */
-    console.log(ulElement.getElementsByTagName('li'));
     expect(ulElement.getElementsByTagName('li').length).toEqual(9);
   });
 
@@ -161,7 +157,6 @@ describe('PageComponent', () => {
 
     /* 依次获取第3 4 5 6 7页，断言对应的页码为4，5，6，7，8 */
     for (let i = 2; i < 7; i++) {
-      console.log(liElements[i].textContent);
       expect(liElements[i].textContent).toContain((i + 2).toString());
     }
   });
@@ -191,7 +186,6 @@ describe('PageComponent', () => {
 
     /* 断言该li元素中存在class为sr-only的元素 */
     const elements = htmlLiElement.getElementsByClassName('sr-only');
-    console.log(elements);
     expect(elements.length).toEqual(1);
     expect(elements[0].textContent).toContain('(current)');
   });

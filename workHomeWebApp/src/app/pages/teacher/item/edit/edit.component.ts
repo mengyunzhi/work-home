@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AppComponent } from '../../../../app.component';
@@ -15,8 +15,6 @@ import { DatePipe } from '@angular/common';
 export class EditComponent implements OnInit {
 
   itemForm: FormGroup;
-
-  linkToIndex: ElementRef;
 
   /**
    * 要编辑的实验项目Id

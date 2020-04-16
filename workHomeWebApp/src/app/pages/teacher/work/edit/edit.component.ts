@@ -53,7 +53,6 @@ export class EditComponent implements OnInit {
     this.workService.getById({id: this.params.workId})
       .subscribe((data) => {
         this.work = data;
-        console.log(this.work);
         this.goToWork();
       }, () => {
         console.log('error');
