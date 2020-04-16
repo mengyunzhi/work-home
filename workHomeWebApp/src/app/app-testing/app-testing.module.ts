@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app/app.component';
 import { AppComponent as RootAppComponent } from '../app.component';
 import { AppTestingController } from './app-testing-controller';
+import {FuncModule} from '../func/func.module';
 
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     AppComponent
