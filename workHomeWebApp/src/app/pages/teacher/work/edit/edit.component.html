@@ -91,13 +91,15 @@
   </div>
 </div>
 <hr>
+<a style="display: none" routerLink="./../../" #linkToIndex>返回作业列表</a>
 <div>
   <div class="col-md-2 form-text text-right">
     <label>作业内容：</label>
   </div>
-<iframe height="500px" width="100%" name="iframe_work"></iframe>
-  <p><a target="iframe_work"  style="display: none"
-        [href]="protocol + '//' + (this.work.student.no + '.' + host + '/' + getWorkDir()) | safeUrl" #linkToWork>点击查看</a>
+  <iframe height="500px" width="100%" name="iframe_work"></iframe>
+  <p><a target="iframe_work" style="display: none"
+        [href]="protocol + '//' + (this.work.student.no + '.' + host + '/' + getWorkDir()) | safeUrl"
+        #linkToWork>点击查看</a>
   </p>
 </div>
-<a style="display: none" routerLink="./../../" #linkToIndex>返回作业列表</a>
+ll
