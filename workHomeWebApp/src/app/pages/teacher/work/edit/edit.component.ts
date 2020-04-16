@@ -7,8 +7,7 @@ import {AttachmentService} from '../../../../service/attachment.service';
 import {AppComponent} from '../../../../app.component';
 import {isDefined} from '../../../../utils';
 import {Attachment} from '../../../../common/attachment';
-import {config} from '../../../../conf/app.config';
-import {Page} from '../../../../base/page';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-edit',
@@ -20,16 +19,28 @@ export class EditComponent implements OnInit {
   /* 使用ViewChild在C层中使用V层中定义的 跳转到首页按钮 */
   @ViewChild('linkToIndex', {static: true})
   linkToIndex: ElementRef;
-
+  /* 使用ViewChild在C层中使用V层中定义的 跳转到首页按钮 */
+  @ViewChild('linkToWork', {static: true})
+  linkToWork: ElementRef;
   work: Work = new Work();
   params = {
     workId: 0
   };
+  protocol: string;  // 协议
+  host: string;
+  _window: any;
+
   constructor(private workService: WorkService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private commonService: CommonService,
+              private appComponent: AppComponent,
+              private attachmentService: AttachmentService) {
   }
 
   ngOnInit() {
+    this._window = this.commonService.nativeWindow;
+    this.host = this._window.location.host;
+    this.protocol = this._window.location.protocol;
     this.activatedRoute.params.subscribe((param: { id: number }) => {
       this.params.workId = param.id;
     });
@@ -42,6 +53,7 @@ export class EditComponent implements OnInit {
       .subscribe((data) => {
         this.work = data;
         console.log(this.work);
+        this.goToWork();
       }, () => {
         console.log('error');
       });
@@ -79,5 +91,27 @@ export class EditComponent implements OnInit {
         }
       );
   }
-
+  getWorkDir(): string {
+    if (this.work.item.dir) {
+      return this.work.item.dir;
+    }
+    return '';
+  }
+  /**
+   * 下载附件
+   * @param attachment 附件
+   */
+  downloadAttachment(attachment: Attachment) {
+    this.attachmentService.download(attachment).subscribe((data) => {
+      saveAs(data, `${attachment.originName}`);
+    }, () => {
+      console.log('请确定是否修改了nginx配置');
+      this.appComponent.error(() => {
+      }, '', '下载发生错误');
+    });
+  }
+  goToWork(): void {
+    this.linkToWork.nativeElement.click();
+  }
 }
+
