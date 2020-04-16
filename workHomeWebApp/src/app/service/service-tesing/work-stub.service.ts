@@ -88,4 +88,8 @@ export class WorkStubService {
     this.updateScoreCache = params;
     return of(params.work);
   }
+
+  getNextNotReviewedWork(): Observable<Work> {
+    return of(null);
+  }
 }

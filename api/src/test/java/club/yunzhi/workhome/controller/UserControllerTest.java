@@ -4,7 +4,7 @@ package club.yunzhi.workhome.controller;
 import club.yunzhi.workhome.entity.User;
 import net.bytebuddy.utility.RandomString;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

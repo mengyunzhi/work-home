@@ -7,5 +7,6 @@ import {Injectable} from '@angular/core';
 })
 export class ActivatedRouteStub {
   subject = new Subject<Params>();
+  snapshot = {};
   readonly params = this.subject.asObservable();
 }

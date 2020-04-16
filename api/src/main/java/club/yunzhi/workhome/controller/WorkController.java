@@ -131,6 +131,16 @@ public class WorkController {
         return this.workService.updateScore(id, work.getScore());
     }
 
+    /**
+     * 获取下一个未评阅的作业
+     * @return 作业
+     */
+    @GetMapping("getNextNotReviewedWork")
+    @JsonView(GetNextNotReviewedWorkJsonView.class)
+    public Work getNextNotReviewedWork() {
+        return this.workService.getNextNotReviewedWork();
+    }
+
     private interface GetAllOfCurrentStudentJsonView
             extends Work.ItemJsonView {
     }
@@ -156,5 +166,8 @@ public class WorkController {
     }
 
     private interface UpdateScoreJsonView extends UpdateJsonView {
+    }
+
+    private interface GetNextNotReviewedWorkJsonView extends GetByIdJsonView {
     }
 }

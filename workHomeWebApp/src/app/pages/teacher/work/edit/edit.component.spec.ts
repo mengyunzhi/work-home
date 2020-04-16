@@ -11,6 +11,8 @@ import {Student} from '../../../../common/student';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {ActivatedRouteStub} from '../../../../service/service-tesing/activated-route-stub';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AppTestingModule} from '../../../../app-testing/app-testing.module';
 
 describe('Page -> Teacher -> EditComponent', () => {
   let component: EditComponent;
@@ -21,7 +23,9 @@ describe('Page -> Teacher -> EditComponent', () => {
       declarations: [ EditComponent ],
       imports: [
         HttpClientTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterTestingModule,
+        AppTestingModule
       ],
       providers: [
         {provide: WorkService, useClass: WorkStubService},
@@ -103,8 +107,6 @@ describe('Page -> Teacher -> EditComponent', () => {
     // 断言间谍调用成功，间谍接收参数符合预期
     expect(workService.updateScoreCache).toEqual({id: work1.id, work: work1});
 
-    // 断言接收返回值符合预期
-    expect(component.work).toEqual(work1);
   });
 
 });

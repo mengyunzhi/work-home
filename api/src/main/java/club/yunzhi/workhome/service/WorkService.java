@@ -129,4 +129,6 @@ public interface WorkService {
      * @return 是返回ture， 不是返回false
      */
     boolean isTeacher();
+
+    Work getNextNotReviewedWork();
 }
