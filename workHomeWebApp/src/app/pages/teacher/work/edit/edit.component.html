@@ -71,12 +71,11 @@
     <label>附件：</label>
   </div>
   <div class="col-md-8">
-            <span *ngFor="let attachment of work?.attachments">
+    <span *ngFor="let attachment of work?.attachments">
         {{attachment.originName}}
-              <span (click)="
-        downloadAttachment(attachment)" class="btn-outline-info"> <i class="fas fa-download"></i>下载</span>
-          <br>
-      </span>
+      <span (click)="downloadAttachment(attachment)" class="btn-outline-info"> <i class="fas fa-download"></i>下载</span>
+      <br>
+    </span>
   </div>
 </div>
 <hr>
