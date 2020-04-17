@@ -11,7 +11,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
  * 使用示例详见：userService
  */
 class AppOnReadyItem {
-
   /*本元素（比如：系统菜单）是否准备完毕*/
   private _ready = false;
 
