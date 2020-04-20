@@ -224,13 +224,6 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public Work getNextNotReviewedWork() {
-        List<Work> works = (List<Work>)workRepository.findAll();
-        for (Iterator iter = works.iterator(); iter.hasNext();) {
-            Work nextWork = (Work)iter.next();
-            if (nextWork.getReviewed() == false) {
-                return nextWork;
-            }
-        }
-        return null;
+        return workRepository.findTopByReviewedIsFalse();
     }
 }
