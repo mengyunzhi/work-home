@@ -2,11 +2,16 @@
 
   <form (ngSubmit)="onQuery()">
     <label>姓名：<input name="name" [formControl]="params.studentName" type="text"/></label>
+    &nbsp;
     <label>学号：<input name="sno" [formControl]="params.studentSno" type="text"/></label>
+    &nbsp;
+    <button class="btn btn-sm btn-primary"  type="submit">查询</button>
+    &nbsp;
+    <button class="btn btn-sm btn-warning" (click)="clear()">清空</button>
+    &nbsp;
     <label>项目名称：
       <app-item-select [item]="params.item" (selected)="onSelectKlass($event)"></app-item-select>
     </label>
-    <button type="submit">查询</button>
     &nbsp;
     <div class="custom-control custom-radio custom-control-inline">
       <input type="radio" [checked]="1" (change)="onCheckBoxChange($event, 1)" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">

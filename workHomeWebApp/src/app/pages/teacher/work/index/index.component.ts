@@ -57,6 +57,7 @@ export class IndexComponent implements OnInit {
       studentName: this.params.studentName.value,
       studentSno: this.params.studentSno.value
     };
+    console.log(queryParams);
     this.workService.getAll(queryParams)
       .subscribe((data: Page<Work>) => {
         this.workPage.content.content = this.setReviewed(data);
@@ -131,6 +132,14 @@ export class IndexComponent implements OnInit {
   /* 选择班级 */
   onSelectKlass(item: Item) {
     this.params.item = item;
+    this.load();
+  }
+
+  clear() {
+    this.params.studentName.setValue(null);
+    this.params.studentSno.setValue(null);
+    this.params.item = new Item();
+    this.load();
   }
 
   /**

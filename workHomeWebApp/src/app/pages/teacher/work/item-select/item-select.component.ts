@@ -11,7 +11,7 @@ export class ItemSelectComponent implements OnInit {
 
   @Output() selected = new EventEmitter<Item>();
   @Input() item: Item;
-  url = 'api/item/active';
+  url = '/api/item/active';
 
   constructor() {
   }
