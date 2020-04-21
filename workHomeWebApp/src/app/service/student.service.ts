@@ -42,9 +42,15 @@ export class StudentService {
       .set('no', params.no ? params.no : '')
       .set('page', params.page.toString())
       .set('size', params.size.toString());
-    console.log(queryParams);
+    const _params = {
+      studentName: params.name ? params.name : null,
+      studentNo: params.no ? params.no : null,
+      page: params.page.toLocaleString(),
+      size: params.size.toLocaleString()
+    };
+    console.log(_params);
 
-    return this.httpClient.get<{ totalPages: number, content: Array<Student> }>(`${this.url}/getAll`, {params: queryParams});
+    return this.httpClient.get<{ totalPages: number, content: Array<Student> }>(`${this.url}/getAll`, {params: _params});
   }
 
   /**

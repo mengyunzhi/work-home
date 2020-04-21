@@ -5,9 +5,9 @@
     &nbsp;
     <label>学号：<input name="sno" [formControl]="params.studentSno" type="text"/></label>
     &nbsp;
-    <button class="btn btn-sm btn-primary"  type="submit">查询</button>
+    <button class="btn btn-sm btn-primary"  type="submit"><i class="fas fa-search"></i>查询</button>
     &nbsp;
-    <button class="btn btn-sm btn-warning" (click)="clear()">清空</button>
+    <button class="btn btn-sm btn-warning" (click)="clear()"><i class="fas fa-trash-alt"></i>清空</button>
     &nbsp;
     <label>项目名称：
       <app-item-select [item]="params.item" (selected)="onSelectKlass($event)"></app-item-select>

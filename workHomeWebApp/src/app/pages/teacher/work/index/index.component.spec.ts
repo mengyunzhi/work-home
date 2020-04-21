@@ -14,7 +14,7 @@ import {ItemSelectComponent} from '../item-select/item-select.component';
 import {FuncModule} from '../../../../func/func.module';
 
 
-describe('Page -> Teacher -> IndexComponent', () => {
+describe('Page -> Teacher -> Work -> IndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 
@@ -295,10 +295,10 @@ describe('Page -> Teacher -> IndexComponent', () => {
     expect(component.onPage).toHaveBeenCalledWith(component.workPage.totalPages - 1);
   });
 
-  it('选择项目组件', () => {
+  fit('选择项目组件', () => {
     /* 获取请求 */
     const httpTestingController = TestBed.get(HttpTestingController);
-    const req: TestRequest = httpTestingController.expectOne('api/item/active');
+    const req: TestRequest = httpTestingController.expectOne('/item/active');
     expect(req.request.method).toEqual('GET');
 
     /* 模拟返回值 */
