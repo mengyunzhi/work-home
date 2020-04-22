@@ -13,6 +13,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ActivatedRouteStub} from '../../../../service/service-tesing/activated-route-stub';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AppTestingModule} from '../../../../app-testing/app-testing.module';
+import {FuncModule} from '../../../../func/func.module';
 
 describe('Page -> Teacher -> EditComponent', () => {
   let component: EditComponent;
@@ -25,7 +26,8 @@ describe('Page -> Teacher -> EditComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        AppTestingModule
+        AppTestingModule,
+        FuncModule
       ],
       providers: [
         {provide: WorkService, useClass: WorkStubService},
