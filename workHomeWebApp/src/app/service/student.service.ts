@@ -38,13 +38,13 @@ export class StudentService {
 
     /* 初始化查询参数 */
     const queryParams = new HttpParams()
-      .set('name', params.name ? params.name : '')
-      .set('no', params.no ? params.no : '')
+      .set('studentName', params.name ? params.name : '')
+      .set('studentNo', params.no ? params.no : '')
       .set('page', params.page.toString())
       .set('size', params.size.toString());
     const _params = {
-      studentName: params.name ? params.name : null,
-      studentNo: params.no ? params.no : null,
+      studentName: params.name ? params.name : '',
+      studentNo: params.no ? params.no : '',
       page: params.page.toLocaleString(),
       size: params.size.toLocaleString()
     };

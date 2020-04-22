@@ -12,6 +12,8 @@ import {Item} from '../../../../common/item';
 import {PartModule} from '../../../../part/part.module';
 import {ItemSelectComponent} from '../item-select/item-select.component';
 import {FuncModule} from '../../../../func/func.module';
+import {WorkTestingModule} from '../../../pages-testing/teacher-testing/work-testing/work-testing.module';
+import {WorkTestingController} from '../../../pages-testing/teacher-testing/work-testing/work-testing-controller';
 
 
 describe('Page -> Teacher -> Work -> IndexComponent', () => {
@@ -20,14 +22,15 @@ describe('Page -> Teacher -> Work -> IndexComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndexComponent , ItemSelectComponent],
+      declarations: [ IndexComponent ],
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
         PartModule,
-        FuncModule
+        FuncModule,
+        WorkTestingModule
       ],
       providers: [
         {provide: WorkService, useClass: WorkStubService}
@@ -295,31 +298,15 @@ describe('Page -> Teacher -> Work -> IndexComponent', () => {
     expect(component.onPage).toHaveBeenCalledWith(component.workPage.totalPages - 1);
   });
 
-  fit('选择项目组件', () => {
-    /* 获取请求 */
-    const httpTestingController = TestBed.get(HttpTestingController);
-    const req: TestRequest = httpTestingController.expectOne('/item/active');
-    expect(req.request.method).toEqual('GET');
+  it('选择项目组件', () => {
+    const controller = TestBed.get(WorkTestingController) as WorkTestingController;
+    const itemSelectComponent = controller.get(ItemSelectComponent) as ItemSelectComponent;
+    expect(itemSelectComponent.item).toBe(component.params.item);
 
-    /* 模拟返回值 */
-    const mockResult = new Array<Item>(
-      new Item({ id: 0 }),
-      new Item({ id: 1 })
-    );
-    req.flush(mockResult);
-    fixture.detectChanges();
-
-    /* 获取select元素 */
-    const debugElement = fixture.debugElement.query(By.css('select'));
-    const select: HTMLSelectElement = debugElement.nativeElement;
-
-    /* 选中首个选项 */
-    select.value = select.options[0].value;
-    select.dispatchEvent(new Event('change'));
-    fixture.detectChanges();
-
-    /* 断言选中的值传给了C层 */
-    expect(component.params.item).toEqual(mockResult[0]);
+    spyOn(component, 'onSelectKlass');
+    const emitItem = new Item();
+    itemSelectComponent.selected.emit(emitItem);
+    expect(component.onSelectKlass).toHaveBeenCalledWith(emitItem);
   });
 
   it('姓名、学号input输入测试', () => {
