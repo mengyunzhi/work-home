@@ -72,4 +72,8 @@ export class IndexComponent implements OnInit {
       });
     }, '即将删除实验项目');
   }
+
+  clear() {
+    this.ngOnInit();
+  }
 }

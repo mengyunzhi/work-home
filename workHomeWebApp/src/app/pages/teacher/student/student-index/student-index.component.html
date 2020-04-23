@@ -26,17 +26,23 @@
 
 <form (ngSubmit)="onQuery()">
   <label>姓名：<input name="name" [formControl]="params.name" type="text"/></label>
+  &nbsp;
   <label>学号：<input name="no" [formControl]="params.no" type="text"/></label>
-  <button type="submit">查询</button>
+  &nbsp;
+  <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-search"></i>查询</button>
+  &nbsp;
+  <button class="btn btn-sm btn-warning" (click)="clear()">
+    <i class="fas fa-trash-alt"></i>
+    清空
+  </button>
+  <div class="custom-control custom-radio custom-control-inline">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn btn-primary btn-sm" routerLink="add">
+      <i class="fas fa-plus"></i>
+      新增
+    </button>
+  </div>
 </form>
-<div class="row">
-    <div class="col-md-2 offset-md-10">
-        <button class="btn btn-primary btn-sm" routerLink="add">
-            <i class="fas fa-plus"></i>
-            新增
-        </button>
-    </div>
-</div>
 
 <!--<app-size [size]="size" (changeSize)="reloadBySize($event)"></app-size>-->
 <table class="table table-striped table-bordered mt-3">

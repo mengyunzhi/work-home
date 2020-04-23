@@ -92,11 +92,17 @@ export class StudentIndexComponent implements OnInit {
   }
 
   onQuery() {
-
+    this.loadData();
   }
 
   onPageSelected(page: number) {
     this.params.page = page;
+    this.loadData();
+  }
+
+  clear() {
+    this.params.name = new FormControl();
+    this.params.no = new FormControl();
     this.loadData();
   }
 }
