@@ -6,8 +6,6 @@ import {ServiceTestingModule} from './service-tesing/service-testing.module';
 import {Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Student} from '../common/student';
-import {User} from '../common/user';
 import {of} from 'rxjs';
 
 describe('UserService', () => {

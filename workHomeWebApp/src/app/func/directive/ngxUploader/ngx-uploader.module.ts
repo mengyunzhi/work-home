@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { NgFileDropDirective } from './ng-file-drop.directive';
-import { NgFileSelectDirective } from './ng-file-select.directive';
+import {NgModule} from '@angular/core';
+import {NgFileDropDirective} from './ng-file-drop.directive';
+import {NgFileSelectDirective} from './ng-file-select.directive';
 
 @NgModule({
   declarations: [NgFileDropDirective, NgFileSelectDirective],

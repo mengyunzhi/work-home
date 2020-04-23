@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Page} from '../../../../base/page';
 import {Work} from '../../../../common/work';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';

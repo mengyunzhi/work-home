@@ -65,5 +65,34 @@
     </div>
   </div>
 </div>
-
+<div class="row">
+  <div class="col-md-2 form-text text-right">
+    <label>附件：</label>
+  </div>
+  <div class="col-md-8">
+    <span *ngFor="let attachment of work?.attachments">
+        {{attachment.originName}}
+      <span (click)="downloadAttachment(attachment)" class="btn-outline-info"> <i class="fas fa-download"></i>下载</span>
+      <br>
+    </span>
+  </div>
+</div>
+<hr>
+<div class="row" *ngIf="work.attachments !== null">
+  <div class="col-md-2 form-text text-right">
+    <label>作业：</label>
+  </div>
+  <div class="col-md-8">
+    <button type="button" class="btn btn-primary btn-sm" (click)="showWindow()">查看效果</button>
+    &nbsp;
+    <a target="_blank"
+       [href]="protocol + '//' + (this.work.student.no + '.' + host + '/' + getWorkDir()) | safeUrl">点击进入</a>
+  </div>
+</div>
+<hr>
 <a style="display: none" routerLink="./../../" #linkToIndex>返回作业列表</a>
+<div class="mask" *ngIf="showPopWindow">
+  <iframe class="popWindow" height="94%" width="100%"  [src]="protocol + '//' + this.work.student.no + '.' + host + '/' + getWorkDir() | safeUrl"></iframe>
+  <button type="button" class="btn btn-primary btn-lg btn-block" (click)="exitPopWindow()">退出预览</button>
+</div>
+

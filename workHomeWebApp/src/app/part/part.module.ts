@@ -6,9 +6,9 @@ import {LayoutComponent} from './layout/layout.component';
 import {RouterModule} from '@angular/router';
 import {NavComponent} from './nav/nav.component';
 import {HttpClientModule} from '@angular/common/http';
-import { SelectComponent } from './select/select.component';
+import {SelectComponent} from './select/select.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { PageComponent } from './page/page.component';
+import {PageComponent} from './page/page.component';
 
 @NgModule({
   declarations: [MenuComponent, HeaderComponent, LayoutComponent, NavComponent, SelectComponent, PageComponent],

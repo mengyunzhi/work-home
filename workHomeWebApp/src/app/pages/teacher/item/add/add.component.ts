@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AppComponent } from '../../../../app.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ItemService } from '../../../../service/item.service';
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AppComponent} from '../../../../app.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ItemService} from '../../../../service/item.service';
 
 @Component({
   selector: 'app-add',

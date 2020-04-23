@@ -5,7 +5,6 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {Work} from '../common/work';
 import {Page} from '../base/page';
 import {HttpRequest} from '@angular/common/http';
-import {of} from 'rxjs';
 
 describe('workServiceTest', () => {
   let httpTestingController: HttpTestingController;

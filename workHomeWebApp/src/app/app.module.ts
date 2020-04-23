@@ -22,7 +22,7 @@ import { AuthModule } from './pages/auth/auth.module';
     FuncModule,
     HttpClientModule,
     SweetAlert2Module.forRoot(),
-    AuthModule
+    AuthModule,
   ],
   providers: [
     {

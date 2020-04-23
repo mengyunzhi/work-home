@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { YunzhiInterceptor } from '../net/yunzhi.interceptor';
-import { CommonService } from './common.service';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {YunzhiInterceptor} from '../net/yunzhi.interceptor';
+import {CommonService} from './common.service';
 
 declare var require: any;
 

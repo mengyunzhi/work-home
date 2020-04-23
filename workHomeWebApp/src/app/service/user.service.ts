@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CommonService} from './common.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError, map, tap} from 'rxjs/operators';
 import {User} from '../common/user';

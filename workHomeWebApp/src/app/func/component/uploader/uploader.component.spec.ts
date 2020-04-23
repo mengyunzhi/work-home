@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UploaderComponent } from './uploader.component';
-import { FuncTestingModule } from '../../func-testing/func-testing.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FormsModule } from '@angular/forms';
+import {UploaderComponent} from './uploader.component';
+import {FuncTestingModule} from '../../func-testing/func-testing.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FormsModule} from '@angular/forms';
 
 describe('UploaderComponent', () => {
   let component: UploaderComponent;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Attachment} from '../../../common/attachment';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AttachmentService} from '../../../service/attachment.service';

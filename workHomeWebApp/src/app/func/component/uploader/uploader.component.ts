@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UploaderOptions, UploadFile, UploadInput, UploadOutput, UploadStatus } from '../../directive/ngxUploader/interfaces';
-import { Attachment } from '../../../common/attachment';
-import { ConfigService } from '../../../service/config.service';
-import { checkDir, stringToNumber } from '../../../utils';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {UploaderOptions, UploadFile, UploadInput, UploadOutput, UploadStatus} from '../../directive/ngxUploader/interfaces';
+import {Attachment} from '../../../common/attachment';
+import {ConfigService} from '../../../service/config.service';
+import {checkDir, stringToNumber} from '../../../utils';
 
 @Component({
   selector: 'app-uploader',

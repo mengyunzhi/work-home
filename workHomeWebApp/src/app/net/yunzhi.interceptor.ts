@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, finalize, mergeMap } from 'rxjs/operators';
-import { config } from '../conf/app.config';
-import { isDefined } from '../utils';
-import { CommonService } from '../service/common.service';
-import { UserService } from '../service/user.service';
+import {Injectable} from '@angular/core';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
+import {catchError, finalize, mergeMap} from 'rxjs/operators';
+import {config} from '../conf/app.config';
+import {isDefined} from '../utils';
+import {CommonService} from '../service/common.service';
+import {UserService} from '../service/user.service';
 
 /**
  * Yunzhi拦截器，用于实现添加url，添加header，全局异常处理

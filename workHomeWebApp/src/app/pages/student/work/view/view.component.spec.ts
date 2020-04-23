@@ -1,6 +1,4 @@
-
-
-import { ViewComponent } from './view.component';
+import {ViewComponent} from './view.component';
 import {WorkStubService} from '../../../../service/service-tesing/work-stub.service';
 import {WorkService} from '../../../../service/work.service';
 

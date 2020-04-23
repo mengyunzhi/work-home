@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Attachment } from '../common/attachment';
-import { Assert } from '../utils';
-import { YunzhiInterceptor } from '../net/yunzhi.interceptor';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Attachment} from '../common/attachment';
+import {Assert} from '../utils';
+import {YunzhiInterceptor} from '../net/yunzhi.interceptor';
 
 @Injectable({
   providedIn: 'root'

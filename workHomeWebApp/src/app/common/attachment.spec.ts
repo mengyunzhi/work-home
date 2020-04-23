@@ -1,4 +1,4 @@
-import { Attachment } from './attachment';
+import {Attachment} from './attachment';
 
 describe('Attachment', () => {
   it('should create an instance', () => {

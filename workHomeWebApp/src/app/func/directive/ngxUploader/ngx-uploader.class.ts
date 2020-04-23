@@ -1,8 +1,8 @@
-import { EventEmitter } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { finalize, mergeMap } from 'rxjs/operators';
-import { BlobFile, UploadFile, UploadInput, UploadOutput, UploadStatus } from './interfaces';
-import { CommonService } from '../../../service/common.service';
+import {EventEmitter} from '@angular/core';
+import {Observable, Subject, Subscription} from 'rxjs';
+import {finalize, mergeMap} from 'rxjs/operators';
+import {BlobFile, UploadFile, UploadInput, UploadOutput, UploadStatus} from './interfaces';
+import {CommonService} from '../../../service/common.service';
 
 export function humanizeBytes(bytes: number): string {
   if (bytes === 0) {

@@ -3,7 +3,7 @@
  */
 import {Item} from './item';
 import {Student} from './student';
-import { Attachment } from './attachment';
+import {Attachment} from './attachment';
 
 /**
  * 作业

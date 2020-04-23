@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {AuthTestingController} from './auth-testing-controller';
-import { LoginComponent } from './login/login.component';
-
+import {LoginComponent} from './login/login.component';
 
 
 @NgModule({
