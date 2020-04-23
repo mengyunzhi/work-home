@@ -53,6 +53,7 @@ public class ItemServiceImpl implements ItemService {
             oldItem.setBeginTime(item.getBeginTime());
             oldItem.setEndTime(item.getEndTime());
             oldItem.setDescription(item.getDescription());
+            oldItem.setDir(item.getDir());
             itemRepository.save(oldItem);
             return;
         }

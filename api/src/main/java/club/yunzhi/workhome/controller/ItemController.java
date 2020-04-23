@@ -3,6 +3,8 @@ package club.yunzhi.workhome.controller;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.service.ItemService;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,7 +22,7 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
-
+    private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
