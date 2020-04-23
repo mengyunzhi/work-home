@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 
 // 文件上传的设置选项
 export interface UploaderOptions {

@@ -1,7 +1,8 @@
 import { humanizeBytes } from './ngx-uploader.class';
 
 
-describe('isContentTypeAllowed function', () => {
+describe('' +
+  'isContentTypeAllowed function', () => {
   it('should return true', () => {
 
   });

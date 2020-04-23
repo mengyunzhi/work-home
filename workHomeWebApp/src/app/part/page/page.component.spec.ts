@@ -1,9 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PageComponent } from './page.component';
+import {PageComponent} from './page.component';
 import {By} from '@angular/platform-browser';
 import {FormTest} from '../../testing/formTest';
-import {Select} from '../select/select.component';
 
 describe('PageComponent', () => {
   let component: PageComponent;

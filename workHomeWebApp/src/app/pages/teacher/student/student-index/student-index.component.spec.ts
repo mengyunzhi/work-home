@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { StudentIndexComponent } from './student-index.component';
+import {StudentIndexComponent} from './student-index.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of} from 'rxjs';
@@ -14,7 +14,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StudentStubService} from '../../../../service/service-tesing/student-stub.service';
 import {StudentService} from '../../../../service/student.service';
 import {By} from '@angular/platform-browser';
-import {AppComponent} from '../../../../app.component';
 import {PartModule} from '../../../../part/part.module';
 
 describe('StudentIndexComponent', () => {
@@ -59,7 +58,7 @@ describe('StudentIndexComponent', () => {
     expect(component).toBeTruthy();
   });
   it('测试依赖注入', () => {
-    const service = TestBed.get(UserService);
+    // const service = TestBed.get(UserService);
   });
   it('点击重置密码按钮', () => {
    spyOn(component, 'resetPassword');

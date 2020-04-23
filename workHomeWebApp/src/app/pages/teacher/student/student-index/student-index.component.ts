@@ -5,7 +5,6 @@ import {AppComponent} from 'src/app/app.component';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {UserService} from '../../../../service/user.service';
-import {User} from '../../../../common/user';
 import {FormControl} from '@angular/forms';
 
 

@@ -1,5 +1,5 @@
-import { DomSanitizer, SafeHtml, SafeResourceUrl, SafeScript, SafeStyle, SafeUrl, SafeValue } from '@angular/platform-browser';
-import { SecurityContext } from '@angular/core';
+import {DomSanitizer, SafeHtml, SafeResourceUrl, SafeScript, SafeStyle, SafeUrl, SafeValue} from '@angular/platform-browser';
+import {SecurityContext} from '@angular/core';
 
 export class DomSanitizerStub extends DomSanitizer {
   bypassSecurityTrustHtml(value: string): SafeHtml {

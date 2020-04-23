@@ -1,5 +1,5 @@
-import { User } from './user';
-import { Random } from '../utils';
+import {User} from './user';
+import {Random} from '../utils';
 
 export class Attachment {
   /** id */

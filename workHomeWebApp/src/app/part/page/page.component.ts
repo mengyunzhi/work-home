@@ -1,6 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Select} from '../select/select.component';
-import {Student} from '../../common/student';
 
 @Component({
   selector: 'app-page',

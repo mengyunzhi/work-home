@@ -1,7 +1,7 @@
 /**
  * 实验项目
  */
-import { Attachment } from './attachment';
+import {Attachment} from './attachment';
 
 export class Item {
   id: number;

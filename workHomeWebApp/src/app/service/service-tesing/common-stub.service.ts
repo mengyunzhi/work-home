@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
-import { CommonService } from '../common.service';
+import {Subject} from 'rxjs';
+import {CommonService} from '../common.service';
 
 export class CommonStubService extends CommonService {
   /**

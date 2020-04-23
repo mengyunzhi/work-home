@@ -11,9 +11,11 @@ import {Student} from '../../../../common/student';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {ActivatedRouteStub} from '../../../../service/service-tesing/activated-route-stub';
+import {FuncModule} from '../../../../func/func.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AppTestingModule} from '../../../../app-testing/app-testing.module';
-import {FuncModule} from '../../../../func/func.module';
+import {FuncTestingModule} from '../../../../func/func-testing/func-testing.module';
+
 
 describe('Page -> Teacher -> EditComponent', () => {
   let component: EditComponent;
@@ -25,9 +27,9 @@ describe('Page -> Teacher -> EditComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        RouterTestingModule,
         AppTestingModule,
-        FuncModule
+        FuncTestingModule,
+        RouterTestingModule,
       ],
       providers: [
         {provide: WorkService, useClass: WorkStubService},
@@ -65,7 +67,6 @@ describe('Page -> Teacher -> EditComponent', () => {
     expect(component.work.score).toBe(100);
     expect(component.work.student).toEqual(new Student({name: 'Student'}));
     expect(component.work.reviewed).toBe(true);
-
   });
 
   /**
@@ -112,4 +113,3 @@ describe('Page -> Teacher -> EditComponent', () => {
   });
 
 });
-

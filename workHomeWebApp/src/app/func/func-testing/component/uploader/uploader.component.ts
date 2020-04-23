@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Attachment } from '../../../../common/attachment';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Attachment} from '../../../../common/attachment';
 
 @Component({
   selector: 'app-uploader',

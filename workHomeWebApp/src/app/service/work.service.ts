@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Work} from '../common/work';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Assert} from '../utils';
 import {Page} from '../base/page';
-import {Item} from '../common/item';
 
 @Injectable({
   providedIn: 'root'

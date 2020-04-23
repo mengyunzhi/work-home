@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Page} from '../../../../base/page';
 import {Work} from '../../../../common/work';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {WorkService} from '../../../../service/work.service';
 import {config} from '../../../../conf/app.config';
-import {RouterModule} from '@angular/router';
 import {Item} from '../../../../common/item';
 
 @Component({

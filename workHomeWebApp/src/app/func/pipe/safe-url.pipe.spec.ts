@@ -1,5 +1,5 @@
-import { SafeUrlPipe } from './safe-url.pipe';
-import { DomSanitizerStub } from '../../testing/dom-sanitizer-stub';
+import {SafeUrlPipe} from './safe-url.pipe';
+import {DomSanitizerStub} from '../../testing/dom-sanitizer-stub';
 
 describe('SafeUrlPipe', () => {
   it('create an instance', () => {

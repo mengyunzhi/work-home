@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Work} from '../../../../common/work';
 import {WorkService} from '../../../../service/work.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';

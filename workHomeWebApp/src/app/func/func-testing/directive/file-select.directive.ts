@@ -1,5 +1,5 @@
-import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { UploaderOptions, UploadOutput } from '../../directive/ngxUploader/interfaces';
+import {Directive, EventEmitter, Input, Output} from '@angular/core';
+import {UploaderOptions, UploadOutput} from '../../directive/ngxUploader/interfaces';
 
 @Directive({
   selector: '[appFileSelect]'

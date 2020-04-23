@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { saveAs } from 'file-saver';
-import { Work } from '../../../../common/work';
-import { CommonService } from '../../../../service/common.service';
-import { WorkService } from '../../../../service/work.service';
-import { AttachmentService } from '../../../../service/attachment.service';
-import { AppComponent } from '../../../../app.component';
-import { Attachment } from '../../../../common/attachment';
-import { ConfigService } from '../../../../service/config.service';
-import { UserService } from '../../../../service/user.service';
-import { User } from '../../../../common/user';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {saveAs} from 'file-saver';
+import {Work} from '../../../../common/work';
+import {CommonService} from '../../../../service/common.service';
+import {WorkService} from '../../../../service/work.service';
+import {AttachmentService} from '../../../../service/attachment.service';
+import {AppComponent} from '../../../../app.component';
+import {Attachment} from '../../../../common/attachment';
+import {ConfigService} from '../../../../service/config.service';
+import {UserService} from '../../../../service/user.service';
+import {User} from '../../../../common/user';
 
 
 @Component({

@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { StudentService } from './student.service';
+import {StudentService} from './student.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {HttpRequest} from '@angular/common/http';
 import {Student} from '../common/student';

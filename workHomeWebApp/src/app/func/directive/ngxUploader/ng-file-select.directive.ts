@@ -1,8 +1,8 @@
-import { Directive, ElementRef, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
-import { UploadOutput, UploaderOptions } from './interfaces';
-import { NgUploaderService } from './ngx-uploader.class';
-import { Subscription } from 'rxjs';
-import { CommonService } from '../../../service/common.service';
+import {Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {UploaderOptions, UploadOutput} from './interfaces';
+import {NgUploaderService} from './ngx-uploader.class';
+import {Subscription} from 'rxjs';
+import {CommonService} from '../../../service/common.service';
 
 /**
  * 通过选择上传文件的指令

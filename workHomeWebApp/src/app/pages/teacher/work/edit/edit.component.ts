@@ -27,8 +27,6 @@ export class EditComponent implements OnInit {
   host: string;
   _window: any;
   showPopWindow = true;
-  url: string;
-
 
   constructor(private workService: WorkService,
               private activatedRoute: ActivatedRoute,
@@ -47,6 +45,8 @@ export class EditComponent implements OnInit {
     });
     this.load();
   }
+
+
   public load() {
     this.workService.getById({id: this.params.workId})
       .subscribe((data) => {
@@ -55,6 +55,7 @@ export class EditComponent implements OnInit {
         console.log('error');
       });
   }
+
   scoreBest() {
     this.work.score = 95;
     this.submit({id: this.work.id, work: this.work});
@@ -118,10 +119,11 @@ export class EditComponent implements OnInit {
     this.linkToIndex.nativeElement.click();
   }
 
-  exitPopWindow() {
-    this.showPopWindow = false;
-  }
   showWindow() {
     this.showPopWindow = true;
+  }
+
+  exitPopWindow() {
+    this.showPopWindow = false;
   }
 }
