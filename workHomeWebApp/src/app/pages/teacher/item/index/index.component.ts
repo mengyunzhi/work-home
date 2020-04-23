@@ -80,7 +80,8 @@ export class IndexComponent implements OnInit {
   onPageSelected(page: number) {
     this.page = page;
     this.pageAll();
-
+  }
+  
   clear() {
     this.ngOnInit();
   }
