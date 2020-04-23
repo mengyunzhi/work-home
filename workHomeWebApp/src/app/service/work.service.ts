@@ -23,7 +23,7 @@ export class WorkService {
       page: params.page.toLocaleString(),
       size: params.size.toLocaleString(),
       studentName: params.studentName ? params.studentName : null,
-      studentSno: params.studentSno ? params.studentSno : null,
+      studentNo: params.studentSno ? params.studentSno : null,
       itemId: params.itemId ? params.itemId.toLocaleString() : null
     };
 

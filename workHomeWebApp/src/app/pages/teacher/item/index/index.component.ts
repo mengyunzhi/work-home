@@ -6,6 +6,7 @@ import {Item} from '../../../../common/item';
 import {Page} from '../../../../base/page';
 import {config} from '../../../../conf/app.config';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Work} from '../../../../common/work';
 
 @Component({
   selector: 'app-index',
@@ -14,7 +15,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class IndexComponent implements OnInit {
 
-  items: Page<Item>;
+  items = {
+      totalPages: 0,
+      content: new Page<Item>(),
+    };
 
   /**
    * 页码
@@ -42,7 +46,6 @@ export class IndexComponent implements OnInit {
   ngOnInit() {
     this.page = 0;
     this.size = config.size;
-
     this.createForm();
     this.pageAll();
   }
@@ -50,7 +53,8 @@ export class IndexComponent implements OnInit {
   public pageAll() {
     this.itemService.page(this.page, this.size, this.itemForm.getRawValue().name)
       .subscribe((data: Page<Item>) => {
-        this.items = data;
+        this.items.content = data;
+        this.items.totalPages = data.totalPages;
       }, () => {
         console.log('error');
       });
@@ -71,5 +75,14 @@ export class IndexComponent implements OnInit {
         }, `删除失败:${res.error.message}`);
       });
     }, '即将删除实验项目');
+  }
+
+  onPageSelected(page: number) {
+    this.page = page;
+    this.pageAll();
+  }
+
+  clear() {
+    this.ngOnInit();
   }
 }

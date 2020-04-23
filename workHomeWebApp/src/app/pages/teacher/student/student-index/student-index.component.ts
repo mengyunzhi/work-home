@@ -6,6 +6,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {UserService} from '../../../../service/user.service';
 import {FormControl} from '@angular/forms';
+import {CommonService} from '../../../../service/common.service';
+import {config} from '../../../../conf/app.config';
 
 
 @Component({
@@ -24,7 +26,7 @@ export class StudentIndexComponent implements OnInit {
   /* 查询参数 */
   params = {
     page: 0,
-    size: 5,
+    size: config.size,
     name: new FormControl(),
     no: new FormControl()
   };
@@ -91,11 +93,17 @@ export class StudentIndexComponent implements OnInit {
   }
 
   onQuery() {
-
+    this.loadData();
   }
 
   onPageSelected(page: number) {
     this.params.page = page;
+    this.loadData();
+  }
+
+  clear() {
+    this.params.name = new FormControl();
+    this.params.no = new FormControl();
     this.loadData();
   }
 }

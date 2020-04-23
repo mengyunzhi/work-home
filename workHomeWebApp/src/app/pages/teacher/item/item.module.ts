@@ -5,6 +5,7 @@ import {ItemRoutingModule} from './item-routing.module';
 import {IndexComponent} from './index/index.component';
 import {EditComponent} from './edit/edit.component';
 import {AddComponent} from './add/add.component';
+import {PartModule} from '../../../part/part.module';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import {AddComponent} from './add/add.component';
     CommonModule,
     ItemRoutingModule,
     ReactiveFormsModule,
+    PartModule,
   ],
   providers: [DatePipe]
 })

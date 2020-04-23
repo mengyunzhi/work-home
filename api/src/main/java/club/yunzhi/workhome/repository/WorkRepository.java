@@ -45,4 +45,10 @@ public interface WorkRepository extends PagingAndSortingRepository<Work, Long>, 
                 .and(WorkSpecs.belongToItem(item));
         return this.findAll(specification, pageable);
     }
+
+    /**
+     * 获取一个未批改的作业
+     * @return 若有，返回一个作业，若没有，返回null
+     */
+    Work findTopByReviewedIsFalse();
 }
