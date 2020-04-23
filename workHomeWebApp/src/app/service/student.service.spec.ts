@@ -39,8 +39,8 @@ describe('StudentService', () => {
       return request.url === 'Student/getAll';
     });
     expect(req.request.method).toEqual('GET');
-    expect(req.request.params.get('name')).toEqual('');
-    expect(req.request.params.get('no')).toEqual('');
+    expect(req.request.params.get('studentName')).toEqual('');
+    expect(req.request.params.get('studentNo')).toEqual('');
     expect(req.request.params.get('page')).toEqual('0');
     expect(req.request.params.get('size')).toEqual('10');
 
@@ -56,8 +56,8 @@ describe('StudentService', () => {
       request => request.url === 'Student/getAll'
     );
     expect(req.request.method).toEqual('GET');
-    expect(req.request.params.get('name')).toEqual('name');
-    expect(req.request.params.get('no')).toEqual('no');
+    expect(req.request.params.get('studentName')).toEqual('name');
+    expect(req.request.params.get('studentNo')).toEqual('no');
     expect(req.request.params.get('page')).toEqual('2');
     expect(req.request.params.get('size')).toEqual('20');
 
