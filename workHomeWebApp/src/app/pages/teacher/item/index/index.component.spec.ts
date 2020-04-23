@@ -5,8 +5,9 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AppTestingModule} from '../../../../app-testing/app-testing.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import {PartModule} from '../../../../part/part.module';
 
-describe('IndexComponent', () => {
+describe('teacher -> item -> IndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
 
@@ -17,7 +18,8 @@ describe('IndexComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         AppTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        PartModule
       ]
     })
     .compileComponents();

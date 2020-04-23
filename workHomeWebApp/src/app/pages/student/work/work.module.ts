@@ -7,6 +7,7 @@ import { FuncModule } from '../../../func/func.module';
 import { RouterModule } from '@angular/router';
 import { WorkRoutingModule } from './work-routing.module';
 import { ViewComponent } from './view/view.component';
+import {PartModule} from '../../../part/part.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ViewComponent } from './view/view.component';
     FuncModule,
     RouterModule,
     WorkRoutingModule,
-    FormsModule
+    FormsModule,
+    PartModule
   ]
 })
 export class WorkModule {
