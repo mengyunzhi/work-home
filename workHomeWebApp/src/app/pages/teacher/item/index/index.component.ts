@@ -76,12 +76,12 @@ export class IndexComponent implements OnInit {
       });
     }, '即将删除实验项目');
   }
-  
+
   onPageSelected(page: number) {
     this.page = page;
     this.pageAll();
   }
-  
+
   clear() {
     this.ngOnInit();
   }
