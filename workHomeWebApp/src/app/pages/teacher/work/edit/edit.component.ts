@@ -90,6 +90,7 @@ export class EditComponent implements OnInit {
                 this.linkToIndex.nativeElement.click();
               } else {
                 this.work = data;
+                this.showWindow();
               }
             });
         }
