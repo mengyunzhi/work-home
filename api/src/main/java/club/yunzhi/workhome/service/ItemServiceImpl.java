@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
@@ -80,5 +81,10 @@ public class ItemServiceImpl implements ItemService {
         }
 
         return yunzhiService.page(itemRepository, item, pageable);
+    }
+
+    @Override
+    public List<Item> findAll() {
+        return (List<Item>) this.itemRepository.findAll();
     }
 }
