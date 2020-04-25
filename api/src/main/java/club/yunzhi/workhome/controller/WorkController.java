@@ -82,12 +82,21 @@ public class WorkController {
             @RequestParam(required = false) Long itemId,
             @RequestParam(required = false) String studentName,
             @RequestParam(required = false) String studentNo,
+            @RequestParam(required = false) String reviewed,
             Pageable pageable) {
+        Boolean _reviewed = null;
+        if (reviewed != null){
+            switch (reviewed) {
+                case "1": _reviewed = true;break;
+                case "0": _reviewed = false;break;
+            }
+        }
         return this.workService.getAll(
-                itemId,
-                studentName,
-                studentNo,
-                pageable);
+            itemId,
+            studentName,
+            studentNo,
+            _reviewed,
+            pageable);
     }
 
     /**
