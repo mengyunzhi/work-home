@@ -33,6 +33,11 @@ public class ItemController {
         return this.itemService.findAllActiveItems();
     }
 
+    @GetMapping("all")
+    @JsonView(FindAllActiveItemsJsonView.class)
+    public List<Item> getAll() {
+        return this.itemService.findAll();
+    }
     /**
      * 保存实验项目
      *

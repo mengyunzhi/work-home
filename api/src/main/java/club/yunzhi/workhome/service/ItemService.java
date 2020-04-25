@@ -4,6 +4,7 @@ import club.yunzhi.workhome.entity.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface ItemService {
@@ -50,4 +51,11 @@ public interface ItemService {
      * @return Page<Item>
      */
     Page<Item> page(String name, Pageable pageable);
+
+    /**
+     * 查看所有项目
+     *
+     * @return List<Item>
+     */
+    List<Item> findAll();
 }
