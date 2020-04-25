@@ -38,11 +38,13 @@ public interface WorkRepository extends PagingAndSortingRepository<Work, Long>, 
      */
     Optional<Work> findByItemIdAndStudentId(Long itemId, Long studentId);
 
-    default Page getAll(Item item,  String studentName, String studentSno, @NotNull Pageable pageable) {
+    default Page getAll(Item item,  String studentName, String studentSno, Boolean reviewed, @NotNull Pageable pageable) {
         Assert.notNull(pageable, "传入的Pageable不能为null");
+
         Specification<Work> specification = WorkSpecs.containingName(studentName)
                 .and(WorkSpecs.startWithNo(studentSno))
-                .and(WorkSpecs.belongToItem(item));
+                .and(WorkSpecs.belongToItem(item))
+                .and(WorkSpecs.isReviewed(reviewed));
         return this.findAll(specification, pageable);
     }
 

@@ -55,18 +55,31 @@ export class WorkStubService {
    * getAll模拟方法
    * @param params 查询参数
    */
-  getAll(params: {page: number, size: number}): Observable<Page<Work>> {
+  getAll(params: {page: number, size: number, reviewed?: boolean}): Observable<Page<Work>> {
     this.pageParamsCache = params;
-    const mockResult = new Page<Work>(
-      {content: new Array<Work>(
-        new Work({
-          id: 1, content: '123', item: new Item({name: 'Item'}), score: 100,
-          student: new Student({name: 'Student', no: '123'}), reviewed: true }),
-        new Work({
-          id: 2, content: '456', item: new Item({name: 'Item'}), score: 100,
-          student: new Student({name: 'Student', no: '456'}), reviewed: false })
-        ), number: 1, size: 2, totalPages: 5}
-    );
+    const work1 = new Work({
+      id: 1, content: '123', item: new Item({name: 'Item'}), score: 100,
+      student: new Student({name: 'Student', no: '123'}), reviewed: true });
+    const work2 = new Work({
+      id: 2, content: '456', item: new Item({name: 'Item'}), score: 100,
+      student: new Student({name: 'Student', no: '456'}), reviewed: false });
+
+    let mockResult = new Page<Work>();
+    if (params.reviewed === true) {
+      mockResult = new Page<Work>(
+        {content: new Array<Work>( work1 ), number: 1, size: 2, totalPages: 5}
+      );
+    } else if (params.reviewed === false) {
+      mockResult = new Page<Work>(
+        {content: new Array<Work>( work2 ), number: 1, size: 2, totalPages: 5}
+      );
+    } else {
+      mockResult = new Page<Work>(
+        {content: new Array<Work>( work1, work2 ), number: 1, size: 2, totalPages: 5}
+      );
+    }
+
+
     return of(mockResult);
   }
 

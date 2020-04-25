@@ -105,39 +105,49 @@ class WorkRepositoryTest {
         Work work = new Work();
         work.setItem(item);
         work.setStudent(student);
+        work.setReviewed(true);
         this.workRepository.save(work);
 
         Work work1 = new Work();
         work1.setItem(item1);
         work1.setStudent(student1);
+        work1.setReviewed(false);
         this.workRepository.save(work1);
 
-        Page workPage = this.workRepository.getAll(item,"testStudentName", "032282",  PageRequest.of(0, 2));
+        Page workPage = this.workRepository.getAll(item,"testStudentName", "032282", null, PageRequest.of(0, 2));
         Assertions.assertEquals(workPage.getTotalElements(),
                 1);
 
-        workPage = this.workRepository.getAll(item,"testStudentName12", "032282",  PageRequest.of(0, 2));
+        workPage = this.workRepository.getAll(item,"testStudentName12", "032282", null, PageRequest.of(0, 2));
         Assertions.assertEquals(workPage.getTotalElements(),
                 0);
 
-        workPage = this.workRepository.getAll(item,"testStudentName", "0322821",  PageRequest.of(0, 2));
+        workPage = this.workRepository.getAll(item,"testStudentName", "0322821", null, PageRequest.of(0, 2));
         Assertions.assertEquals(workPage.getTotalElements(),
                 0);
 
-        workPage = this.workRepository.getAll( item1,"testStudentName", "032282",  PageRequest.of(0, 2));
+        workPage = this.workRepository.getAll( item1,"testStudentName", "032282", null, PageRequest.of(0, 2));
         Assertions.assertEquals(workPage.getTotalElements(),
                 0);
 
-        workPage = this.workRepository.getAll(item,null, "032282",  PageRequest.of(0, 2));
+        workPage = this.workRepository.getAll(item,null, "032282", null, PageRequest.of(0, 2));
         Assertions.assertEquals(workPage.getTotalElements(),
                 1);
 
-        workPage = this.workRepository.getAll(null, null, null, PageRequest.of(0, 2));
+        workPage = this.workRepository.getAll(null, null, null, null, PageRequest.of(0, 2));
         Assertions.assertEquals(workPage.getTotalElements(),
                 2);
 
-        workPage = this.workRepository.getAll(new Item(),null, null,  PageRequest.of(0, 2));
+        workPage = this.workRepository.getAll(new Item(),null, null, null, PageRequest.of(0, 2));
         Assertions.assertEquals(workPage.getTotalElements(),
                 2);
+
+        workPage = this.workRepository.getAll(new Item(),null, null, true, PageRequest.of(0, 2));
+        Assertions.assertEquals(workPage.getTotalElements(),
+                1);
+
+        workPage = this.workRepository.getAll(new Item(),null, null, false, PageRequest.of(0, 2));
+        Assertions.assertEquals(workPage.getTotalElements(),
+                1);
     }
 }

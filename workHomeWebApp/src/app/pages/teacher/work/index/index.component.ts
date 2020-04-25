@@ -19,6 +19,7 @@ export class IndexComponent implements OnInit {
   params = {
     page: 0,
     size: 10,
+    reviewed: undefined,
     studentName: new FormControl(),
     studentSno: new FormControl(),
     item: new Item()
@@ -53,13 +54,14 @@ export class IndexComponent implements OnInit {
       page: this.params.page,
       size: this.params.size,
       itemId: this.params.item.id,
+      reviewed: this.params.reviewed,
       studentName: this.params.studentName.value,
       studentSno: this.params.studentSno.value
     };
     console.log(queryParams);
     this.workService.getAll(queryParams)
       .subscribe((data: Page<Work>) => {
-        this.workPage.content.content = this.setReviewed(data);
+        this.workPage.content = data;
         this.workPage.totalPages = data.totalPages;
       }, () => {
         console.log('error');
@@ -90,8 +92,11 @@ export class IndexComponent implements OnInit {
    * @param reviewed 评阅状态码1默认2已评阅3未评阅
    */
   onCheckBoxChange($event: Event, reviewed: number) {
-    this.reviewed = reviewed;
-    console.log(this.reviewed);
+    switch (reviewed) {
+      case 1: this.params.reviewed = undefined; break;
+      case 2: this.params.reviewed = true; break;
+      case 3: this.params.reviewed = false; break;
+    }
     this.load();
   }
 
@@ -100,28 +105,28 @@ export class IndexComponent implements OnInit {
    * @param _workPage 所有作业
    * @return result 调整后的作业
    */
-  setReviewed(_workPage: Page<Work>) {
-    let result = new Array<Work>();
-    switch (this.reviewed) {
-      case 1: {
-        result = _workPage.content;
-        break;
-      }
-      case 2: {
-        _workPage.content.forEach((work) => {
-          if (work.reviewed) {result.push(work); }
-        });
-        break;
-      }
-      case 3: {
-        _workPage.content.forEach((work) => {
-          if (!work.reviewed) {result.push(work); }
-        });
-        break;
-      }
-    }
-    return result;
-  }
+  // setReviewed(_workPage: Page<Work>) {
+  //   let result = new Array<Work>();
+  //   switch (this.reviewed) {
+  //     case 1: {
+  //       result = _workPage.content;
+  //       break;
+  //     }
+  //     case 2: {
+  //       _workPage.content.forEach((work) => {
+  //         if (work.reviewed) {result.push(work); }
+  //       });
+  //       break;
+  //     }
+  //     case 3: {
+  //       _workPage.content.forEach((work) => {
+  //         if (!work.reviewed) {result.push(work); }
+  //       });
+  //       break;
+  //     }
+  //   }
+  //   return result;
+  // }
 
   onPageSelected(page: number) {
     this.params.page = page;

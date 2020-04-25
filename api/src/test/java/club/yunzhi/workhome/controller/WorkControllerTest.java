@@ -194,6 +194,7 @@ public class WorkControllerTest extends ControllerTest {
                 .getAll(Mockito.anyLong(),
                         Mockito.anyString(),
                         Mockito.anyString(),
+                        Mockito.anyBoolean(),
                         Mockito.any(Pageable.class)))
                 .thenReturn(mockOutWorkPage);
 
@@ -204,6 +205,7 @@ public class WorkControllerTest extends ControllerTest {
                         .param("itemId", "1")
                         .param("studentName", "testName")
                         .param("studentNo", "testSno")
+                        .param("reviewed","1")
                         .param("page", "1")
                         .param("size", "2"))
                 .andDo(MockMvcResultHandlers.print())

@@ -18,15 +18,17 @@ export class WorkService {
     return this.httpClient.get<Array<Work>>(`${this.url}/getAllOfCurrentStudent`);
   }
 
-  getAll(params: {page: number, size: number, studentName?: string, studentSno?: string, itemId?: number}): Observable<Page<Work>> {
+  getAll(params: {page: number, size: number, studentName?: string, studentSno?: string, itemId?: number, reviewed?: boolean}):
+    Observable<Page<Work>> {
     const _params = {
       page: params.page.toLocaleString(),
       size: params.size.toLocaleString(),
       studentName: params.studentName ? params.studentName : null,
       studentNo: params.studentSno ? params.studentSno : null,
+      reviewed: params.reviewed === undefined ? 'null' : params.reviewed ? '1' : '0',
       itemId: params.itemId ? params.itemId.toLocaleString() : null
     };
-
+    console.log(_params.reviewed);
     return this.httpClient.get<Page<Work>>(`${this.url}/getAll`, {params: _params});
   }
 

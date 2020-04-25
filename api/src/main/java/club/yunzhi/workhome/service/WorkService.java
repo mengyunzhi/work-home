@@ -122,7 +122,7 @@ public interface WorkService {
      * @param pageable
      * @return
      */
-    Page<Work> getAll(Long itemId, String studentName, String studentSno,  @NotNull Pageable pageable);
+    Page<Work> getAll(Long itemId, String studentName, String studentSno, Boolean reviewed, @NotNull Pageable pageable);
 
     /**
      * 判断是否为老师

@@ -28,4 +28,11 @@ public class WorkSpecs {
         }
         return (Specification<Work>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("student").get("no").as(String.class), String.format("%s%%", studentNo));
     }
+
+    public static Specification<Work> isReviewed(Boolean reviewed) {
+        if (reviewed == null) {
+            return Specification.where(null);
+        }
+        return (Specification<Work>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("reviewed").as(Boolean.class),  reviewed);
+    }
 }

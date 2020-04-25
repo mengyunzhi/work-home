@@ -143,11 +143,12 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public Page<Work> getAll(Long itemId, String studentName, String studentSno, @NotNull Pageable pageable) {
+    public Page<Work> getAll(Long itemId, String studentName, String studentSno, Boolean reviewed, @NotNull Pageable pageable) {
         Assert.notNull(pageable, "Pageable不能为null");
         Item item = new Item();
         item.setId(itemId);
-        return this.workRepository.getAll(item, studentName, studentSno, pageable);
+
+        return this.workRepository.getAll(item, studentName, studentSno, reviewed, pageable);
     }
 
     @Override
