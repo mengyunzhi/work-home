@@ -51,13 +51,22 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.changeToLogin();
     /** 创建表单 */
     this.loginForm = this.builder.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.minLength(5),
+        Validators.maxLength(6),
+        Validators.pattern('\\w+'),
+        Validators.required]],
       password: ['', Validators.required],
     });
     /** 创建注册表单 */
     this.registerForm = this.builder.group({
-      no: ['', Validators.required],
-      name: ['', Validators.required],
+      no: ['', [Validators.minLength(5),
+        Validators.maxLength(6),
+        Validators.pattern('\\w+'),
+        Validators.required]],
+      name: ['', [Validators.minLength(2),
+        Validators.maxLength(5),
+        Validators.pattern('\\D+'),
+        Validators.required]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     }, {
