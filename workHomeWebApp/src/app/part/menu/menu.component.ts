@@ -6,6 +6,7 @@ import {MenuService} from '../../service/menu.service';
 import {Menu} from '../../common/menu';
 import {UserService} from '../../service/user.service';
 import {isDefined} from '../../utils';
+import {WorkService} from '../../service/work.service';
 
 @Component({
   selector: 'app-menu',
@@ -76,6 +77,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   navigate(menu: Menu): void {
     this.router.navigateByUrl(menu.url);
+    if (menu.url === 'teacher/work') {
+      WorkService.workPage = 0;
+    }
   }
 
   getBackgroundColor(menu: Menu): string {

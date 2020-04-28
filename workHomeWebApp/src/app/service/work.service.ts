@@ -9,6 +9,7 @@ import {Page} from '../base/page';
   providedIn: 'root'
 })
 export class WorkService {
+  public static workPage = 0;
   private url = 'work';
 
   constructor(private httpClient: HttpClient) {
