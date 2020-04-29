@@ -85,7 +85,7 @@
   <div class="col-md-8">
     <button type="button" class="btn btn-primary btn-sm" (click)="showWindow()">查看效果</button>
     &nbsp;
-    <a target="_blank"
+    <a type="button" class="btn btn-info btn-sm" target="_blank"
        [href]="protocol + '//' + (this.work.student.no + '.' + host + '/' + getWorkDir()) | safeUrl">点击进入</a>
   </div>
 </div>
