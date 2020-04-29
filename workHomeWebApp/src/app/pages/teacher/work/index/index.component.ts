@@ -17,7 +17,7 @@ export class IndexComponent implements OnInit {
   pages: Array<number>;
   /* 查询参数 */
   params = {
-    page: 0,
+    page: WorkService.workPage,
     size: 10,
     reviewed: undefined,
     studentName: new FormControl(),
@@ -36,7 +36,7 @@ export class IndexComponent implements OnInit {
   reviewed = 1;
 
   ngOnInit() {
-    this.params.page = 0;
+    this.params.page = WorkService.workPage;
     this.params.size = config.size;
 
     this.createForm();
@@ -129,7 +129,7 @@ export class IndexComponent implements OnInit {
   // }
 
   onPageSelected(page: number) {
-    this.params.page = page;
+    WorkService.workPage = this.params.page =  page;
     this.load();
   }
 }
