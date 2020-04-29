@@ -42,7 +42,10 @@
     <td>{{i + 1 }}</td>
     <td>{{ item.name}}</td>
     <td>{{ item.description}}</td>
-    <td>{{ item.active}}</td>
+    <td>
+      <span *ngIf="item.active">已开启</span>
+      <span *ngIf="!item.active">已关闭</span>
+    </td>
     <td>{{ item.beginTime | date:"yyyy-MM-dd" }}</td>
     <td>{{ item.endTime | date:"yyyy-MM-dd" }}</td>
     <td>
