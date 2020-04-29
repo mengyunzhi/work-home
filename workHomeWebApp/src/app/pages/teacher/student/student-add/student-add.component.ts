@@ -24,7 +24,10 @@ export class StudentAddComponent implements OnInit {
   ngOnInit() {
     this.studentForm = this.builder.group({
       name: ['', [Validators.required]],
-      no: ['', [Validators.required]],
+      no: ['', [Validators.minLength(5),
+                Validators.maxLength(6),
+                Validators.pattern('\\w+'),
+                Validators.required]],
       user: this.builder.group({
         password: [config.defaultPassword, [Validators.required]]
       })

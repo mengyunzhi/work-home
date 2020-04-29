@@ -28,6 +28,12 @@
             <label for="username">学号<code>*</code></label>
             <input class="form-control" id="username" placeholder="请输入学号" formControlName="username"/>
           </div>
+          <div class="row-1 mt-1" *ngIf="loginForm.invalid && (loginForm.get('username').dirty || loginForm.get('username').touched)">
+            <p class="text-danger" *ngIf="loginForm.get('username').errors.pattern">
+              <i class="fa fa-exclamation-triangle"></i>学号格式不正确</p>
+            <p class="text-danger" *ngIf="loginForm.get('username').errors.required">
+              <i class="fa fa-exclamation-triangle"></i>学号不能为空</p>
+          </div>
           <div class="form-group">
             <label for="password">密码<code>*</code></label>
             <input type="password" class="form-control" id="password" placeholder="请输入密码" formControlName="password"/>
@@ -52,11 +58,23 @@
             </label>
             <input class="form-control form-control-sm" id="register-no" placeholder="请输入学号" formControlName="no"/>
           </div>
+          <div class="row-1 mt-1" *ngIf="registerForm.invalid && (registerForm.get('no').dirty || registerForm.get('no').touched)">
+            <p class="text-danger" *ngIf="registerForm.get('no').errors.pattern">
+              <i class="fa fa-exclamation-triangle"></i>学号格式不正确</p>
+            <p class="text-danger" *ngIf="registerForm.get('no').errors.required">
+              <i class="fa fa-exclamation-triangle"></i>学号不能为空</p>
+          </div>
           <div class="form-group">
             <label for="register-name">
               <small>姓名<code>*</code></small>
             </label>
             <input class="form-control form-control-sm" id="register-name" placeholder="请输入姓名" formControlName="name"/>
+          </div>
+          <div class="row-1 mt-1" *ngIf="registerForm.invalid && (registerForm.get('name').dirty || registerForm.get('name').touched)">
+            <p class="text-danger" *ngIf="registerForm.get('name')?.errors.pattern">
+              <i class="fa fa-exclamation-triangle"></i>姓名格式不正确</p>
+            <p class="text-danger" *ngIf="registerForm.get('name')?.errors.required">
+              <i class="fa fa-exclamation-triangle"></i>姓名不能为空</p>
           </div>
           <div class="form-group">
             <label for="register-password">
