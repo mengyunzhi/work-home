@@ -1,5 +1,5 @@
 export const config = {
   server: '/api/',
-  size: 2,
-  defaultPassword: '123456',
+  size: 10,
+  defaultPassword: 'yunzhi',
 };
