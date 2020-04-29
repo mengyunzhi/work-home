@@ -15,6 +15,10 @@
                         <i class="fa fa-exclamation-triangle"></i>
                         学生学号必须
                     </small>
+                  <small class="text-danger" *ngIf="no.errors.pattern">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    学生学号格式错误
+                  </small>
                 </div>
             </div>
             <br>
