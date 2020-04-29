@@ -31,7 +31,7 @@
       <span *ngIf="!work.reviewed">-</span>
     </td>
     <td>
-      <a *ngIf="work.item.active" class="btn btn-sm btn-outline-primary" routerLink="./edit/{{work.item.id}}">作答</a>
+      <a *ngIf="work.item.active" class="btn btn-sm btn-outline-primary" routerLink="./edit/{{work.item.id}}">修改</a>
       <a *ngIf="!work.item.active" class="btn btn-sm btn-outline-info" routerLink="./{{work.id}}">查看</a>
     </td>
   </tr>
