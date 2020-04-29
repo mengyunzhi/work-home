@@ -59,6 +59,6 @@ export class StudentAddComponent implements OnInit {
   }
 
   get password(): AbstractControl {
-    return this.studentForm.get('user').get('password');
+   return this.studentForm.get('user').get('password');
   }
 }
