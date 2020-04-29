@@ -50,6 +50,15 @@
                     (uploadRejected)="uploadRejected($event)"
                     (uploadedFile)="attachmentUploaded($event)" [buttonText]="'选择文件'"></app-uploader>
     </div>
+
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-2 form-text text-right">
+      <label for="content">温馨提示：</label>
+    </div>
+    <div class="col-md-8">
+      <label for="content">上传文件时，请确保你的HTML文件为index.html，否则无法预览。</label>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-2 form-text text-right">
