@@ -1,5 +1,6 @@
 package club.yunzhi.workhome.controller;
 
+import club.yunzhi.workhome.annotation.Admin;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.service.StudentService;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -28,6 +29,7 @@ public class StudentController {
      * @param student
      * @return
      */
+    @Admin
     @PostMapping
     @JsonView(studentJsonView.class)
     public Student save(@RequestBody Student student) {
@@ -90,6 +92,7 @@ public class StudentController {
      * @param student
      */
     @PutMapping("{id}")
+    @Admin
     @JsonView(studentJsonView.class)
     public void update(@PathVariable Long id, @RequestBody Student student) {
         studentService.update(id, student);
@@ -100,6 +103,7 @@ public class StudentController {
      * @param id
      */
     @DeleteMapping("{id}")
+    @Admin
     @JsonView(studentJsonView.class)
     public void delete(@PathVariable Long id) {
         studentService.delete(id);
