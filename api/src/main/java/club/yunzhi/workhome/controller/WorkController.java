@@ -1,5 +1,6 @@
 package club.yunzhi.workhome.controller;
 
+import club.yunzhi.workhome.annotation.Admin;
 import club.yunzhi.workhome.entity.Attachment;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Work;
@@ -76,6 +77,7 @@ public class WorkController {
      * @param pageable 分页信息
      * @return 所有作业
      */
+    @Admin
     @GetMapping("getAll")
     @JsonView(GetAllJsonView.class)
     public Page<Work> findAll(
@@ -106,6 +108,7 @@ public class WorkController {
      * @param studentId 学生id
      * @return 作业
      */
+    @Admin
     @GetMapping("getByItemIdAndStudentId")
     @JsonView(GetByItemIdAndStudentIdJsonView.class)
     public Work getByItemIdAndStudentId(@RequestParam Long itemId, @RequestParam Long studentId) {
@@ -122,6 +125,7 @@ public class WorkController {
      * @param id 作业id
      * @return 作业
      */
+    @Admin
     @GetMapping("{id}")
     @JsonView(GetByIdJsonView.class)
     public Work getById(@PathVariable Long id) {
@@ -134,6 +138,7 @@ public class WorkController {
      * @param work 作业
      * @return
      */
+    @Admin
     @PutMapping("updateScore/{id}")
     @JsonView(UpdateScoreJsonView.class)
     public Work updateScore (@PathVariable Long id, @RequestBody Work work) {
@@ -144,6 +149,7 @@ public class WorkController {
      * 获取下一个未评阅的作业
      * @return 作业
      */
+    @Admin
     @GetMapping("getNextNotReviewedWork")
     @JsonView(GetNextNotReviewedWorkJsonView.class)
     public Work getNextNotReviewedWork() {

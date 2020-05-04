@@ -1,5 +1,6 @@
 package club.yunzhi.workhome.controller;
 
+import club.yunzhi.workhome.annotation.Admin;
 import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.service.ItemService;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -32,7 +33,6 @@ public class ItemController {
     public List<Item> findAllActiveItems() {
         return this.itemService.findAllActiveItems();
     }
-
     @GetMapping("all")
     @JsonView(FindAllActiveItemsJsonView.class)
     public List<Item> getAll() {
@@ -43,6 +43,7 @@ public class ItemController {
      *
      * @param item 实验项目
      */
+    @Admin
     @PostMapping
     public Item save(@RequestBody Item item) {
         return itemService.save(item);
@@ -66,6 +67,7 @@ public class ItemController {
      * @param id   实验项目Id
      * @param item 实验项目
      */
+    @Admin
     @PutMapping("{id}")
     @JsonView(itemJsonView.class)
     public void update(@PathVariable Long id, @RequestBody Item item) {
@@ -77,7 +79,9 @@ public class ItemController {
      * 删除实验项目
      *
      * @param id 实验项目Id
+     *
      */
+    @Admin
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
         itemService.delete(id);

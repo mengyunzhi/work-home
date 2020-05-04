@@ -1,5 +1,6 @@
 package club.yunzhi.workhome.controller;
 
+import club.yunzhi.workhome.annotation.Admin;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.User;
 import club.yunzhi.workhome.service.StudentService;
@@ -82,13 +83,13 @@ public class UserController {
     public void updatePassword(@RequestBody VUser vUser) {
         this.userService.updatePassword(vUser);
     }
-
+    @Admin
     @PostMapping("register")
     public void register(@RequestBody Student student) {
         logger.debug("保存");
         studentService.save(student);
     }
-
+    @Admin
     @PutMapping("resetPassword/{id}")
     public void resetPassword(@PathVariable Long id){
         logger.debug("密码重置");
