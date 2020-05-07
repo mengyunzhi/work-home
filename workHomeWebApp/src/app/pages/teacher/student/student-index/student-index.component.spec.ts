@@ -15,6 +15,8 @@ import {StudentStubService} from '../../../../service/service-tesing/student-stu
 import {StudentService} from '../../../../service/student.service';
 import {By} from '@angular/platform-browser';
 import {PartModule} from '../../../../part/part.module';
+import {PartTestingController} from '../../../../part/part-testing/part-testing-controller';
+import {PageComponent} from '../../../../part/part-testing/page/page.component';
 
 describe('StudentIndexComponent', () => {
   let component: StudentIndexComponent;
@@ -22,8 +24,9 @@ describe('StudentIndexComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StudentIndexComponent],
+      declarations: [ StudentIndexComponent, PageComponent],
       providers: [
+        PartTestingController,
         {provide: UserService, useClass: UserStubService},
         {provide: StudentService, useClass: StudentStubService}
       ],
@@ -33,8 +36,7 @@ describe('StudentIndexComponent', () => {
         AppTestingModule,
         ReactiveFormsModule,
         FormsModule,
-        PartModule
-      ]
+      ],
     })
     .compileComponents();
   }));
@@ -122,6 +124,22 @@ describe('StudentIndexComponent', () => {
     formTest.clickButton('button');
     expect(component.onQuery).toHaveBeenCalled();
     // expect(component.loadData).toHaveBeenCalled();
+  });
+
+  it('选择页数组件', () => {
+    const controller = TestBed.get(PartTestingController) as PartTestingController;
+    const pageComponent = controller.get(PageComponent) as PageComponent;
+    expect(pageComponent.setPage).toBe(component.params.page);
+    expect(pageComponent.setSize).toBe(component.params.size);
+    expect(pageComponent.setTotalPages).toBe(component.pageStudent.totalPages);
+
+    spyOn(component, 'onPageSelected');
+    spyOn(component, 'onSizeSelected');
+    pageComponent.selectedPage.emit(3);
+    pageComponent.selectedSize.emit(4);
+    expect(component.onPageSelected).toHaveBeenCalledWith(3);
+    expect(component.onSizeSelected).toHaveBeenCalledWith(4);
+
   });
 
 });

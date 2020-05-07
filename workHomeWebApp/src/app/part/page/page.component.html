@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-4" id="pageInfo">
-    第{{page + 1}}/{{totalPages}}页 每页{{size}}条
+    第{{page + 1}}/{{totalPages}}页 每页<app-size-select [size]="size" (changeSize)="onSizeSelected($event)"></app-size-select>条
   </div>
   <div class="col-8">
     <nav>
