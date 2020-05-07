@@ -52,7 +52,7 @@ export class IndexComponent implements OnInit {
   public load() {
     const queryParams = {
       page: this.params.page,
-      size: this.params.size,
+      size: config.size,
       itemId: this.params.item.id,
       reviewed: this.params.reviewed,
       studentName: this.params.studentName.value,
@@ -130,6 +130,11 @@ export class IndexComponent implements OnInit {
 
   onPageSelected(page: number) {
     WorkService.workPage = this.params.page =  page;
+    this.load();
+  }
+
+  onSizeSelected(size: number) {
+    config.size = size;
     this.load();
   }
 }

@@ -8,6 +8,7 @@ import {UserService} from '../../../../service/user.service';
 import {FormControl} from '@angular/forms';
 import {CommonService} from '../../../../service/common.service';
 import {config} from '../../../../conf/app.config';
+import {Config} from 'codelyzer';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class StudentIndexComponent implements OnInit {
   loadData() {
     const queryParams = {
       page: this.params.page,
-      size: this.params.size,
+      size: config.size,
       name: this.params.name.value,
       no: this.params.no.value
     };
@@ -104,6 +105,11 @@ export class StudentIndexComponent implements OnInit {
   clear() {
     this.params.name = new FormControl();
     this.params.no = new FormControl();
+    this.loadData();
+  }
+
+  onSizeSelected(size: number) {
+    config.size = size;
     this.loadData();
   }
 }

@@ -7,11 +7,12 @@ import {RouterModule} from '@angular/router';
 import {NavComponent} from './nav/nav.component';
 import {HttpClientModule} from '@angular/common/http';
 import {SelectComponent} from './select/select.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PageComponent} from './page/page.component';
+import { SizeSelectComponent } from './size-select/size-select.component';
 
 @NgModule({
-  declarations: [MenuComponent, HeaderComponent, LayoutComponent, NavComponent, SelectComponent, PageComponent],
+  declarations: [MenuComponent, HeaderComponent, LayoutComponent, NavComponent, SelectComponent, PageComponent, SizeSelectComponent],
   exports: [
     MenuComponent,
     HeaderComponent,
@@ -23,7 +24,8 @@ import {PageComponent} from './page/page.component';
     CommonModule,
     RouterModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class PartModule {
