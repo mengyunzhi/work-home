@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {UserService} from '../../../service/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Student} from '../../../common/student';
@@ -126,6 +126,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+  }
+  get username(): AbstractControl {
+    return this.loginForm.get('username');
+  }
 
+  get no(): AbstractControl {
+    return this.registerForm.get('no');
+  }
+
+  get name(): AbstractControl {
+    return this.loginForm.get('name');
   }
 }
