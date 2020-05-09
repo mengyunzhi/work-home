@@ -12,7 +12,8 @@ export class PageComponent implements OnInit {
   pages: Array<number>;
 
 
-  @Output() selected = new EventEmitter<number>();
+  @Output() selectedPage = new EventEmitter<number>();
+  @Output() selectedSize = new EventEmitter<number>();
 
   @Input() set setTotalPages(totalPages: number) {
     this.totalPages = totalPages;
@@ -47,7 +48,7 @@ export class PageComponent implements OnInit {
       return ;
     }
     // this.page = page;
-    this.selected.emit(page);
+    this.selectedPage.emit(page);
     this.loadData();
   }
 
@@ -91,5 +92,9 @@ export class PageComponent implements OnInit {
       result.push(begin);
     }
     return result;
+  }
+
+  onSizeSelected(size: number) {
+    this.selectedSize.emit(size);
   }
 }
