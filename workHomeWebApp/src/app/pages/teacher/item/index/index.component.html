@@ -60,6 +60,6 @@
   </tr>
   </tbody>
 </table>
-<app-page *ngIf="items.totalPages != 0" [setTotalPages]="items.totalPages" [setPage]="page" [setSize]="size" (selected)="onPageSelected($event)"></app-page>
+<app-page *ngIf="items.totalPages != 0" [setTotalPages]="items.totalPages" [setPage]="page" [setSize]="size" (selectedPage)="onPageSelected($event)" (selectedSize)="onSizeSelected($event)"></app-page>
 
 

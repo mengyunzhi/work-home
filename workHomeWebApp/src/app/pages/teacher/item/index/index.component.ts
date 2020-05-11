@@ -85,4 +85,9 @@ export class IndexComponent implements OnInit {
   clear() {
     this.ngOnInit();
   }
+
+  onSizeSelected(size: number) {
+    config.size = size;
+    this.ngOnInit();
+  }
 }

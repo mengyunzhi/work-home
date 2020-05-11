@@ -53,6 +53,6 @@
 
   </tbody>
 </table>
-  <app-page *ngIf="workPage.totalPages != 0" [setTotalPages]="workPage.totalPages" [setPage]="params.page" [setSize]="params.size" (selected)="onPageSelected($event)"></app-page>
+  <app-page *ngIf="workPage.totalPages != 0" [setTotalPages]="workPage.totalPages" [setPage]="params.page" [setSize]="params.size" (selectedPage)="onPageSelected($event)" (selectedSize)="onSizeSelected($event)"></app-page>
 
 </form>
