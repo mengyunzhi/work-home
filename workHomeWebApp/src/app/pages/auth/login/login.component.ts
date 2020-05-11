@@ -136,6 +136,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   get name(): AbstractControl {
-    return this.loginForm.get('name');
+    return this.registerForm.get('name');
   }
 }
