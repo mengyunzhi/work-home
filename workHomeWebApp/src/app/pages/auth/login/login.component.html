@@ -26,13 +26,15 @@
         <form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="mode === 'login'">
           <div class="form-group">
             <label for="username">学号<code>*</code></label>
-            <input class="form-control" id="username" placeholder="请输入学号" formControlName="username"/>
+            <input class="form-control" id="username" placeholder="请输入学号"  formControlName="username"/>
           </div>
-          <div class="row-1 mt-1" *ngIf="loginForm.invalid && (loginForm.get('username').dirty || loginForm.get('username').touched)">
-            <p class="text-danger" *ngIf="loginForm.get('username').errors.pattern">
-              <i class="fa fa-exclamation-triangle"></i>学号格式不正确</p>
-            <p class="text-danger" *ngIf="loginForm.get('username').errors.required">
-              <i class="fa fa-exclamation-triangle"></i>学号不能为空</p>
+          <div class="row-1 mt-1" *ngIf="username.invalid && (username.dirty || username.touched)">
+            <div>
+            <small class="text-danger" *ngIf="username.errors.pattern">
+              <i class="fa fa-exclamation-triangle"></i>学号格式不正确</small>
+            </div>
+            <small class="text-danger" *ngIf="username.errors.required">
+              <i class="fa fa-exclamation-triangle"></i>学号不能为空</small>
           </div>
           <div class="form-group">
             <label for="password">密码<code>*</code></label>
@@ -58,11 +60,11 @@
             </label>
             <input class="form-control form-control-sm" id="register-no" placeholder="请输入学号" formControlName="no"/>
           </div>
-          <div class="row-1 mt-1" *ngIf="registerForm.invalid && (registerForm.get('no').dirty || registerForm.get('no').touched)">
-            <p class="text-danger" *ngIf="registerForm.get('no').errors.pattern">
-              <i class="fa fa-exclamation-triangle"></i>学号格式不正确</p>
-            <p class="text-danger" *ngIf="registerForm.get('no').errors.required">
-              <i class="fa fa-exclamation-triangle"></i>学号不能为空</p>
+          <div class="row-1 mt-1" *ngIf="no.invalid && (no.dirty || no.touched)">
+            <small class="text-danger" *ngIf="no.errors?.pattern">
+              <i class="fa fa-exclamation-triangle"></i>学号格式不正确</small>
+            <small class="text-danger" *ngIf="no.errors?.required">
+              <i class="fa fa-exclamation-triangle"></i>学号不能为空</small>
           </div>
           <div class="form-group">
             <label for="register-name">
@@ -70,10 +72,10 @@
             </label>
             <input class="form-control form-control-sm" id="register-name" placeholder="请输入姓名" formControlName="name"/>
           </div>
-          <div class="row-1 mt-1" *ngIf="registerForm.invalid && (registerForm.get('name').dirty || registerForm.get('name').touched)">
-            <p class="text-danger" *ngIf="registerForm.get('name')?.errors.pattern">
+          <div class="row-1 mt-1" *ngIf="name.invalid && (name.dirty || name.touched)">
+            <p class="text-danger" *ngIf="name?.errors?.pattern">
               <i class="fa fa-exclamation-triangle"></i>姓名格式不正确</p>
-            <p class="text-danger" *ngIf="registerForm.get('name')?.errors.required">
+            <p class="text-danger" *ngIf="name?.errors?.required">
               <i class="fa fa-exclamation-triangle"></i>姓名不能为空</p>
           </div>
           <div class="form-group">

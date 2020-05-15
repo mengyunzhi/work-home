@@ -127,7 +127,6 @@ export class UserService {
     const vUser = new VUser();
     vUser.password = oldPassword;
     vUser.newPassword = encodeURIComponent(newPassword);
-
     return this.httpClient.put<void>(`${this.url}/updatePassword`, vUser);
   }
 
