@@ -83,7 +83,6 @@ public class UserController {
     public void updatePassword(@RequestBody VUser vUser) {
         this.userService.updatePassword(vUser);
     }
-    @Admin
     @PostMapping("register")
     public void register(@RequestBody Student student) {
         logger.debug("保存");
