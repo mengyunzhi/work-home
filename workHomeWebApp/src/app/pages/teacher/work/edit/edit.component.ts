@@ -78,7 +78,7 @@ export class EditComponent implements OnInit {
   }
 
   submit(params: {id: number, work: Work}) {
-    this.work.reviewed = true;
+    // this.work.reviewed = true;
     this.workService.updateScore({id: params.id, work: params.work})
       .subscribe(
         () => {
