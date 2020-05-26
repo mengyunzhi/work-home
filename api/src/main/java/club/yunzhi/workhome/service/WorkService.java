@@ -106,13 +106,13 @@ public interface WorkService {
     Page<Work> getAll(Pageable pageable);
 
 
-    /**
-     * 更新作业分数
-     * @param id
-     * @param score
-     * @return
-     */
-    Work updateScore(Long id, int score);
+//    /**
+//     * 更新作业分数
+//     * @param id
+//     * @param score
+//     * @return
+//     */
+//    Work updateScore(Long id, int score);
 
     /**
      * 综合查询
@@ -129,6 +129,6 @@ public interface WorkService {
      * @return 是返回ture， 不是返回false
      */
     boolean isTeacher();
-
-    Work getNextNotReviewedWork();
+//
+//    Work getNextNotReviewedWork();
 }

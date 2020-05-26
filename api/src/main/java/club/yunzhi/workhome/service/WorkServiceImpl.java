@@ -110,37 +110,36 @@ public class WorkServiceImpl implements WorkService {
         return this.workRepository.findAll(pageable);
     }
 
-    @Override
-    public Work updateScore(Long id, int score) {
-        Work work = this.workRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
-        if (!this.isTeacher()) {
-            throw new AccessDeniedException("无权判定作业");
-        }
-        work.setScore(score);
-        work.setReviewed(true);
-        logger.info(String.valueOf(work.getScore()));
-
-        //取出此学生的所有作业
-        List<Work> currentStudentWorks = this.workRepository.findAllByStudent(work.getStudent());
-        //取出此学生
-        Student currentStudent = this.studentService.findById(work.getStudent().getId());
-        currentStudent.setTotalScore(0);
-        int viewed = 0;
-
-        for (Work awork : currentStudentWorks) {
-            if (awork.getReviewed() == true) {
-                viewed++;
-                //计算总成绩
-                currentStudent.setTotalScore(currentStudent.getTotalScore()+awork.getScore());
-                //计算平均成绩
-                currentStudent.setAverageScore(currentStudent.getTotalScore()/viewed);
-            }
-        }
-
-        studentRepository.save(currentStudent);
-        return this.save(work);
-    }
+//    @Override
+//    public Work updateScore(Long id, int score) {
+//        Work work = this.workRepository.findById(id)
+//                .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
+//        if (!this.isTeacher()) {
+//            throw new AccessDeniedException("无权判定作业");
+//        }
+//        work.setScore(score);
+//        logger.info(String.valueOf(work.getScore()));
+//
+//        //取出此学生的所有作业
+//        List<Work> currentStudentWorks = this.workRepository.findAllByStudent(work.getStudent());
+//        //取出此学生
+//        Student currentStudent = this.studentService.findById(work.getStudent().getId());
+//        currentStudent.setTotalScore(0);
+//        int viewed = 0;
+//
+//        for (Work awork : currentStudentWorks) {
+//            if (awork.getReviewed() == true) {
+//                viewed++;
+//                //计算总成绩
+//                currentStudent.setTotalScore(currentStudent.getTotalScore()+awork.getScore());
+//                //计算平均成绩
+//                currentStudent.setAverageScore(currentStudent.getTotalScore()/viewed);
+//            }
+//        }
+//
+//        studentRepository.save(currentStudent);
+//        return this.save(work);
+//    }
 
     @Override
     public Page<Work> getAll(Long itemId, String studentName, String studentSno, Boolean reviewed, @NotNull Pageable pageable) {
@@ -218,13 +217,13 @@ public class WorkServiceImpl implements WorkService {
                 (CONFIG_PATH + WORK_PATH + student.getNo() + uploadDir);
     }
 
-    /**
-     * 得到下一个未评阅的作业
-     * @return 作业
-     */
-
-    @Override
-    public Work getNextNotReviewedWork() {
-        return workRepository.findTopByReviewedIsFalse();
-    }
+//    /**
+//     * 得到下一个未评阅的作业
+//     * @return 作业
+//     */
+//
+//    @Override
+//    public Work getNextNotReviewedWork() {
+//        return workRepository.findTopByReviewedIsFalse();
+//    }
 }
