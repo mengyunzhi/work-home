@@ -110,36 +110,70 @@ public class WorkServiceImpl implements WorkService {
         return this.workRepository.findAll(pageable);
     }
 
-//    @Override
-//    public Work updateScore(Long id, int score) {
-//        Work work = this.workRepository.findById(id)
-//                .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
-//        if (!this.isTeacher()) {
-//            throw new AccessDeniedException("无权判定作业");
-//        }
-//        work.setScore(score);
-//        logger.info(String.valueOf(work.getScore()));
-//
-//        //取出此学生的所有作业
-//        List<Work> currentStudentWorks = this.workRepository.findAllByStudent(work.getStudent());
-//        //取出此学生
-//        Student currentStudent = this.studentService.findById(work.getStudent().getId());
-//        currentStudent.setTotalScore(0);
-//        int viewed = 0;
-//
-//        for (Work awork : currentStudentWorks) {
-//            if (awork.getReviewed() == true) {
-//                viewed++;
-//                //计算总成绩
-//                currentStudent.setTotalScore(currentStudent.getTotalScore()+awork.getScore());
-//                //计算平均成绩
-//                currentStudent.setAverageScore(currentStudent.getTotalScore()/viewed);
-//            }
-//        }
-//
-//        studentRepository.save(currentStudent);
-//        return this.save(work);
-//    }
+    @Override
+    public Work updateScore(Long id, int score) {
+        // 取出作业实体
+        Work work = this.workRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("未找到ID为" + id + "的作业"));
+        // 取出当前登录的用户
+        User currentUser = this.userService.getCurrentLoginUser();
+
+        switch (work.getStatus()) {
+            // 未评阅
+            case 0: {
+                work.setScore(score);
+                break;
+            }
+            // 评阅中
+            case 1: {
+                if (work.getLastReviewedUserId().equals(currentUser.getId())) {
+                    work.setScore(score);
+                } else {
+                    work.setScore( (score + work.getScore()) / 2 );
+                }
+                break;
+            }
+            // 已评阅
+            case 2: {
+                if (currentUser.getRole() == -1) {
+
+                    work.setScore(score);
+                } else {
+                    throw new AccessDeniedException("您没有权限修改此作业");
+                }
+                break;
+            }
+            // 状态异常
+            default: {
+                throw new ValidationException("校验异常，请重试");
+            }
+        }
+        // 更新评阅教师
+        work.setLastReviewedUserId(currentUser.getId());
+        this.save(work);
+
+        // logger.info(String.valueOf(work.getScore()));
+
+        //取出此学生的所有作业
+        List<Work> currentStudentWorks = this.workRepository.findAllByStudent(work.getStudent());
+        //取出此学生
+        Student currentStudent = this.studentService.findById(work.getStudent().getId());
+        currentStudent.setTotalScore(0);
+        int viewed = 0;
+
+        for (Work aWork : currentStudentWorks) {
+            if (aWork.getStatus() == 2) {
+                viewed++;
+                //计算总成绩
+                currentStudent.setTotalScore(currentStudent.getTotalScore()+aWork.getScore());
+                //计算平均成绩
+                currentStudent.setAverageScore(currentStudent.getTotalScore()/viewed);
+            }
+        }
+
+        studentRepository.save(currentStudent);
+        return this.save(work);
+    }
 
     @Override
     public Page<Work> getAll(Long itemId, String studentName, String studentSno, Boolean reviewed, @NotNull Pageable pageable) {

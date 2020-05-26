@@ -106,13 +106,13 @@ public interface WorkService {
     Page<Work> getAll(Pageable pageable);
 
 
-//    /**
-//     * 更新作业分数
-//     * @param id
-//     * @param score
-//     * @return
-//     */
-//    Work updateScore(Long id, int score);
+    /**
+     * 更新作业分数
+     * @param id
+     * @param score
+     * @return
+     */
+    Work updateScore(Long id, int score);
 
     /**
      * 综合查询
