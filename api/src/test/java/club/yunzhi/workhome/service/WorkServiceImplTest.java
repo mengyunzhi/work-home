@@ -188,53 +188,53 @@ class WorkServiceImplTest extends ServiceTest {
         org.assertj.core.api.Assertions.assertThat(pageableArgumentCaptor.getValue()).isEqualTo(mockInPageable);
     }
 
-    @Test
-    public void updateScore() {
-        Long id = this.random.nextLong();
-
-        Work oldWork = new Work();
-        oldWork.setScore(0);
-        oldWork.setStudent(this.currentStudent);
-        oldWork.setItem(Mockito.spy(new Item()));
-
-        Work testWork = new Work();
-        testWork.setScore(0);
-        testWork.setReviewed(true);
-        testWork.setStudent(this.currentStudent);
-        testWork.setItem(Mockito.spy(new Item()));
-
-        int score = 100;
-        List<Work> works= Arrays.asList(oldWork, testWork);
-
-        Mockito.doReturn(Optional.of(oldWork))
-                .when(this.workRepository)
-                .findById(Mockito.eq(id));
-        Mockito.doReturn(works)
-                .when(this.workRepository)
-                .findAllByStudent(oldWork.getStudent());
-        Mockito.doReturn(true)
-                .when(oldWork.getItem())
-                .getActive();
-        Mockito.doReturn(this.currentStudent)
-                .when(this.studentService)
-                .findById(oldWork.getStudent().getId());
-
-        Work work = new Work();
-        work.setScore(score);
-        work.setReviewed(true);
-
-        Work resultWork = new Work();
-        Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
-                .thenReturn(resultWork);
-
-        Mockito.doReturn(true).when(workService).isTeacher();
-        Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
-        Assertions.assertEquals(oldWork.getScore(), work.getScore());
-
-        Assertions.assertEquals(oldWork.getReviewed(),work.getReviewed());
-        Assertions.assertEquals(oldWork.getStudent().getTotalScore(), 100);
-        Assertions.assertEquals(oldWork.getStudent().getAverageScore(), 50);
-    }
+//    @Test
+//    public void updateScore() {
+//        Long id = this.random.nextLong();
+//
+//        Work oldWork = new Work();
+//        oldWork.setScore(0);
+//        oldWork.setStudent(this.currentStudent);
+//        oldWork.setItem(Mockito.spy(new Item()));
+//
+//        Work testWork = new Work();
+//        testWork.setScore(0);
+//        testWork.setReviewed(true);
+//        testWork.setStudent(this.currentStudent);
+//        testWork.setItem(Mockito.spy(new Item()));
+//
+//        int score = 100;
+//        List<Work> works= Arrays.asList(oldWork, testWork);
+//
+//        Mockito.doReturn(Optional.of(oldWork))
+//                .when(this.workRepository)
+//                .findById(Mockito.eq(id));
+//        Mockito.doReturn(works)
+//                .when(this.workRepository)
+//                .findAllByStudent(oldWork.getStudent());
+//        Mockito.doReturn(true)
+//                .when(oldWork.getItem())
+//                .getActive();
+//        Mockito.doReturn(this.currentStudent)
+//                .when(this.studentService)
+//                .findById(oldWork.getStudent().getId());
+//
+//        Work work = new Work();
+//        work.setScore(score);
+//        work.setReviewed(true);
+//
+//        Work resultWork = new Work();
+//        Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
+//                .thenReturn(resultWork);
+//
+//        Mockito.doReturn(true).when(workService).isTeacher();
+//        Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
+//        Assertions.assertEquals(oldWork.getScore(), work.getScore());
+//
+//        Assertions.assertEquals(oldWork.getReviewed(),work.getReviewed());
+//        Assertions.assertEquals(oldWork.getStudent().getTotalScore(), 100);
+//        Assertions.assertEquals(oldWork.getStudent().getAverageScore(), 50);
+//    }
 
     @Test
     public void findAllSpecs() {
