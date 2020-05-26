@@ -34,16 +34,16 @@ export class IndexComponent implements OnInit {
           this.currentStudent.averageScore = 0;
         }
       });
-    this.workService.getAllOfCurrentStudent()
-      .subscribe(data => {
-        this.works = data;
-        this.reviewedWork = 0;
-        data.forEach((work) => {
-          if (work.reviewed === true) {
-            this.reviewedWork++;
-          }
-        });
-      });
+    // this.workService.getAllOfCurrentStudent()
+    //   .subscribe(data => {
+    //     this.works = data;
+    //     this.reviewedWork = 0;
+    //     data.forEach((work) => {
+    //       if (work.reviewed === true) {
+    //         this.reviewedWork++;
+    //       }
+    //     });
+    //   });
   }
 
 }

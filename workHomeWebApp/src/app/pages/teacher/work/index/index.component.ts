@@ -54,7 +54,7 @@ export class IndexComponent implements OnInit {
       page: this.params.page,
       size: config.size,
       itemId: this.params.item.id,
-      reviewed: this.params.reviewed,
+      // reviewed: this.params.reviewed,
       studentName: this.params.studentName.value,
       studentSno: this.params.studentSno.value
     };
@@ -91,14 +91,14 @@ export class IndexComponent implements OnInit {
    * @param $event 弹射值
    * @param reviewed 评阅状态码1默认2已评阅3未评阅
    */
-  onCheckBoxChange($event: Event, reviewed: number) {
-    switch (reviewed) {
-      case 1: this.params.reviewed = undefined; break;
-      case 2: this.params.reviewed = true; break;
-      case 3: this.params.reviewed = false; break;
-    }
-    this.load();
-  }
+  // onCheckBoxChange($event: Event, reviewed: number) {
+  //   switch (reviewed) {
+  //     case 1: this.params.reviewed = undefined; break;
+  //     case 2: this.params.reviewed = true; break;
+  //     case 3: this.params.reviewed = false; break;
+  //   }
+  //   this.load();
+  // }
 
   /**
    * 根据是否查阅，调整作业内容
