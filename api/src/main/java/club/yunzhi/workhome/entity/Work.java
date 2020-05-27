@@ -29,6 +29,7 @@ public class Work extends AbstractEntity {
 
 	private Long lastReviewedUserId;
 
+	private Short status;
 	@ManyToMany
 	@JsonView(AttachmentsJsonView.class)
 	private List<Attachment> attachments = new ArrayList<>();
@@ -82,6 +83,14 @@ public class Work extends AbstractEntity {
 		return score;
 	}
 
+	public void setStatus(Short status) {
+		this.status = status;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
 	public void setScore(int score) {
 		this.score = score;
 	}
@@ -92,10 +101,6 @@ public class Work extends AbstractEntity {
 
 	public void setLastReviewedUserId(Long lastReviewedUserId) {
 		this.lastReviewedUserId = lastReviewedUserId;
-	}
-
-	public void setScore(Integer score) {
-		this.score = score;
 	}
 
 	public Item getItem() {
