@@ -10,9 +10,10 @@ spring:
     show-sql: true
    # flyway设置
   flyway:
-    enabled: false
-    baseline-on-migrate: false
-    baseline-version: 0
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    check-location: true
   datasource:
     url: jdbc:mysql://${db.host:127.0.0.1}:${db.port:3306}/${db.name:work_home}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: ${db.username:root}

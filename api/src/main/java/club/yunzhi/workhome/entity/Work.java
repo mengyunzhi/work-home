@@ -3,7 +3,6 @@ package club.yunzhi.workhome.entity;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.descriptor.sql.SmallIntTypeDescriptor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -27,8 +26,6 @@ public class Work extends AbstractEntity {
 	private Timestamp updateTime;
 
 	private Integer score = 0;
-
-	private Short status = 0;
 
 	private Long lastReviewedUserId;
 
@@ -87,14 +84,6 @@ public class Work extends AbstractEntity {
 
 	public void setScore(int score) {
 		this.score = score;
-	}
-
-	public Short getStatus() {
-		return status;
-	}
-
-	public void setStatus(Short status) {
-		this.status = status;
 	}
 
 	public Long getLastReviewedUserId() {
