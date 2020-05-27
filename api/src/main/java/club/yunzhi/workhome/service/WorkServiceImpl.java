@@ -180,8 +180,8 @@ public class WorkServiceImpl implements WorkService {
         Assert.notNull(pageable, "Pageable不能为null");
         Item item = new Item();
         item.setId(itemId);
-
-        return this.workRepository.getAll(item, studentName, studentSno, reviewed, pageable);
+        Long lastReviewedUserId = userService.getCurrentLoginUser().getId();
+        return this.workRepository.getAll(item, studentName, studentSno, reviewed, pageable, lastReviewedUserId);
     }
 
     @Override

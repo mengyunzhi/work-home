@@ -29,10 +29,24 @@ public class WorkSpecs {
         return (Specification<Work>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("student").get("no").as(String.class), String.format("%s%%", studentNo));
     }
 
-    public static Specification<Work> isReviewed(Boolean reviewed) {
-        if (reviewed == null) {
+    public static Specification<Work> isStatus(Short status) {
+        if (status == null) {
             return Specification.where(null);
         }
-        return (Specification<Work>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("reviewed").as(Boolean.class),  reviewed);
+        return (Specification<Work>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("status").as(Short.class),  status);
+    }
+
+    public static Specification<Work> notIsStatus(Short status) {
+        if (status == null) {
+            return Specification.where(null);
+        }
+        return (Specification<Work>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.notEqual(root.get("status").as(Short.class),  status);
+    }
+
+    public static Specification<Work> notIsUserId(Long lastReviewedUserId) {
+        if (lastReviewedUserId == null) {
+            return Specification.where(null);
+        }
+        return (Specification<Work>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.notEqual(root.get("lastReviewedUserId").as(Long.class),  lastReviewedUserId);
     }
 }
