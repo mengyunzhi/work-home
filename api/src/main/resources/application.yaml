@@ -1,7 +1,7 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: ${ddl-auto:update}
+      ddl-auto: ${ddl-auto:validate}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL55Dialect
