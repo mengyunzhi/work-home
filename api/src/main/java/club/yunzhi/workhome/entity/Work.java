@@ -3,7 +3,6 @@ package club.yunzhi.workhome.entity;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.descriptor.sql.SmallIntTypeDescriptor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -28,10 +27,9 @@ public class Work extends AbstractEntity {
 
 	private Integer score = 0;
 
-	private Short status = 0;
-
 	private Long lastReviewedUserId;
 
+	private Short status;
 	@ManyToMany
 	@JsonView(AttachmentsJsonView.class)
 	private List<Attachment> attachments = new ArrayList<>();
@@ -85,16 +83,16 @@ public class Work extends AbstractEntity {
 		return score;
 	}
 
-	public void setScore(int score) {
-		this.score = score;
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 
 	public Short getStatus() {
 		return status;
 	}
 
-	public void setStatus(Short status) {
-		this.status = status;
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	public Long getLastReviewedUserId() {
@@ -103,10 +101,6 @@ public class Work extends AbstractEntity {
 
 	public void setLastReviewedUserId(Long lastReviewedUserId) {
 		this.lastReviewedUserId = lastReviewedUserId;
-	}
-
-	public void setScore(Integer score) {
-		this.score = score;
 	}
 
 	public Item getItem() {
