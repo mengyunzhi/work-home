@@ -259,8 +259,9 @@ class WorkServiceImplTest extends ServiceTest {
                 .getAll(Mockito.any(Item.class),
                         Mockito.eq(name),
                         Mockito.eq(sno),
-                        Mockito.anyBoolean(),
-                        Mockito.eq(pageable)))
+                        Mockito.any(Boolean.class),
+                        Mockito.eq(pageable),
+                        Mockito.any()))
                 .thenReturn(mockStudentPage);
 
         /* 调用测试方法，获取返回值并断言与预期相同 */
@@ -269,10 +270,10 @@ class WorkServiceImplTest extends ServiceTest {
 
         /* 获取M层调用workRepository的getAll方法时item的参数值，并进行断言 */
         ArgumentCaptor<Item> itemArgumentCaptor = ArgumentCaptor.forClass(Item.class);
-        Mockito.verify(this.workRepository).getAll(itemArgumentCaptor.capture(), Mockito.eq(name), Mockito.eq(sno), Mockito.eq(true) ,  Mockito.eq(pageable));
+        Mockito.verify(this.workRepository).getAll(itemArgumentCaptor.capture(), Mockito.eq(name), Mockito.eq(sno), Mockito.any(Boolean.class) ,  Mockito.eq(pageable), Mockito.any());
         Assertions.assertEquals(itemArgumentCaptor.getValue().getId(), itemId);
 
-        Mockito.verify(this.workRepository).getAll(itemArgumentCaptor.capture(), Mockito.any(String.class), Mockito.any(String.class), Mockito.eq(true), Mockito.any(Pageable.class));
+        Mockito.verify(this.workRepository).getAll(itemArgumentCaptor.capture(), Mockito.any(String.class), Mockito.any(String.class), Mockito.any(Boolean.class), Mockito.any(Pageable.class), Mockito.any());
         Assertions.assertEquals(itemArgumentCaptor.getValue().getId(), itemId);
     }
 
