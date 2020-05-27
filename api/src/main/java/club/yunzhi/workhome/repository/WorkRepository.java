@@ -47,10 +47,10 @@ public interface WorkRepository extends PagingAndSortingRepository<Work, Long>, 
                 .and(WorkSpecs.belongToItem(item));
         if (reviewed != null) {
             if (!reviewed) {
-                specification = specification.and(WorkSpecs.notIsStatus((short) 2));
+                specification = specification.and(WorkSpecs.notIsStatus((short) 2))
+                .and(WorkSpecs.notIsUserId(lastReviewedUserId));
             } else if (reviewed) {
-                specification = specification.and(WorkSpecs.isStatus((short) 2))
-                        .and(WorkSpecs.notIsUserId(lastReviewedUserId));
+                specification = specification.and(WorkSpecs.isStatus((short) 2));
             }
         }
         return this.findAll(specification, pageable);
