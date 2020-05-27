@@ -135,12 +135,12 @@ public class WorkController {
      * @param work 作业
      * @return
      */
-//    @Admin
-//    @PutMapping("updateScore/{id}")
-//    @JsonView(UpdateScoreJsonView.class)
-//    public Work updateScore (@PathVariable Long id, @RequestBody Work work) {
-//        return this.workService.updateScore(id, work.getScore());
-//    }
+    @Admin
+    @PutMapping("updateScore/{id}")
+    @JsonView(UpdateScoreJsonView.class)
+    public Work updateScore (@PathVariable Long id, @RequestBody Work work) {
+        return this.workService.updateScore(id, work.getScore());
+    }
 
     /**
      * 获取下一个未评阅的作业

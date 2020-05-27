@@ -16,7 +16,8 @@ export class Work {
   score: number;
   student = new Student();
   updateTime: Date;
-  reviewed: boolean;
+  status: number;
+  lastReviewedUserId: number;
   attachments = new Array<Attachment>();
 
   constructor(params?: {
@@ -27,7 +28,8 @@ export class Work {
     score?: number;
     student?: Student;
     updateTime?: Date;
-    reviewed: boolean;
+    status?: number;
+    lastReviewedUserId?: number;
     attachments?: Array<Attachment>}) {
     if (!params) {
       return;
@@ -39,7 +41,8 @@ export class Work {
     this.score = params.score ? params.score : null;
     this.student = params.student ? params.student : null;
     this.updateTime = params.updateTime ? params.updateTime : null;
-    this.reviewed = params.reviewed ? params.reviewed : null;
+    this.status = params.status ? params.status : null;
+    this.lastReviewedUserId = params.lastReviewedUserId ? params.lastReviewedUserId : null;
     this.attachments = params.attachments ? params.attachments : null;
   }
 }

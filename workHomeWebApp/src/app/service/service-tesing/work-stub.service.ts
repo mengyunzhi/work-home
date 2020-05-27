@@ -28,7 +28,7 @@ export class WorkStubService {
     work.item.endTime = TestingUtils.randomNumber();
     work.item.active = (TestingUtils.randomNumber() % 2) === 0;
     work.content = null;
-    work.reviewed = true;
+    // work.reviewed = true;
     work.score = 90;
     return of([work]);
   }
@@ -59,10 +59,10 @@ export class WorkStubService {
     this.pageParamsCache = params;
     const work1 = new Work({
       id: 1, content: '123', item: new Item({name: 'Item'}), score: 100,
-      student: new Student({name: 'Student', no: '123'}), reviewed: true });
+      student: new Student({name: 'Student', no: '123'})});
     const work2 = new Work({
       id: 2, content: '456', item: new Item({name: 'Item'}), score: 100,
-      student: new Student({name: 'Student', no: '456'}), reviewed: false });
+      student: new Student({name: 'Student', no: '456'})});
 
     let mockResult = new Page<Work>();
     if (params.reviewed === true) {
@@ -88,7 +88,7 @@ export class WorkStubService {
     const mockResult = new Work(
       {
             id: 1, content: '<p>content</p>', item: new Item({name: 'Item', description: 'TestItem'}),
-            score: 100, student: new Student({name: 'Student'}), reviewed: true});
+            score: 100, student: new Student({name: 'Student'})});
     return of(mockResult);
   }
 

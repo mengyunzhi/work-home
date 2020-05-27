@@ -39,12 +39,10 @@ class WorkServiceImplTest extends ServiceTest {
     private static final Logger logger = LoggerFactory.getLogger(WorkServiceImplTest.class);
 
     WorkRepository workRepository;
-    UserService userService;
     ItemRepository itemRepository;
     ItemService itemService;
     WorkServiceImpl workService;
     AttachmentService attachmentService;
-    StudentService studentService;
     StudentRepository studentRepository;
     ResourceLoader loader;
 
@@ -54,9 +52,7 @@ class WorkServiceImplTest extends ServiceTest {
         this.loader = Mockito.mock(ResourceLoader.class);
         this.itemService = Mockito.mock(ItemService.class);
         this.workRepository = Mockito.mock(WorkRepository.class);
-        this.userService = Mockito.mock(UserService.class);
         this.itemRepository = Mockito.mock(ItemRepository.class);
-        this.studentService = Mockito.mock(StudentService.class);
         this.studentRepository = Mockito.mock(StudentRepository.class);
         this.workService = Mockito.spy(new WorkServiceImpl(this.workRepository, this.studentService,
                 this.userService, this.itemRepository, this.attachmentService, this.studentRepository));
@@ -188,53 +184,65 @@ class WorkServiceImplTest extends ServiceTest {
         org.assertj.core.api.Assertions.assertThat(pageableArgumentCaptor.getValue()).isEqualTo(mockInPageable);
     }
 
-//    @Test
-//    public void updateScore() {
-//        Long id = this.random.nextLong();
-//
-//        Work oldWork = new Work();
-//        oldWork.setScore(0);
-//        oldWork.setStudent(this.currentStudent);
-//        oldWork.setItem(Mockito.spy(new Item()));
-//
-//        Work testWork = new Work();
-//        testWork.setScore(0);
-//        testWork.setReviewed(true);
-//        testWork.setStudent(this.currentStudent);
-//        testWork.setItem(Mockito.spy(new Item()));
-//
-//        int score = 100;
-//        List<Work> works= Arrays.asList(oldWork, testWork);
-//
-//        Mockito.doReturn(Optional.of(oldWork))
-//                .when(this.workRepository)
-//                .findById(Mockito.eq(id));
-//        Mockito.doReturn(works)
-//                .when(this.workRepository)
-//                .findAllByStudent(oldWork.getStudent());
-//        Mockito.doReturn(true)
-//                .when(oldWork.getItem())
-//                .getActive();
-//        Mockito.doReturn(this.currentStudent)
-//                .when(this.studentService)
-//                .findById(oldWork.getStudent().getId());
-//
-//        Work work = new Work();
-//        work.setScore(score);
-//        work.setReviewed(true);
-//
-//        Work resultWork = new Work();
-//        Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
-//                .thenReturn(resultWork);
-//
-//        Mockito.doReturn(true).when(workService).isTeacher();
-//        Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
-//        Assertions.assertEquals(oldWork.getScore(), work.getScore());
-//
-//        Assertions.assertEquals(oldWork.getReviewed(),work.getReviewed());
-//        Assertions.assertEquals(oldWork.getStudent().getTotalScore(), 100);
-//        Assertions.assertEquals(oldWork.getStudent().getAverageScore(), 50);
-//    }
+    @Test
+    public void updateScore() {
+        Long id = this.random.nextLong();
+        this.currentUser.setId(this.random.nextLong());
+
+        // 新建一个作业，状态评阅中，学生是当前学生
+        Work oldWork = new Work();
+        oldWork.setStudent(this.currentStudent);
+        oldWork.setLastReviewedUserId((long) 1234567890);
+        oldWork.setStatus((short) 1);
+        oldWork.setScore(60);
+        oldWork.setItem(Mockito.spy(new Item()));
+
+        // 新建一个作业，状态评阅中，学生是当前学生
+        Work testWork = new Work();
+        testWork.setScore(50);
+        testWork.setStatus((short) 2);
+        testWork.setStudent(this.currentStudent);
+        testWork.setItem(Mockito.spy(new Item()));
+
+        Work resultWork = new Work();
+        resultWork.setScore(80);
+        resultWork.setStatus((short) 2);
+        resultWork.setStudent(currentStudent);
+
+        int score = 100;
+        List<Work> works= Arrays.asList(resultWork, testWork);
+
+        // 获取一份作业的时候，返回oldWork
+        Mockito.doReturn(Optional.of(oldWork))
+                .when(this.workRepository)
+                .findById(Mockito.eq(id));
+        // 获取此学生所有作业的时候，返回works列表
+        Mockito.doReturn(works)
+                .when(this.workRepository)
+                .findAllByStudent(oldWork.getStudent());
+        // 获取此学生的时候返回当前学生
+        Mockito.doReturn(this.currentStudent)
+                .when(this.studentService)
+                .findById(oldWork.getStudent().getId());
+        // 用于验证结果
+        Work work = new Work();
+        work.setScore(80);
+        work.setStatus((short) 2);
+
+        // 调用save方法的时候返回resultWork
+        Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
+                .thenReturn(resultWork);
+
+        // 调用方法，验证返回值复合预期
+        Assertions.assertEquals(resultWork, this.workService.updateScore(id, score));
+        // 验证分数
+        Assertions.assertEquals(resultWork.getScore(), work.getScore());
+        // 验证状态
+        Assertions.assertEquals(resultWork.getStatus(),work.getStatus());
+        // 验证总分
+        Assertions.assertEquals(resultWork.getStudent().getTotalScore(), 130);
+        Assertions.assertEquals(resultWork.getStudent().getAverageScore(), 65);
+    }
 
     @Test
     public void findAllSpecs() {
