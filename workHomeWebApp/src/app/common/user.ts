@@ -19,7 +19,10 @@ export class User {
   /** 角色 */
   role: number;
 
-  constructor(data?: { id?: number, username?: string, password?: string, role?: number }) {
+  /** 是否为admin */
+  admin: boolean;
+
+  constructor(data?: { id?: number, username?: string, password?: string, role?: number, admin?: boolean}) {
     if (data) {
       if (data.id) {
         this.id = data.id;
@@ -35,6 +38,10 @@ export class User {
 
       if (data.role) {
         this.role = data.role;
+      }
+
+      if (data.admin) {
+        this.admin = data.admin;
       }
     }
 

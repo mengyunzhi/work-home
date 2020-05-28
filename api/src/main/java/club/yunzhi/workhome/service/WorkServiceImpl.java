@@ -133,6 +133,7 @@ public class WorkServiceImpl implements WorkService {
                     work.setScore( (score + work.getScore()) / 2 );
                     work.setStatus((short) 2);
                 }
+                work.setStatus((short) 2);
                 break;
             }
             // 已评阅
