@@ -76,8 +76,8 @@ CREATE TABLE `student`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` bigint(20) NOT NULL,
-  `average_score` tinyblob NULL,
-  `total_score` tinyblob NULL,
+  `average_score` integer(20) NULL,
+  `total_score` integer(20) NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FKk5m148xqefonqw7bgnpm0snwj`(`user_id`) USING BTREE,
   CONSTRAINT `FKk5m148xqefonqw7bgnpm0snwj` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
