@@ -29,7 +29,7 @@ public class Work extends AbstractEntity {
 
 	private Long lastReviewedUserId;
 
-	private Short status;
+	private Short status = 0;
 	@ManyToMany
 	@JsonView(AttachmentsJsonView.class)
 	private List<Attachment> attachments = new ArrayList<>();
