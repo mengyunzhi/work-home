@@ -4,6 +4,7 @@ import club.yunzhi.workhome.entity.Item;
 import club.yunzhi.workhome.entity.Student;
 import club.yunzhi.workhome.entity.Work;
 import club.yunzhi.workhome.repository.specs.WorkSpecs;
+import club.yunzhi.workhome.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -38,13 +39,20 @@ public interface WorkRepository extends PagingAndSortingRepository<Work, Long>, 
      */
     Optional<Work> findByItemIdAndStudentId(Long itemId, Long studentId);
 
-    default Page getAll(Item item,  String studentName, String studentSno, Boolean reviewed, @NotNull Pageable pageable) {
+    default Page getAll(Item item,  String studentName, String studentSno, Boolean reviewed, @NotNull Pageable pageable, Long lastReviewedUserId) {
         Assert.notNull(pageable, "传入的Pageable不能为null");
 
         Specification<Work> specification = WorkSpecs.containingName(studentName)
                 .and(WorkSpecs.startWithNo(studentSno))
-                .and(WorkSpecs.belongToItem(item))
-                .and(WorkSpecs.isReviewed(reviewed));
+                .and(WorkSpecs.belongToItem(item));
+        if (reviewed != null) {
+            if (!reviewed) {
+                specification = specification.and(WorkSpecs.notIsStatus((short) 2));
+            } else if (reviewed) {
+                specification = specification.and(WorkSpecs.isStatus((short) 2))
+                        .and(WorkSpecs.notIsUserId(lastReviewedUserId));
+            }
+        }
         return this.findAll(specification, pageable);
     }
 
