@@ -41,6 +41,7 @@ public class InitTestUser implements ApplicationListener<ContextRefreshedEvent> 
         User user = new User();
         user.setUsername("admin");
         user.setPassword(encoder.encode("admin"));
+        user.setAdmin(User.ADMIN_TEACHER);
         users.add(user);
 
         logger.debug("保存");

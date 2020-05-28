@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 public class User extends AbstractEntity {
 
 	public static final int ROLE_STUDENT = 1;
+	public static final boolean ADMIN_TEACHER = true;
     @Column(unique = true, nullable = false)
 	private String username;
 
@@ -19,6 +20,8 @@ public class User extends AbstractEntity {
 	private String password;
 
 	private int role;
+
+	private boolean admin;
 
 	public User() {
 	}
@@ -45,6 +48,14 @@ public class User extends AbstractEntity {
 
 	public void setRole(int role) {
 		this.role = role;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	public interface PasswordJsonView {}
