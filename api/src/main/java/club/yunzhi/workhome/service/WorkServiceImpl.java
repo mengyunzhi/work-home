@@ -122,6 +122,7 @@ public class WorkServiceImpl implements WorkService {
             // 未评阅
             case 0: {
                 work.setScore(score);
+                work.setStatus((short) 1);
                 break;
             }
             // 评阅中
@@ -130,13 +131,13 @@ public class WorkServiceImpl implements WorkService {
                     work.setScore(score);
                 } else {
                     work.setScore( (score + work.getScore()) / 2 );
+                    work.setStatus((short) 2);
                 }
                 break;
             }
             // 已评阅
             case 2: {
                 if (currentUser.getRole() == -1) {
-
                     work.setScore(score);
                 } else {
                     throw new AccessDeniedException("您没有权限修改此作业");
