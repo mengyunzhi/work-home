@@ -138,7 +138,7 @@ public class WorkServiceImpl implements WorkService {
             }
             // 已评阅
             case 2: {
-                if (currentUser.getRole() == -1) {
+                if (currentUser.isAdmin() == true) {
                     work.setScore(score);
                 } else {
                     throw new AccessDeniedException("您没有权限修改此作业");
