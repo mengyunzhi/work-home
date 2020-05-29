@@ -7,16 +7,16 @@ import {LoadingComponent} from './component/loading/loading.component';
 import {UploaderComponent} from './component/uploader/uploader.component';
 import {NgxUploaderModule} from './directive/ngxUploader/ngx-uploader.module';
 import {SafeUrlPipe} from './pipe/safe-url.pipe';
-import {TrueFalsePipe} from './pipe/true-false.pipe';
+import { StatusPipe } from './pipe/status.pipe';
 
 @NgModule({
-  declarations: [EditorComponentComponent, LoadingComponent, UploaderComponent, SafeUrlPipe, TrueFalsePipe],
+  declarations: [EditorComponentComponent, LoadingComponent, UploaderComponent, SafeUrlPipe, StatusPipe],
   exports: [
     EditorComponentComponent,
     LoadingComponent,
     UploaderComponent,
     SafeUrlPipe,
-    TrueFalsePipe
+    StatusPipe
   ],
   imports: [
     CommonModule,
