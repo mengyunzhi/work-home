@@ -72,7 +72,13 @@ export class WorkService {
     return this.httpClient.get<Work>(this.url + '/getByItemIdOfCurrentStudent', {params});
   }
 
-  getNextNotReviewedWork(): Observable<Work> {
-    return this.httpClient.get<Work>(this.url + '/getNextNotReviewedWork');
+  getNextNotReviewedWork(): Observable<Page<Work>> {
+    const _params = {
+      page: '0'.toLocaleString(),
+      size: '1'.toLocaleString(),
+      reviewed: '0'.toLocaleString(),
+    };
+    return this.httpClient.get<Page<Work>>(`${this.url}/getAll`, {params: _params});
+    // return this.httpClient.get<Page<Work>>(this.url + '/getNextNotReviewedWork');
   }
 }
