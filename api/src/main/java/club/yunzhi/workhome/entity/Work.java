@@ -27,7 +27,7 @@ public class Work extends AbstractEntity {
 
 	private Integer score = 0;
 
-	private Long lastReviewedUserId;
+	private Long lastReviewedUserId = 0L;
 
 	private Short status = 0;
 	@ManyToMany

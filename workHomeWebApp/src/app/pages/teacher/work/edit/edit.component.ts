@@ -84,12 +84,13 @@ export class EditComponent implements OnInit {
         () => {
           this.workService.getNextNotReviewedWork()
             .subscribe(data => {
-              if (data === null) {
+              if (data === null || data.content.length === 0) {
                 this.appComponent.success(() => {
                 }, '作业已全部批改完成,老师辛苦了');
                 this.linkToIndex.nativeElement.click();
               } else {
-                this.work = data;
+                console.log(data);
+                this.work = data.content[0];
                 this.showWindow();
               }
             });
