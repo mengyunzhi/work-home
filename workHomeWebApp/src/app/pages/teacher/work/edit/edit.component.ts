@@ -1,12 +1,13 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Work} from '../../../../common/work';
-import {ActivatedRoute, Router} from '@angular/router';
-import {WorkService} from '../../../../service/work.service';
-import {AppComponent} from '../../../../app.component';
-import {Attachment} from '../../../../common/attachment';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Work } from '../../../../common/work';
+import { ActivatedRoute, Router } from '@angular/router';
+import { WorkService } from '../../../../service/work.service';
+import { AppComponent } from '../../../../app.component';
+import { Attachment } from '../../../../common/attachment';
 import { saveAs } from 'file-saver';
-import {AttachmentService} from '../../../../service/attachment.service';
-import {CommonService} from '../../../../service/common.service';
+import { AttachmentService } from '../../../../service/attachment.service';
+import { CommonService } from '../../../../service/common.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -60,24 +61,28 @@ export class EditComponent implements OnInit {
     this.work.score = 95;
     this.submit({id: this.work.id, work: this.work});
   }
+
   scoreGood() {
     this.work.score = 90;
     this.submit({id: this.work.id, work: this.work});
   }
+
   scoreMiddle() {
     this.work.score = 80;
     this.submit({id: this.work.id, work: this.work});
   }
+
   scoreBad() {
     this.work.score = 60;
     this.submit({id: this.work.id, work: this.work});
   }
+
   scoreZero() {
     this.work.score = 0;
     this.submit({id: this.work.id, work: this.work});
   }
 
-  submit(params: {id: number, work: Work}) {
+  submit(params: { id: number, work: Work }) {
     // this.work.reviewed = true;
     this.workService.updateScore({id: params.id, work: params.work})
       .subscribe(
@@ -94,16 +99,20 @@ export class EditComponent implements OnInit {
                 this.showWindow();
               }
             });
-        }
-      );
-
+        }, (res: HttpErrorResponse) => {
+          // 操作失败提示
+          this.appComponent.error(() => {
+          }, res.error.message);
+        });
   }
+
   getWorkDir(): string {
     if (this.work.item.dir) {
       return this.work.item.dir;
     }
     return '';
   }
+
   /**
    * 下载附件
    * @param attachment 附件
@@ -117,6 +126,7 @@ export class EditComponent implements OnInit {
       }, '', '下载发生错误');
     });
   }
+
   close() {
     this.linkToIndex.nativeElement.click();
   }
