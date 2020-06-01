@@ -7,3 +7,6 @@ ADD COLUMN `last_reviewed_user_id` bigint(20) NOT NULL DEFAULT 0 AFTER `student_
 UPDATE `work`
 SET STATUS=2
 WHERE STATUS=1;
+UPDATE `user`
+SET ADMIN=1
+WHERE USERNAME='admin';
