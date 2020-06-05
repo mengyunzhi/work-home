@@ -25,6 +25,8 @@ public class Item extends AbstractEntity implements YunzhiEntity {
 
     private String description;
 
+    private Integer power = 1;
+
     /**
      * 实验保存目录
      */
@@ -98,6 +100,14 @@ public class Item extends AbstractEntity implements YunzhiEntity {
 
     public void setDir(String dir) {
         this.dir = dir;
+    }
+
+    public Integer getPower() {
+        return power;
+    }
+
+    public void setPower(Integer power) {
+        this.power = power;
     }
 
     public interface AttachmentsJsonView {

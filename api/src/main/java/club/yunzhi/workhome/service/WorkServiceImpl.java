@@ -164,11 +164,12 @@ public class WorkServiceImpl implements WorkService {
 
         for (Work aWork : currentStudentWorks) {
             if (aWork.getStatus() == 2) {
-                viewed++;
-                //计算总成绩
-                currentStudent.setTotalScore(currentStudent.getTotalScore()+aWork.getScore());
-                //计算平均成绩
-                currentStudent.setAverageScore(currentStudent.getTotalScore()/viewed);
+                // 已评阅作业数，加权
+                viewed += aWork.getItem().getPower();
+                //总成绩 = 各作业成绩 * 作业的项目的权重
+                currentStudent.setTotalScore( currentStudent.getTotalScore() + aWork.getScore() * aWork.getItem().getPower() );
+                //平均成绩 = 总成绩 / 总权重
+                currentStudent.setAverageScore( currentStudent.getTotalScore() / viewed );
             }
         }
 
