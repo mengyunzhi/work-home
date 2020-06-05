@@ -28,6 +28,7 @@ export class EditComponent implements OnInit {
   host: string;
   _window: any;
   showPopWindow = true;
+  currentItemId = null;
 
   constructor(private workService: WorkService,
               private activatedRoute: ActivatedRoute,
@@ -52,6 +53,7 @@ export class EditComponent implements OnInit {
     this.workService.getById({id: this.params.workId})
       .subscribe((data) => {
         this.work = data;
+        this.currentItemId = data.item.id;
       }, () => {
         console.log('error');
       });
@@ -96,6 +98,10 @@ export class EditComponent implements OnInit {
               } else {
                 console.log(data);
                 this.work = data.content[0];
+                if (this.currentItemId !== data.content[0].item.id) {
+                  this.appComponent.success(() => {
+                  }, '现在为下一个实验的作业');
+                }
                 this.showWindow();
               }
             });
