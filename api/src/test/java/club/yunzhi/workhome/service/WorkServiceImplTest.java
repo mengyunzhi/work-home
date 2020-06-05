@@ -189,25 +189,28 @@ class WorkServiceImplTest extends ServiceTest {
         Long id = this.random.nextLong();
         this.currentUser.setId(this.random.nextLong());
 
+        Item item = new Item();
+        item.setPower(1);
         // 新建一个作业，状态评阅中，学生是当前学生
         Work oldWork = new Work();
         oldWork.setStudent(this.currentStudent);
         oldWork.setLastReviewedUserId((long) 1234567890);
         oldWork.setStatus((short) 1);
         oldWork.setScore(60);
-        oldWork.setItem(Mockito.spy(new Item()));
+        oldWork.setItem(Mockito.spy(item));
 
         // 新建一个作业，状态评阅中，学生是当前学生
         Work testWork = new Work();
         testWork.setScore(50);
         testWork.setStatus((short) 2);
         testWork.setStudent(this.currentStudent);
-        testWork.setItem(Mockito.spy(new Item()));
+        testWork.setItem(Mockito.spy(item));
 
         Work resultWork = new Work();
         resultWork.setScore(80);
         resultWork.setStatus((short) 2);
         resultWork.setStudent(currentStudent);
+        resultWork.setItem(Mockito.spy(item));
 
         int score = 100;
         List<Work> works= Arrays.asList(resultWork, testWork);
@@ -228,6 +231,7 @@ class WorkServiceImplTest extends ServiceTest {
         Work work = new Work();
         work.setScore(80);
         work.setStatus((short) 2);
+        work.setItem(Mockito.spy(item));
 
         // 调用save方法的时候返回resultWork
         Mockito.when(this.workRepository.save(Mockito.eq(oldWork)))
