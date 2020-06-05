@@ -19,12 +19,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 初始化测试账户
- * admin / admin
+ * 变更ID为5的实验项目权重为3
+ * 重新计算所有学生的作业
  */
 @Component
 public class SetAllScores implements ApplicationListener<ContextRefreshedEvent> {
@@ -52,13 +53,17 @@ public class SetAllScores implements ApplicationListener<ContextRefreshedEvent> 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         // 获取id 为5的项目（大作业）
-        Item item = itemService.findById((long) 5);
-        // 如果不是空值，就设置权重为3
-        if (item != null) {
-            item.setPower(3);
-        }
-        // 保存项目
-        itemRepository.save(item);
+        try {
+            Item item = itemService.findById((long) 5);
+            // 如果不是空值，就设置权重为3
+            if (item != null) {
+                item.setPower(3);
+                // 保存项目
+                itemRepository.save(item);
+            }
+        } catch (EntityNotFoundException e) {
+
+        };
         // 创建分页数据
         Pageable pageable = PageRequest.of(0,10000);
         // 取出所有学生
