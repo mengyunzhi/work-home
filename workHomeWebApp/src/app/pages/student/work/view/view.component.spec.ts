@@ -10,6 +10,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ServiceTestingModule} from '../../../../service/service-tesing/service-testing.module';
+import {FuncModule} from '../../../../func/func.module';
+import {AppTestingModule} from '../../../../app-testing/app-testing.module';
 
 
 describe('ViewComponent', () => {
@@ -23,7 +26,10 @@ describe('ViewComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ServiceTestingModule,
+        FuncModule,
+        AppTestingModule,
       ],
       providers: [
         {provide: WorkService, useClass: WorkStubService},
