@@ -166,7 +166,7 @@ public class WorkController {
     public interface UploadWork {
     }
 
-    private interface GetAllJsonView extends Work.StudentJsonView, Work.ItemJsonView {
+    private interface GetAllJsonView extends Work.StudentJsonView, Work.ItemJsonView, Work.AttachmentsJsonView {
     }
 
 
