@@ -25,10 +25,14 @@
     <td>{{work.item.name}}</td>
     <td>{{work.item.beginTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
     <td>{{work.item.endTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
-    <td></td>
     <td>
-<!--      <span *ngIf="work.reviewed">{{work.score}}</span>-->
-<!--      <span *ngIf="!work.reviewed">-</span>-->
+      <span *ngIf="work.status == 2">已评阅</span>
+      <span *ngIf="work.status == 1">评阅中</span>
+      <span *ngIf="work.status == 0">未评阅</span>
+    </td>
+    <td>
+      <span *ngIf="work.status == 2">{{work.score}}</span>
+      <span *ngIf="work.status != 2"> - </span>
     </td>
     <td>
       <a *ngIf="work.item.active" class="btn btn-sm btn-outline-primary" routerLink="./edit/{{work.item.id}}">修改</a>
