@@ -47,9 +47,9 @@ export class StudentIndexComponent implements OnInit {
   loadData() {
     const queryParams = {
       page: this.params.page,
-      size: config.size,
-      name: this.params.name.value,
+      size: config.size,      
       no: this.params.no.value
+      name: this.params.name.value,
     };
 
     this.studentService.page(queryParams)
